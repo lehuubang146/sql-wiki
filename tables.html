@@ -170,11 +170,36 @@ ADD CONSTRAINT CHK_GioiTinh CHECK (GioiTinh IN (0, 1));
 
 <h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: KHACHHANG</h3>
 <div style='overflow-x: auto; margin-top: 1rem;'><table>
-<thead><tr><th>MaKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TenKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>DiaChi<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(200)</small></th><th>LoaiKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th></tr></thead>
+<thead><tr><th>MaKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>HoTen<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>DienThoai<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(20)</small></th></tr></thead>
 <tbody>
-<tr><td>KH01</td><td>Nguyễn Văn A</td><td>731 Trần Hưng Đạo, Q5, TpHCM</td><td>VIP</td></tr>
-<tr><td>KH02</td><td>Trần Ngọc Hân</td><td>23/5 Nguyễn Trãi, Q5, TpHCM</td><td>TV</td></tr>
-<tr><td>KH03</td><td>Phạm Quỳnh Anh</td><td>Quy Nhơn, Bình Định</td><td>VIP</td></tr>
+<tr><td>KH01</td><td>Công ty TNHH ABC</td><td>0901234567</td></tr>
+<tr><td>KH02</td><td>Cửa hàng Minh Hoa</td><td>0912345678</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: HANGHOA</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaHH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TenHH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>MaLoai<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th></tr></thead>
+<tbody>
+<tr><td>HH01</td><td>Bánh kem</td><td>1</td></tr>
+<tr><td>HH02</td><td>Kẹo dẻo</td><td>1</td></tr>
+<tr><td>HH03</td><td>Bánh mì</td><td>2</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DONDATHANG</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaDDH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>MaKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th></tr></thead>
+<tbody>
+<tr><td>DDH01</td><td>KH01</td></tr>
+<tr><td>DDH02</td><td>KH02</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: CHITIETDATHANG</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaDDH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>MaHH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>SoLuong<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th><th>DonGia<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>float</small></th></tr></thead>
+<tbody>
+<tr><td>DDH01</td><td>HH01</td><td>50</td><td>250000</td></tr>
+<tr><td>DDH01</td><td>HH02</td><td>200</td><td>50000</td></tr>
+<tr><td>DDH02</td><td>HH03</td><td>20</td><td>15000</td></tr>
 </tbody></table></div>
 
 <h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: HANGHOA</h3>

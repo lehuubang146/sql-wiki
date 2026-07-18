@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
     // UI Elements
     const sessionListEl = document.getElementById('chat-session-list');
     const newChatBtn = document.getElementById('new-chat-btn');
@@ -12,9 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileUpload = document.getElementById('chat-file-upload');
     const attachBtn = document.getElementById('chat-attach-btn');
     const attachmentPreview = document.getElementById('attachment-preview-area');
-    const attachmentFilename = document.getElementById('attachment-filename');
-    const removeAttachmentBtn = document.getElementById('remove-attachment-btn');
-
+    
     // Settings
     const settingsBtn = document.getElementById('chat-settings-btn');
     const settingsModal = document.getElementById('messenger-settings-modal');
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let deepseekKey = localStorage.getItem('deepseek_api_key') || '';
     let geminiKey = localStorage.getItem('gemini_api_key') || '';
     
-    let currentAttachment = null; // { type: 'image'|'text', data: '...', mime: '...', filename: '...' }
+    let currentAttachments = [];
 
     const systemPrompt = window.SQL_WIKI_SYSTEM_PROMPT || "Bạn là trợ lý AI.";
     const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
@@ -45,6 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "'": '&#39;'
     }[char]));
 
+    // Tải danh sách models trước khi init
+    loadModels();
+    
     // Initialize
     if (sessions.length === 0) {
         createNewSession();
@@ -55,17 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSessionList();
         loadSession(activeSessionId);
     }
+
+    const pendingPrompt = sessionStorage.getItem('pendingAiPrompt');
+    if (pendingPrompt) {
+        sessionStorage.removeItem('pendingAiPrompt');
+        setTimeout(() => {
+            inputEl.value = pendingPrompt;
+            inputEl.focus();
+        }, 300);
+    }
     
-    // Tải danh sách Model tĩnh để đảm bảo luôn có đủ các model tốt nhất
     function loadModels() {
         let html = '<optgroup label="Groq Models (Tốc độ siêu nhanh)">';
         html += '<option value="groq:llama-3.3-70b-versatile">llama-3.3-70b-versatile - [TOP 1] Thông minh & Toàn năng nhất</option>';
         html += '<option value="groq:llama-3.1-8b-instant">llama-3.1-8b-instant - [TOP 2] Phan hoi sieu nhanh</option>';
-        html += '<option value="groq:llama-3.2-11b-vision-instruct">Llama 3.2 Vision (11B) - Hỗ trợ đọc Hình Ảnh</option>';
         html += '</optgroup>';
         
         html += '<optgroup label="Google Gemini (Siêu thông minh - 2M tokens)">';
-        html += '<option value="gemini:gemini-1.5-flash-latest">Gemini 1.5 Flash (Tốc độ siêu cao + Hỗ trợ đọc Ảnh!)</option>';
+        html += '<option value="gemini:gemini-3.5-flash">Gemini 3.5 Flash (Tốc độ siêu cao + Hỗ trợ đọc Ảnh!)</option>';
         html += '</optgroup>';
         
         const prevValue = modelSelect.value || 'groq:llama-3.3-70b-versatile';
@@ -77,11 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    loadModels();
-    
-
-
-    // --- Core Logic: Sessions ---
     function saveSessions() {
         localStorage.setItem('messenger_sessions', JSON.stringify(sessions));
         localStorage.setItem('messenger_active_session', activeSessionId);
@@ -143,10 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const session = sessions.find(s => s.id === id);
         if(!session) return;
         
-        // Cập nhật Select Model UI
         if(session.model) {
             modelSelect.value = session.model;
-            if(!modelSelect.value) { modelSelect.value = 'groq:llama-3.3-70b-versatile'; session.model = modelSelect.value; saveSessions(); }
+            if(!modelSelect.value) { 
+                modelSelect.value = 'groq:llama-3.3-70b-versatile'; 
+                session.model = modelSelect.value; 
+                saveSessions(); 
+            }
         }
 
         messagesEl.innerHTML = '';
@@ -154,29 +160,34 @@ document.addEventListener('DOMContentLoaded', () => {
             messagesEl.innerHTML = `<div class="chat-msg ai" id="chat-welcome-msg">Xin chào! Chọn một Model ở trên và bắt đầu trò chuyện nhé.</div>`;
         } else {
             session.messages.forEach(msg => {
-                renderMessageUI(msg.role, msg.content, msg.attachment);
+                if (msg.attachment && !msg.attachments) {
+                    msg.attachments = [msg.attachment];
+                }
+                renderMessageUI(msg.role, msg.content, msg.attachments);
             });
         }
         messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    // --- UI Rendering ---
-    function renderMessageUI(role, text, attachment = null) {
-        if(role === 'system') return; // Không hiển thị prompt hệ thống
+    function renderMessageUI(role, text, attachments = null) {
+        if(role === 'system') return;
         text = String(text ?? '');
         const msgDiv = document.createElement('div');
         msgDiv.className = `chat-msg ${role === 'user' ? 'user' : 'ai'}`;
         
         let html = '';
-        if (attachment) {
-            if (attachment.type === 'image') {
-                html += `<img src="data:${escapeHtml(attachment.mime)};base64,${attachment.data}" class="msg-attachment" style="cursor: zoom-in;"><br>`;
-            } else if (attachment.type === 'text') {
-                html += `<div class="msg-file-icon">📄 ${escapeHtml(attachment.filename)}</div><br>`;
-            }
+        if (attachments && Array.isArray(attachments)) {
+            html += '<div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px;">';
+            attachments.forEach(attachment => {
+                if (attachment.type === 'image') {
+                    html += `<img src="data:${escapeHtml(attachment.mime)};base64,${attachment.data}" class="msg-attachment" style="cursor: zoom-in; max-width: 150px; border-radius: 8px;">`;
+                } else if (attachment.type === 'text') {
+                    html += `<div class="msg-file-icon" style="background: rgba(0,0,0,0.05); padding: 5px 10px; border-radius: 4px;">📄 ${escapeHtml(attachment.filename)}</div>`;
+                }
+            });
+            html += '</div><br>';
         }
         
-        // Markdown parser
         let codeBlocks = [];
         let formattedText = text.replace(/```([a-zA-Z0-9_-]+)?\n([\s\S]*?)```/gi, (match, lang, code) => {
             const language = lang || 'text';
@@ -210,10 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
         formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
         
-        // Chỉ bẻ dòng cho text thường
         formattedText = formattedText.replace(/\n/g, '<br>');
         
-        // Phục hồi lại code blocks
         codeBlocks.forEach((block, index) => {
             formattedText = formattedText.replace(`___CODEBLOCK_${index}___`, block);
         });
@@ -230,65 +239,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Attachments ---
-    attachBtn.onclick = () => fileUpload.click();
-    fileUpload.onchange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        if (file.size > 2 * 1024 * 1024) {
-            alert("Vui lòng chọn file dưới 2MB");
-            return;
-        }
-
-        const reader = new FileReader();
-        if (file.type.startsWith('image/')) {
-            reader.onload = (ev) => {
-                const base64 = ev.target.result.split(',')[1];
-                currentAttachment = { type: 'image', data: base64, mime: file.type, filename: file.name };
-                showAttachmentPreview();
-            };
-            reader.readAsDataURL(file);
-        } else {
-            // Text file
-            reader.onload = (ev) => {
-                currentAttachment = { type: 'text', data: ev.target.result, mime: file.type || 'text/plain', filename: file.name };
-                showAttachmentPreview();
-            };
-            reader.readAsText(file);
-        }
-    };
+    if (attachBtn) attachBtn.onclick = () => fileUpload.click();
     
-    function showAttachmentPreview() {
-        if(!currentAttachment) {
-            attachmentPreview.style.display = 'none';
-            return;
+    window.removeAttachment = function(index) {
+        currentAttachments.splice(index, 1);
+        if(currentAttachments.length === 0 && fileUpload) {
+            fileUpload.value = '';
         }
-        if (currentAttachment.type === 'image') {
-            attachmentFilename.innerHTML = `<div style="display:flex; align-items:center; gap:10px;"><img src="data:${escapeHtml(currentAttachment.mime)};base64,${currentAttachment.data}" class="preview-thumbnail" style="height:40px; border-radius:4px; cursor:zoom-in;"> <span>${escapeHtml(currentAttachment.filename)}</span></div>`;
-        } else {
-            attachmentFilename.textContent = `📎 Đính kèm: ${currentAttachment.filename}`;
-        }
-        attachmentPreview.style.display = 'flex';
-    }
-    
-    removeAttachmentBtn.onclick = () => {
-        currentAttachment = null;
-        fileUpload.value = '';
         showAttachmentPreview();
     };
+
+    if (fileUpload) {
+        fileUpload.onchange = async (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            for (const file of files) {
+                if (file.size > 2 * 1024 * 1024) {
+                    alert("Bỏ qua file " + file.name + " (Vượt quá 2MB)");
+                    continue;
+                }
+                
+                await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    if (file.type.startsWith('image/')) {
+                        reader.onload = (ev) => {
+                            const base64 = ev.target.result.split(',')[1];
+                            currentAttachments.push({ type: 'image', data: base64, mime: file.type, filename: file.name });
+                            resolve();
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        reader.onload = (ev) => {
+                            currentAttachments.push({ type: 'text', data: ev.target.result, mime: file.type || 'text/plain', filename: file.name });
+                            resolve();
+                        };
+                        reader.readAsText(file);
+                    }
+                });
+            }
+            showAttachmentPreview();
+        };
+    }
+    
+    function showAttachmentPreview() {
+        if(!currentAttachments || currentAttachments.length === 0) {
+            if (attachmentPreview) {
+                attachmentPreview.style.display = 'none';
+                attachmentPreview.innerHTML = '';
+            }
+            return;
+        }
+        if(attachmentPreview) {
+            attachmentPreview.style.display = 'flex';
+            attachmentPreview.innerHTML = '';
+            
+            currentAttachments.forEach((att, index) => {
+                const item = document.createElement('div');
+                item.style.cssText = "position: relative; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid #ddd; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;";
+                
+                let icon = '';
+                if (att.type === 'image') {
+                    icon = `<img src="data:${escapeHtml(att.mime)};base64,${att.data}" style="height:20px; border-radius:2px; object-fit: cover;">`;
+                } else {
+                    icon = '📄';
+                }
+                
+                item.innerHTML = `${icon} <span>${escapeHtml(att.filename.substring(0,15))}${att.filename.length>15?'...':''}</span>
+                                  <button onclick="removeAttachment(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; padding: 0 0 0 5px; font-weight: bold;">✕</button>`;
+                attachmentPreview.appendChild(item);
+            });
+        }
+    }
+    
+    function clearAttachments() {
+        currentAttachments = [];
+        if (fileUpload) fileUpload.value = '';
+        showAttachmentPreview();
+    }
 
     // --- Sending Messages & API Integration ---
     async function sendMessage() {
         const text = inputEl.value.trim();
-        if (!text && !currentAttachment) return;
+        if (!text && currentAttachments.length === 0) return;
 
         const session = sessions.find(s => s.id === activeSessionId);
         
-        const providerData = modelSelect.value.split(':');
-        const provider = providerData[0]; // 'groq' or 'gemini'
+        let activeMdl = session.model || modelSelect.value;
+        if (!activeMdl || !activeMdl.includes(':')) {
+            activeMdl = 'groq:llama-3.3-70b-versatile';
+            session.model = activeMdl;
+            modelSelect.value = activeMdl;
+        }
+        
+        const providerData = activeMdl.split(':');
+        const provider = providerData[0];
         const modelName = providerData[1];
         
-        // Kiá»ƒm tra Key
         if (provider === 'gemini' && !geminiKey) {
             alert('Vui lòng cài đặt Gemini API Key để dùng mô hình này!');
             settingsModal.style.display = 'flex';
@@ -305,28 +352,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Cập nhật UI
         const welcomeMsg = document.getElementById('chat-welcome-msg');
         if(welcomeMsg) welcomeMsg.remove();
         
-        const attachCopy = currentAttachment ? {...currentAttachment} : null;
+        const attachCopy = currentAttachments.length > 0 ? [...currentAttachments] : null;
         renderMessageUI('user', text, attachCopy);
         
-        // Update Title if it's the first message
         if (session.messages.length === 0 && text) {
             session.title = text.substring(0, 20) + (text.length > 20 ? '...' : '');
             renderSessionList();
         }
         
-        // Save user message to session
-        session.messages.push({ role: 'user', content: text, attachment: attachCopy });
+        session.messages.push({ role: 'user', content: text, attachments: attachCopy });
         session.model = modelSelect.value;
         saveSessions();
         
         inputEl.value = '';
-        currentAttachment = null;
-        fileUpload.value = '';
-        showAttachmentPreview();
+        clearAttachments();
         
         inputEl.disabled = true;
         sendBtn.disabled = true;
@@ -350,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error(error);
             renderMessageUI('assistant', `⚠️ Lỗi: ${error.message}`);
-            session.messages.pop(); // Revert user message on fail
+            session.messages.pop();
         } finally {
             inputEl.disabled = false;
             sendBtn.disabled = false;
@@ -359,10 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- API Handlers ---
-    async function callGroqAPI(model, messages, attachment) {
-        // Chuẩn bị payload chuẩn OpenAI
-        // Gom System Prompt + Profile Notes
+    async function callGroqAPI(model, messages, attachments) {
         const profileNotes = localStorage.getItem('ai_profile_notes') || '';
         let fullSystemPrompt = systemPrompt;
         if (profileNotes.trim()) {
@@ -371,18 +410,19 @@ document.addEventListener('DOMContentLoaded', () => {
         let groqMessages = [{ role: 'system', content: fullSystemPrompt }];
         
         messages.forEach(msg => {
-            let content = msg.content;
-            // Xử lý đính kèm hình ảnh / file text
-            if (msg.attachment) {
-                if (msg.attachment.type === 'image') {
-                    content = [
-                        { type: "text", text: msg.content || "Hãy phân tích hình ảnh này" },
-                        { type: "image_url", image_url: { url: `data:${msg.attachment.mime};base64,${msg.attachment.data}` } }
-                    ];
-                } else if (msg.attachment.type === 'text') {
-                    content = `${msg.content}\n\n--- Dữ liệu File đính kèm (${msg.attachment.filename}) ---\n${msg.attachment.data}\n--- Hết File ---`;
-                }
+            let content = msg.content || "";
+            
+            let atts = msg.attachments || (msg.attachment ? [msg.attachment] : []);
+            if (atts.length > 0) {
+                atts.forEach(att => {
+                    if (att.type === 'image') {
+                        content += "\n[Hình ảnh đính kèm không thể hiển thị lại cho model văn bản]";
+                    } else if (att.type === 'text') {
+                        content += `\n\n--- Dữ liệu File đính kèm (${att.filename}) ---\n${att.data}\n--- Hết File ---`;
+                    }
+                });
             }
+            
             groqMessages.push({ role: msg.role === 'assistant' ? 'assistant' : 'user', content: content });
         });
 
@@ -397,8 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return data.choices[0].message.content;
     }
 
-    // --- DeepSeek API ---
-    async function callDeepSeekAPI(model, messages, attachment) {
+    async function callDeepSeekAPI(model, messages, attachments) {
         const profileNotes = localStorage.getItem('ai_profile_notes') || '';
         let fullSystemPrompt = systemPrompt;
         if (profileNotes.trim()) {
@@ -407,10 +446,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let dsMessages = [{ role: 'system', content: fullSystemPrompt }];
         
         messages.forEach(msg => {
-            let content = msg.content;
-            if (msg.attachment && msg.attachment.type === 'text') {
-                content = msg.content + '\n\n--- Dữ liệu File đính kèm (' + msg.attachment.filename + ') ---\n' + msg.attachment.data + '\n--- Hết File ---';
-            }
+            let content = msg.content || "";
+            let atts = msg.attachments || (msg.attachment ? [msg.attachment] : []);
+            atts.forEach(att => {
+                if (att.type === 'text') {
+                    content += '\n\n--- Dữ liệu File đính kèm (' + att.filename + ') ---\n' + att.data + '\n--- Hết File ---';
+                }
+            });
             dsMessages.push({ role: msg.role === 'assistant' ? 'assistant' : 'user', content: content });
         });
 
@@ -425,8 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return data.choices[0].message.content;
     }
 
-    // --- Gemini API ---
-    async function callGeminiAPI(model, messages, attachment) {
+    async function callGeminiAPI(model, messages, attachments) {
         const profileNotes = localStorage.getItem('ai_profile_notes') || '';
         let fullSystemPrompt = systemPrompt;
         if (profileNotes.trim()) {
@@ -438,20 +479,20 @@ document.addEventListener('DOMContentLoaded', () => {
             let role = msg.role === 'assistant' ? 'model' : 'user';
             let parts = [];
             
-            if (msg.attachment) {
-                if (msg.attachment.type === 'image') {
+            let atts = msg.attachments || (msg.attachment ? [msg.attachment] : []);
+            atts.forEach(att => {
+                if (att.type === 'image') {
                     parts.push({
                         inlineData: {
-                            data: msg.attachment.data,
-                            mimeType: msg.attachment.mime
+                            data: att.data,
+                            mimeType: att.mime
                         }
                     });
-                } else if (msg.attachment.type === 'text') {
-                    parts.push({ text: '\n\n--- Dữ liệu File đính kèm (' + msg.attachment.filename + ') ---\n' + msg.attachment.data + '\n--- Hết File ---' });
+                } else if (att.type === 'text') {
+                    parts.push({ text: `\n--- Dữ liệu File đính kèm (${att.filename}) ---\n${att.data}\n--- Hết File ---\n` });
                 }
-            }
-            parts.push({ text: msg.content });
-            
+            });
+            parts.push({ text: msg.content || "Hãy phân tích đính kèm này." });
             geminiContents.push({ role: role, parts: parts });
         });
 
@@ -468,37 +509,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         const data = await res.json();
-        if(!res.ok) throw new Error(data.error?.message || 'Loi ket noi Gemini');
+        if(!res.ok) throw new Error(data.error?.message || 'Lỗi kết nối Gemini');
         return data.candidates[0].content.parts[0].text;
     }
 
     // --- Events Binding ---
-    sendBtn.onclick = sendMessage;
-    inputEl.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
-    newChatBtn.onclick = createNewSession;
+    if (sendBtn) sendBtn.onclick = sendMessage;
+    if (inputEl) inputEl.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+    if (newChatBtn) newChatBtn.onclick = createNewSession;
     
-    settingsBtn.onclick = () => {
-        groqKeyInput.value = groqKey;
+    if (settingsBtn) settingsBtn.onclick = () => {
+        if (groqKeyInput) groqKeyInput.value = groqKey;
         const geminiEl = document.getElementById('ms-gemini-key');
         if (geminiEl) geminiEl.value = geminiKey;
-        settingsModal.style.display = 'flex';
+        if (settingsModal) settingsModal.style.display = 'flex';
     };
-    closeSettingsBtn.onclick = () => settingsModal.style.display = 'none';
-    saveSettingsBtn.onclick = () => {
-        groqKey = groqKeyInput.value.trim();
-        localStorage.setItem('groq_api_key', groqKey);
+    if (closeSettingsBtn) closeSettingsBtn.onclick = () => { if(settingsModal) settingsModal.style.display = 'none'; };
+    if (saveSettingsBtn) saveSettingsBtn.onclick = () => {
+        if (groqKeyInput) {
+            groqKey = groqKeyInput.value.trim();
+            localStorage.setItem('groq_api_key', groqKey);
+        }
         const geminiEl = document.getElementById('ms-gemini-key');
         if (geminiEl) {
             geminiKey = geminiEl.value.trim();
             localStorage.setItem('gemini_api_key', geminiKey);
         }
-        settingsModal.style.display = 'none';
+        if (settingsModal) settingsModal.style.display = 'none';
         loadModels();
     };
     
-    // Mobile interactions
-    sidebarToggle.onclick = () => sidebar.classList.add('active');
-    sidebarClose.onclick = () => sidebar.classList.remove('active');
+    if (sidebarToggle && sidebar) sidebarToggle.onclick = () => sidebar.classList.add('active');
+    if (sidebarClose && sidebar) sidebarClose.onclick = () => sidebar.classList.remove('active');
 
     // --- AI Profile ---
     const profileBtn = document.getElementById('chat-profile-btn');
@@ -544,7 +586,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Ham Copy Code (Global scope)
 window.copyToClipboard = function(btn) {
     const codeBlock = btn.closest('.code-box').querySelector('code');
     const text = codeBlock.innerText;

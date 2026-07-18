@@ -87,7 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
             optBtn.onmouseout = () => optBtn.style.background = 'none';
             optBtn.onclick = () => {
                 sessionStorage.setItem('pendingAiPrompt', opt.prompt + getCleanCode(codeEl) + '\n```');
-                window.location.href = '?page=chat';
+                const isStatic = window.location.pathname.endsWith('.html') || window.location.pathname.includes('github.io');
+                window.location.href = isStatic ? 'chat.html' : '?page=chat';
             };
             aiDropdown.appendChild(optBtn);
         });
@@ -111,6 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         runBtn.onclick = function() {
             if (window.runQuery) {
+                const code = getCleanCode(codeEl);
+                const upperCode = code.toUpperCase();
+                if (upperCode.includes('CREATE PROCEDURE') || upperCode.includes('CREATE TRIGGER') || upperCode.includes('DECLARE @')) {
+                    alert('⚠️ Trình biên dịch trực tuyến (SQLite) hiện tại không hỗ trợ cú pháp Stored Procedure, Trigger hoặc Biến của T-SQL (SQL Server).\n\nVui lòng sử dụng SQL Server Management Studio (SSMS) để chạy các đoạn mã này.');
+                    return;
+                }
+                
                 // Cấp ID cho code block nếu chưa có
                 if (!codeEl.id) {
                     codeEl.id = 'query-input-auto-' + Math.random().toString(36).substr(2, 9);

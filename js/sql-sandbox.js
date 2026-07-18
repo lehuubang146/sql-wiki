@@ -32,10 +32,10 @@ async function initDatabase() {
             CREATE TABLE DIEMHP (MaSV NVARCHAR(20), MaHP NVARCHAR(10), DiemHP FLOAT, PRIMARY KEY (MaSV, MaHP));
             
             -- QUAN LY BAN HANG
-            CREATE TABLE KHACHHANG (MaKH NVARCHAR(10) PRIMARY KEY, TenKH NVARCHAR(100), DiaChi NVARCHAR(200), DienThoai NVARCHAR(20), LoaiKH NVARCHAR(50));
-            CREATE TABLE HANGHOA (MaH NVARCHAR(10) PRIMARY KEY, TenH NVARCHAR(100), DVT NVARCHAR(50), DonGia FLOAT);
-            CREATE TABLE HOADON (MaHD NVARCHAR(10) PRIMARY KEY, NgayLapHD DATE, MaKH NVARCHAR(10), TrangThai NVARCHAR(50));
-            CREATE TABLE CHITIETHD (MaHD NVARCHAR(10), MaH NVARCHAR(10), SoLuong INT, DonGia FLOAT, KhuyenMai FLOAT, PRIMARY KEY (MaHD, MaH));
+            CREATE TABLE KHACHHANG (MaKH NVARCHAR(10) PRIMARY KEY, HoTen NVARCHAR(100), DienThoai NVARCHAR(20));
+            CREATE TABLE HANGHOA (MaHH NVARCHAR(10) PRIMARY KEY, TenHH NVARCHAR(100), MaLoai INT);
+            CREATE TABLE DONDATHANG (MaDDH NVARCHAR(10) PRIMARY KEY, MaKH NVARCHAR(10));
+            CREATE TABLE CHITIETDATHANG (MaDDH NVARCHAR(10), MaHH NVARCHAR(10), SoLuong INT, DonGia FLOAT, PRIMARY KEY (MaDDH, MaHH));
         `;
         db.run(schema);
 
@@ -49,10 +49,10 @@ async function initDatabase() {
             INSERT INTO DIEMHP VALUES ('SV01', 'CSDL', 8.5), ('SV01', 'TRR', 7.0), ('SV02', 'CSDL', 9.0), ('SV03', 'KTVM', 6.5);
             
             -- QUAN LY BAN HANG DATA
-            INSERT INTO KHACHHANG VALUES ('KH01', 'Công ty TNHH ABC', '123 Lê Lợi, Q1, HCM', '0901234567', 'Thường'), ('KH02', 'Cửa hàng Minh Hoa', '456 Trần Hưng Đạo, Q5, HCM', '0912345678', 'Thường');
-            INSERT INTO HANGHOA VALUES ('HH01', 'Bánh kem', 'Cái', 250000), ('HH02', 'Kẹo dẻo', 'Gói', 50000), ('HH03', 'Bánh mì', 'Cái', 15000);
-            INSERT INTO HOADON VALUES ('HD01', '2023-02-15', 'KH01', 'Đã giao'), ('HD02', '2023-10-05', 'KH02', 'Đang xử lý');
-            INSERT INTO CHITIETHD VALUES ('HD01', 'HH01', 50, 250000, 0), ('HD01', 'HH02', 200, 50000, 0), ('HD02', 'HH03', 20, 15000, 0);
+            INSERT INTO KHACHHANG VALUES ('KH01', 'Công ty TNHH ABC', '0901234567'), ('KH02', 'Cửa hàng Minh Hoa', '0912345678');
+            INSERT INTO HANGHOA VALUES ('HH01', 'Bánh kem', 1), ('HH02', 'Kẹo dẻo', 1), ('HH03', 'Bánh mì', 2);
+            INSERT INTO DONDATHANG VALUES ('DDH01', 'KH01'), ('DDH02', 'KH02');
+            INSERT INTO CHITIETDATHANG VALUES ('DDH01', 'HH01', 50, 250000), ('DDH01', 'HH02', 200, 50000), ('DDH02', 'HH03', 20, 15000);
         `;
         db.run(seedData);
         
