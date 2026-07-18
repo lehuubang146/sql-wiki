@@ -1,0 +1,729 @@
+:root {
+    --bg-color: #000000;
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --glass-bg: rgba(15, 23, 42, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --sidebar-width: 280px;
+    --code-bg: rgba(15, 23, 42, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px; /* Prevent header from hiding anchors */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    background-image: none;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+}
+
+.wiki-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid var(--glass-border);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+}
+
+/* Main Content Wrapper */
+.main-content-wrapper {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    transition: margin-left 0.3s ease;
+}
+
+/* Header */
+.main-header {
+    padding: 1.5rem 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.main-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Content Area */
+.main-content {
+    flex: 1;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.main-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-content h2 {
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+}
+
+.main-content h3 {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #cbd5e1;
+}
+
+.main-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.main-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+}
+
+.main-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Code Blocks */
+pre {
+    background: var(--code-bg);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    color: #38bdf8; /* Light blue for code text */
+}
+
+/* Inline code */
+p code, li code {
+    background: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    color: #f1f5f9;
+    font-size: 0.9em;
+}
+
+/* Callouts / Alerts */
+.callout {
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+.callout.warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-left-color: #f59e0b;
+}
+
+.callout h4 {
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+    color: #fff;
+}
+.callout p {
+    margin-bottom: 0;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    background: var(--glass-bg);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.search-empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* Keyword Highlighting in QA and Questions */
+.highlight-kw {
+    color: #3b82f6;
+    font-weight: 600;
+}
+.highlight-vi {
+    color: #10b981;
+    font-weight: 600;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: #fff;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Footer */
+.main-footer {
+    padding: 2rem 3rem;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .main-content-wrapper {
+        margin-left: 0;
+    }
+}
+
+/* Desktop Sidebar Toggle */
+@media (min-width: 769px) {
+    body.desktop-sidebar-collapsed .sidebar {
+        transform: translateX(-100%);
+    }
+    body.desktop-sidebar-collapsed .main-content-wrapper {
+        margin-left: 0 !important;
+    }
+}
+
+/* Override PrismJS background */
+pre[class*='language-'] { background: #111111 !important; text-shadow: none !important; border: 1px solid rgba(255, 255, 255, 0.1); }
+code[class*='language-'] { background: transparent !important; text-shadow: none !important; }
+
+/* Line numbers styling overrides */
+pre[class*='language-'].line-numbers {
+    padding-left: 3.8em;
+}
+.line-numbers .line-numbers-rows {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 10px;
+}
+
+body.light-mode {
+    --bg-color: #f8fafc;
+    --text-color: #0f172a;
+    --text-muted: #475569;
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --code-bg: rgba(0, 0, 0, 0.08); /* Nền sáng cho code nội tuyến */
+    background-image: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+}
+body.light-mode .main-content h2, body.light-mode .main-content h3 { color: var(--text-color); }
+body.light-mode .main-content h1 {
+    background: linear-gradient(to right, #1d4ed8, #6d28d9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body.light-mode p, body.light-mode ul, body.light-mode td { color: var(--text-color); }
+body.light-mode code { color: #be185d; font-weight: 500; } /* Đổi màu code nội tuyến cho nền sáng (hồng đậm) */
+body.light-mode pre code { color: #38bdf8; font-weight: normal; } /* Giữ màu code block vì background vẫn tối */
+body.light-mode th { background: rgba(0, 0, 0, 0.05); color: var(--text-color); }
+body.light-mode .callout h4 { color: #000; }
+body.light-mode .search-modal-content { background: #fff; }
+body.light-mode .search-modal-backdrop { background: rgba(255,255,255,0.8); }
+body.light-mode #search-input { color: #000; }
+body.light-mode .result-question { color: #000; }
+body.light-mode .ai-context-menu {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Làm nổi bật các nút trên Code Block tối trong chế độ sáng */
+body.light-mode div.code-toolbar > .toolbar > .toolbar-item > button.prism-custom-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
+    box-shadow: none;
+    border-radius: 6px;
+}
+body.light-mode div.code-toolbar > .toolbar > .toolbar-item > button.prism-custom-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+/* Mobile Menu */
+.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: opacity 0.3s; }
+.sidebar-overlay.active { display: block; opacity: 1; }
+@media (max-width: 768px) {
+    .mobile-only { display: block !important; }
+    .sidebar { z-index: 999; }
+    .sidebar.open { transform: translateX(0); }
+    .main-header { padding: 1rem 1.5rem; }
+    .main-content { padding: 1.5rem; }
+    .main-header h1 { font-size: 1.1rem !important; }
+    .header-search span, .header-search kbd { display: none !important; }
+    #open-search-btn { padding: 0 !important; border-radius: 50%; width: 36px; height: 36px; justify-content: center !important; }
+    #open-search-btn svg { flex-shrink: 0 !important; width: 20px !important; height: 20px !important; margin: 0 !important; }
+}
+
+/* Background Effects Layer (Stars, Auroras) */
+#bg-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Galaxy Stars */
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle linear infinite;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); box-shadow: 0 0 4px #fff; }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
+/* Shooting Stars */
+.shooting-star {
+    position: absolute;
+    width: 250px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    transform: rotate(135deg);
+    opacity: 0;
+    animation: shooting 1.8s ease-out forwards;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px 4px rgba(255, 255, 255, 0.8), 0 0 30px 8px rgba(139, 92, 246, 0.7);
+}
+
+@keyframes shooting {
+    0% {
+        transform: rotate(135deg) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: rotate(135deg) translateX(50px) scale(1);
+    }
+    100% {
+        transform: rotate(135deg) translateX(1000px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Light Mode Aurora (Crystal Glass) */
+.aurora {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out alternate;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(50px, 20px) scale(1.2); }
+    100% { transform: translate(-30px, -40px) scale(0.9); }
+}
+
+/* =========================================================
+   Clean Reading Mode (For content pages like overview, queries, etc.)
+   ========================================================= */
+body.clean-reading-mode {
+    background-image: none !important;
+    background-color: #000000 !important; /* Solid dark background */
+}
+body.light-mode.clean-reading-mode {
+    background-color: #f8fafc !important; /* Solid light background */
+}
+
+/* Hide background effects entirely */
+body.clean-reading-mode #bg-effects {
+    display: none !important;
+}
+
+/* Remove glassmorphism from sidebar */
+body.clean-reading-mode .sidebar {
+    background: #000000 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+body.light-mode.clean-reading-mode .sidebar {
+    background: #ffffff !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Remove glassmorphism from other components if any */
+body.clean-reading-mode table,
+body.clean-reading-mode pre,
+body.clean-reading-mode .search-modal-content {
+    background: #111111 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* =========================================================
+   Interactive Features (TOC & Progress)
+   ========================================================= */
+
+/* Floating TOC */
+.toc-container {
+    display: none;
+}
+
+@media (min-width: 1300px) {
+    /* Prevent overlap with main content */
+    body.has-toc .main-content-wrapper {
+        padding-right: 280px;
+    }
+
+    /* Make header and footer span full width ignoring the padding */
+    body.has-toc .main-header,
+    body.has-toc .main-footer {
+        margin-right: -280px;
+    }
+
+    .toc-container {
+        display: block;
+        position: fixed;
+        right: 2rem;
+        top: 100px;
+        width: 250px;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding: 1.5rem;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        z-index: 100;
+    }
+    
+    body.clean-reading-mode .toc-container {
+        background: transparent !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    body.light-mode.clean-reading-mode .toc-container {
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+}
+
+.toc-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin-bottom: 0.5rem;
+}
+
+.toc-list li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: block;
+    transition: all 0.2s;
+    line-height: 1.4;
+}
+
+.toc-level-2 a {
+    padding-left: 1rem;
+    font-size: 0.85rem;
+    border-left: 1px solid var(--glass-border);
+}
+
+.toc-list li a:hover, .toc-list li a.active {
+    color: var(--primary-color);
+}
+.toc-level-2 a:hover, .toc-level-2 a.active {
+    border-left-color: var(--primary-color);
+}
+
+/* Mark Complete Button */
+.mark-complete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mark-complete-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.mark-complete-btn.completed {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: #10b981;
+    color: #10b981;
+}
+
+/* Prism Custom Toolbar Buttons */
+div.code-toolbar > .toolbar > .toolbar-item > button.prism-custom-btn {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    font-weight: 500;
+}
+div.code-toolbar > .toolbar > .toolbar-item > button.prism-custom-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    cursor: pointer;
+}
+div.code-toolbar > .toolbar > .toolbar-item > button.run-btn {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+div.code-toolbar > .toolbar > .toolbar-item > button.run-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+/* Make toolbar always visible as a separate top bar without overlapping code */
+div.code-toolbar {
+    position: relative;
+    padding-top: 3.5rem !important;
+}
+
+div.code-toolbar > .toolbar {
+    opacity: 1 !important;
+    visibility: visible !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 8px 12px !important;
+    border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.1));
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    height: 3.5rem;
+}
+
+body.light-mode div.code-toolbar > .toolbar {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+div.code-toolbar > pre {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* AI Context Menu */
+.ai-context-menu {
+    position: absolute;
+    background: var(--glass-bg, #0f172a);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    min-width: 220px;
+}
+
+.ai-context-menu-item {
+    padding: 0.75rem 1rem;
+    color: var(--text-color, #f8fafc);
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.ai-context-menu-item:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--primary-color, #3b82f6);
+}
+
+body.light-mode.clean-reading-mode table,
+body.light-mode.clean-reading-mode .search-modal-content {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+body.light-mode.clean-reading-mode pre {
+    /* Code blocks keep their specific syntax highlight dark background */
+    background: #1e293b !important;
+}
+
+/* Remove gradient text from headings */
+body.clean-reading-mode .main-content h1,
+body.clean-reading-mode .sidebar-header h2 {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Add a gentle fade-in and slide-up animation for content */
+body.clean-reading-mode .main-content {
+    animation: cleanFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes cleanFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   Custom Scrollbar
+   ========================================================= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.6);
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
+}

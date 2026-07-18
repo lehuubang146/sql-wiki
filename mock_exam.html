@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="mock_exam" class="  has-toc clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="active">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Thi Thử (Mock Exam)    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Thi Thử (Mock Exam)</div><div class="wiki-content">
+    <div class="content-header">
+        <h1>Chế Độ Thi Thử (Mock Exam)</h1>
+        <p class="subtitle">Kiểm tra kiến thức SQL của bạn với 10 câu hỏi trắc nghiệm ngẫu nhiên. Bài làm có bấm giờ để tạo cảm giác phòng thi thực tế.</p>
+    </div>
+
+    <div id="exam-setup-container" style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;">
+        <h2>Sẵn sàng chưa?</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Bạn sẽ có thời gian tương ứng với độ dài bài thi để hoàn thành bài trắc nghiệm (được trộn và chọn ngẫu nhiên từ ngân hàng 50+ câu hỏi). Đừng làm mới (F5) trang khi đang thi nhé!<br><br><span style="color: #10b981; font-weight: 500;">💡 Bạn có thể tự do điều chỉnh số lượng câu hỏi và thời gian thi ở bên dưới:</span></p>
+        
+        <div style="margin-bottom: 20px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="exam-length" style="font-weight: bold;">Số lượng câu hỏi:</label>
+                    <input type="number" id="exam-length" value="10" min="5" max="40" style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); font-size: 1rem; outline: none; width: 80px; text-align: center;">
+                </div>
+                <small style="color: var(--text-muted); font-size: 0.8rem;">(Tối thiểu 5 - Tối đa 40 câu)</small>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="exam-time" style="font-weight: bold;">Thời gian (phút):</label>
+                    <input type="number" id="exam-time" value="15" min="5" max="120" style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); font-size: 1rem; outline: none; width: 80px; text-align: center;">
+                </div>
+                <small style="color: var(--text-muted); font-size: 0.8rem;">(Tối thiểu 5 - Tối đa 120 phút)</small>
+            </div>
+        </div>
+
+        <button id="start-exam-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 24px;">Bắt đầu thi ngay</button>
+    </div>
+
+    <div id="exam-active-container" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(59, 130, 246, 0.1); padding: 15px 20px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; backdrop-filter: blur(10px);">
+            <div style="font-weight: bold; font-size: 1.1rem;">Tiến độ: <span id="progress-text">0/10</span></div>
+            <div style="font-weight: bold; font-size: 1.2rem; color: #ef4444; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <form id="exam-form">
+            <div id="questions-container"></div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button type="submit" id="submit-exam-btn" class="btn btn-primary" style="font-size: 1.2rem; padding: 15px 40px; background: #10b981; border-color: #059669;">Nộp Bài</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="exam-result-container" style="display: none; background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;">
+        <h2>Kết quả bài thi</h2>
+        <div id="score-display" style="font-size: 3rem; font-weight: bold; color: #3b82f6; margin: 1rem 0;">0/10</div>
+        <p id="score-message" style="font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
+        <button onclick="location.reload()" class="btn btn-secondary">Thi lại (Đề mới)</button>
+    </div>
+</div>
+
+<style>
+.question-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.question-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.option-label {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.option-label:hover {
+    background: rgba(255,255,255,0.05);
+}
+.light-mode .option-label:hover {
+    background: rgba(0,0,0,0.05);
+}
+.option-label input[type="radio"] {
+    margin-right: 10px;
+}
+.option-label.selected {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+.option-label.correct {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+.option-label.wrong {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let allQuestions = [];
+    let selectedQuestions = [];
+    let timerInterval = null;
+    let timeLeft = 15 * 60; // 15 minutes
+    
+    const setupContainer = document.getElementById('exam-setup-container');
+    const activeContainer = document.getElementById('exam-active-container');
+    const resultContainer = document.getElementById('exam-result-container');
+    const questionsContainer = document.getElementById('questions-container');
+    const timerDisplay = document.getElementById('timer-display');
+    const startBtn = document.getElementById('start-exam-btn');
+    const examForm = document.getElementById('exam-form');
+    
+    // Fetch MCQs
+    fetch('data/mcq.json')
+        .then(res => res.json())
+        .then(data => {
+            allQuestions = data;
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Lỗi tải bộ câu hỏi thi.');
+        });
+        
+    startBtn.addEventListener('click', () => {
+        if(allQuestions.length === 0) return;
+        
+        const lengthInput = document.getElementById('exam-length');
+        const timeInput = document.getElementById('exam-time');
+        
+        let numQuestions = parseInt(lengthInput.value) || 10;
+        let examMinutes = parseInt(timeInput.value) || 15;
+        
+        // Enforce boundaries
+        if(numQuestions < 5) numQuestions = 5;
+        if(numQuestions > 40) numQuestions = 40;
+        if(numQuestions > allQuestions.length) numQuestions = allQuestions.length;
+        
+        if(examMinutes < 5) examMinutes = 5;
+        if(examMinutes > 120) examMinutes = 120;
+        
+        // Randomize and pick N questions
+        selectedQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, numQuestions);
+        
+        timeLeft = examMinutes * 60;
+        
+        renderQuestions();
+        
+        setupContainer.style.display = 'none';
+        activeContainer.style.display = 'block';
+        
+        // Start Timer
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if(timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Đã hết thời gian làm bài!");
+                submitExam();
+            }
+        }, 1000);
+    });
+    
+    function updateTimerDisplay() {
+        let m = Math.floor(timeLeft / 60);
+        let s = timeLeft % 60;
+        timerDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        if(timeLeft < 60) {
+            timerDisplay.style.animation = 'pulse 1s infinite';
+        }
+    }
+    
+    function renderQuestions() {
+        questionsContainer.innerHTML = '';
+        selectedQuestions.forEach((q, index) => {
+            // Shuffle options for this question
+            let opts = q.options.map((text, i) => ({ text, isCorrect: i === q.answer }));
+            opts.sort(() => 0.5 - Math.random());
+            
+            // Re-assign for later grading
+            q.shuffledOptions = opts;
+            q.newAnswer = opts.findIndex(o => o.isCorrect);
+
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            let html = `<h3>Câu ${index + 1}: ${q.question}</h3>`;
+            q.shuffledOptions.forEach((opt, optIndex) => {
+                html += `
+                    <label class="option-label" id="lbl-q${index}-o${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        ${opt.text}
+                    </label>
+                `;
+            });
+            card.innerHTML = html;
+            questionsContainer.appendChild(card);
+            
+            // Add click listener for styling
+            const radios = card.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    card.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+                    document.getElementById(`lbl-q${index}-o${radio.value}`).classList.add('selected');
+                    updateProgress();
+                });
+            });
+        });
+        updateProgress();
+    }
+    
+    function updateProgress() {
+        const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+        document.getElementById('progress-text').innerText = `${answered}/${selectedQuestions.length}`;
+    }
+    
+    function submitExam() {
+        clearInterval(timerInterval);
+        const submitBtn = document.getElementById('submit-exam-btn');
+        submitBtn.disabled = true;
+        
+        let score = 0;
+        selectedQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const selectedVal = selected ? parseInt(selected.value) : -1;
+            
+            const labels = document.querySelectorAll(`input[name="q${index}"]`);
+            labels.forEach((radio, optIndex) => {
+                radio.disabled = true;
+                const lbl = document.getElementById(`lbl-q${index}-o${optIndex}`);
+                if (optIndex === q.newAnswer) {
+                    lbl.classList.add('correct');
+                } else if (optIndex === selectedVal && selectedVal !== q.newAnswer) {
+                    lbl.classList.add('wrong');
+                }
+            });
+            
+            if (selectedVal === q.newAnswer) score++;
+        });
+        
+        document.getElementById('score-display').innerText = `${score}/${selectedQuestions.length}`;
+        const msgEl = document.getElementById('score-message');
+        if(score >= 8) {
+            msgEl.innerText = "Tuyệt vời! Kiến thức SQL của bạn rất vững chắc!";
+            msgEl.style.color = "#10b981";
+        } else if(score >= 5) {
+            msgEl.innerText = "Khá tốt! Nhưng hãy ôn tập thêm các phần bạn làm sai nhé.";
+            msgEl.style.color = "#f59e0b";
+        } else {
+            msgEl.innerText = "Bạn cần ôn tập lại nhiều hơn! Hãy đọc lại tài liệu lý thuyết.";
+            msgEl.style.color = "#ef4444";
+        }
+        
+        resultContainer.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    examForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if(confirm("Bạn có chắc chắn muốn nộp bài?")) {
+            submitExam();
+        }
+    });
+});
+</script>
+                <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <button id="mark-complete-btn" onclick="markComplete('mock_exam', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Đánh dấu Hoàn thành
+                    </button>
+                    <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Hoàn thành bài học để tăng tiến độ khóa học SQL của bạn!</p>
+                </div>
+                            </main>
+            
+            <!-- TOC Container -->
+                        <aside id="toc-container" class="toc-container"></aside>
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

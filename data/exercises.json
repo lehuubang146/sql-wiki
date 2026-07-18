@@ -1,0 +1,646 @@
+[
+  {
+    "id": "b2-d1-b1-1",
+    "category": "Truy vấn có điều kiện",
+    "question": "1. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh, GioiTinh, của sinh viên trong trường.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  ngaysinh,\n  gioitinh\nfrom\n  sinhvien;",
+    "explanation": "Câu lệnh sử dụng mệnh đề SELECT để chọn các cột masv, hoten, malop, ngaysinh, và gioitinh từ bảng sinhvien. Không có mệnh đề WHERE nên kết quả sẽ trả về tất cả các dòng trong bảng."
+  },
+  {
+    "id": "b2-d1-b1-2",
+    "category": "Truy vấn có điều kiện",
+    "question": "2. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, Namsinh, GioiTinh, của những sinh viên Nữ.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  year(ngaysinh) as namsinh,\n  gioitinh\nfrom\n  sinhvien\nwhere\n  gioitinh = 1;",
+    "explanation": "Sử dụng SELECT để lấy các trường tương ứng, dùng hàm YEAR(ngaysinh) as namsinh để trích xuất năm sinh từ ngày sinh. Mệnh đề WHERE gioitinh = 1 dùng để lọc và chỉ lấy các sinh viên Nữ (giả sử 1 là Nữ)."
+  },
+  {
+    "id": "b2-d1-b1-3",
+    "category": "Truy vấn có điều kiện",
+    "question": "3. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh, GioiTinh, của những sinh viên Nam ở Tuy Phước hay Tây Sơn.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  ngaysinh,\n  gioitinh\nfrom\n  sinhvien\nwhere\n  gioitinh = 0\n  and (\n    diachi = n'tuy phuoc'\n    or diachi = n'tay son'\n  );",
+    "explanation": "Lấy các thông tin cần thiết từ bảng sinhvien. Mệnh đề WHERE kết hợp điều kiện gioitinh = 0 (sinh viên Nam) VÀ (AND) điều kiện địa chỉ ở 'tuy phuoc' HOẶC (OR) 'tay son'. Dấu ngoặc () bao quanh điều kiện OR đảm bảo logic kiểm tra địa chỉ được thực hiện trước khi AND với giới tính."
+  },
+  {
+    "id": "b2-d1-b1-4",
+    "category": "Truy vấn có điều kiện",
+    "question": "4. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh (dd/mm/yyyy) của những sinh viên Nam học lớp CT13.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh\nfrom\n  sinhvien\nwhere\n  gioitinh = 0\n  and malop = 'ct13';",
+    "explanation": "Hàm CONVERT(varchar, ngaysinh, 103) được dùng để định dạng ngày sinh theo chuẩn dd/mm/yyyy (mã định dạng 103). Mệnh đề WHERE lọc ra các sinh viên thỏa mãn đồng thời 2 điều kiện: là nam (gioitinh = 0) và thuộc lớp 'ct13'."
+  },
+  {
+    "id": "b2-d1-b1-5",
+    "category": "Truy vấn có điều kiện",
+    "question": "5. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, Namsinh, GioiTinh (Nam, Nữ) của những sinh viên Nam học lớp CT11.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  year(ngaysinh) as namsinh,\n  n'nam' as gioitinh\nfrom\n  sinhvien\nwhere\n  gioitinh = 0\n  and malop = 'ct11';",
+    "explanation": "Lấy năm sinh bằng hàm YEAR(). Ở đây, cột giới tính được gán giá trị tĩnh N'nam' as gioitinh ngay trong SELECT vì ta đã lọc sinh viên nam ở WHERE. Điều kiện WHERE gioitinh = 0 AND malop = 'ct11' dùng để chọn các sinh viên nam của lớp CT11."
+  },
+  {
+    "id": "b2-d1-b1-6",
+    "category": "Truy vấn có điều kiện",
+    "question": "6. Hiển thị danh sách gồm: Mã SV, Họ Tên, Mã Lớp, Ngày Sinh (dd/mm/yyyy), Giới Tính(Nam, Nữ) những sinh viên mà Hoten có ký tự thứ 2 là g.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh,\n  case\n    when gioitinh = 0 then n'nam'\n    else n'nu'\n  end as gioitinh\nfrom\n  sinhvien\nwhere\n  hoten like '_g%';",
+    "explanation": "Sử dụng cấu trúc CASE WHEN trong SELECT để chuyển đổi giá trị gioitinh: nếu là 0 thì hiển thị 'nam', ngược lại hiển thị 'nu'. Mệnh đề WHERE hoten LIKE '_g%' dùng để lọc các sinh viên có ký tự thứ 2 trong họ tên là 'g' (dấu '_' đại diện cho 1 ký tự bất kỳ đầu tiên, '%' đại diện cho chuỗi ký tự phía sau)."
+  },
+  {
+    "id": "b2-d1-b1-7",
+    "category": "Truy vấn có điều kiện",
+    "question": "7. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh (dd/mm/yyyy), GioiTinh (Nam, Nữ) của những sinh viên có họ lót là “Văn”.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh,\n  case\n    when gioitinh = 0 then n'nam'\n    else n'nu'\n  end as gioitinh\nfrom\n  sinhvien\nwhere\n  hoten like n'% van %';",
+    "explanation": "Cấu trúc CASE WHEN tương tự câu trên để hiển thị giới tính. Mệnh đề WHERE hoten LIKE N'% van %' dùng để tìm các sinh viên có họ lót là 'văn'. Dấu '%' ở hai đầu giúp tìm từ 'van' nằm ở giữa chuỗi họ tên, có khoảng trắng ở hai bên."
+  },
+  {
+    "id": "b2-d1-b1-8",
+    "category": "Truy vấn có điều kiện",
+    "question": "8. Hiển thị danh sách gồm: Mã SV, Họ Tên, Mã Lớp, Ngày Sinh (dd/mm/yyyy), Giới Tính(Nam, Nữ) của những sinh viên có họ không bắt đầu bằng chữ N,L,T.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh,\n  case\n    when gioitinh = 0 then n'nam'\n    else n'nu'\n  end as gioitinh\nfrom\n  sinhvien\nwhere\n  hoten not like 'n%'\n  and hoten not like 'l%'\n  and hoten not like 't%';",
+    "explanation": "Sử dụng CASE WHEN để định dạng giới tính. Mệnh đề WHERE kết hợp nhiều điều kiện NOT LIKE với toán tử AND để loại bỏ các sinh viên có họ (ký tự đầu tiên) bắt đầu bằng chữ 'n', 'l', hoặc 't'. Ký tự '%' đại diện cho phần còn lại của tên."
+  },
+  {
+    "id": "b2-d1-b1-9",
+    "category": "Truy vấn có điều kiện",
+    "question": "9. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh (dd/mm/yyyy), GioiTinh (Nam, Nữ) của những sinh viên học lớp CT11,CT12,CT13.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh,\n  case\n    when gioitinh = 0 then n'nam'\n    else n'nu'\n  end as gioitinh\nfrom\n  sinhvien\nwhere\n  malop in ('ct11', 'ct12', 'ct13');",
+    "explanation": "Sử dụng mệnh đề IN trong điều kiện WHERE thay vì dùng nhiều điều kiện OR liên tiếp (malop = 'ct11' OR malop = 'ct12' ...). Toán tử IN giúp kiểm tra xem giá trị của cột malop có nằm trong danh sách ('ct11', 'ct12', 'ct13') hay không, làm cho truy vấn ngắn gọn và dễ đọc hơn."
+  },
+  {
+    "id": "b2-d1-b1-10",
+    "category": "Truy vấn có điều kiện",
+    "question": "10. Hiển thị danh sách gồm: MaSV, HoTen, MaLop, NgaySinh (dd/mm/yyyy), GioiTinh (Nam, Nữ), Tuổi của những sinh viên có tuổi từ 20-29.",
+    "sql": "select\n  masv,\n  hoten,\n  malop,\n  convert(varchar, ngaysinh, 103) as ngaysinh,\n  case\n    when gioitinh = 0 then n'nam'\n    else n'nu'\n  end as gioitinh,\n  year(getdate()) - year(ngaysinh) as tuoi\nfrom\n  sinhvien\nwhere\n  year(getdate()) - year(ngaysinh) between 20 and 29;",
+    "explanation": "Tính tuổi bằng cách lấy năm hiện tại YEAR(GETDATE()) trừ đi năm sinh YEAR(ngaysinh). Trong WHERE, ta lọc các sinh viên có độ tuổi từ 20 đến 29 bằng toán tử BETWEEN 20 AND 29, toán tử này bao gồm cả hai giá trị đầu mút."
+  },
+  {
+    "id": "b2-d1-b2-1",
+    "category": "Truy vấn có điều kiện",
+    "question": "1. Câu lệnh SQL có kết nối Hiển thị danh sách MaSV, HoTen , MaLop, MaHP, DiemHP có điểm học phần >=5 và sắp xếp theo ưu tiên Mã lớp, Họ tên tăng dần.",
+    "sql": "select\n  s.masv,\n  s.hoten,\n  s.malop,\n  d.mahp,\n  d.diemhp\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp >= 5\norder by\n  s.malop asc,\n  s.hoten asc;",
+    "explanation": "Truy vấn kết nối 2 bảng sinhvien (bí danh s) và diemhp (bí danh d) thông qua khóa chung masv (s.masv = d.masv). Điều kiện d.diemhp >= 5 dùng để lọc các học phần điểm lớn hơn hoặc bằng 5. Mệnh đề ORDER BY dùng để sắp xếp kết quả tăng dần (ASC) ưu tiên theo malop trước, sau đó tới hoten."
+  },
+  {
+    "id": "b2-d1-b2-2",
+    "category": "Truy vấn có điều kiện",
+    "question": "2. Hiển thị danh sách gồm MaSV, HoTen, MaLop, DiemHP, MaHP của những sinh viên có điểm HP từ 7 đến 9 ở học kỳ I.",
+    "sql": "select\n  s.masv,\n  s.hoten,\n  s.malop,\n  d.diemhp,\n  d.mahp\nfrom\n  sinhvien s,\n  diemhp d,\n  dmhocphan h\nwhere\n  s.masv = d.masv\n  and d.mahp = h.mahp\n  and d.diemhp between 7 and 9\n  and h.hocky = 1;",
+    "explanation": "Kết nối 3 bảng sinhvien, diemhp và dmhocphan thông qua các khóa ngoại masv và mahp. Mệnh đề WHERE có điều kiện lọc điểm học phần nằm trong khoảng từ 7 đến 9 bằng toán tử BETWEEN, và điều kiện học kỳ phải là 1 (h.hocky = 1)."
+  },
+  {
+    "id": "b2-d1-b2-3",
+    "category": "Truy vấn có điều kiện",
+    "question": "3. Hiển thị danh sách sinh viên gồm MaSV, HoTen, MaLop, TenLop, Tên Khoa của Khoa có mã CNTT hoặc KT.",
+    "sql": "select\n  s.masv,\n  s.hoten,\n  s.malop,\n  l.tenlop,\n  k.tenkhoa\nfrom\n  sinhvien s,\n  dmlop l,\n  dmnganh n,\n  dmkhoa k\nwhere\n  s.malop = l.malop\n  and l.manganh = n.manganh\n  and n.makhoa = k.makhoa\n  and k.makhoa in ('cntt', 'kt');",
+    "explanation": "Thực hiện phép nối qua 4 bảng (sinhvien, dmlop, dmnganh, dmkhoa) bằng các khóa kết nối tương ứng (malop, manganh, makhoa). Điều kiện k.makhoa IN ('cntt', 'kt') giúp chỉ lọc ra các sinh viên thuộc về khoa có mã là 'cntt' hoặc 'kt'."
+  },
+  {
+    "id": "b2-d2-b1-1",
+    "category": "Truy vấn có phân nhóm",
+    "question": "1. Cho biết MaLop, TenLop, tổng số sinh viên của mỗi lớp.",
+    "sql": "select\n  l.malop,\n  l.tenlop,\n  count(s.masv) as tongsosv\nfrom\n  dmlop l\n  left join sinhvien s on l.malop = s.malop\ngroup by\n  l.malop,\n  l.tenlop;",
+    "explanation": "Sử dụng LEFT JOIN để giữ lại tất cả các lớp trong bảng dmlop kể cả khi lớp đó chưa có sinh viên nào. Phép gom nhóm GROUP BY theo malop và tenlop cho phép ta đếm số lượng sinh viên (COUNT(s.masv)) của từng lớp. Nếu dùng INNER JOIN, các lớp không có sinh viên sẽ bị loại khỏi kết quả."
+  },
+  {
+    "id": "b2-d2-b1-2",
+    "category": "Truy vấn có phân nhóm",
+    "question": "2. Cho biết điểm trung bình chung của mỗi sinh viên ở mỗi học kỳ.",
+    "sql": "select\n  s.masv,\n  h.hocky,\n  avg(d.diemhp) as diemtbc\nfrom\n  diemhp d,\n  dmhocphan h,\n  sinhvien s\nwhere\n  d.mahp = h.mahp\n  and d.masv = s.masv\ngroup by\n  s.masv,\n  h.hocky;",
+    "explanation": "Kết nối các bảng điểm, học phần và sinh viên. Sau đó, gom nhóm dữ liệu theo từng sinh viên (s.masv) và học kỳ (h.hocky) bằng mệnh đề GROUP BY. Hàm tập hợp AVG(d.diemhp) được dùng để tính điểm trung bình chung cho từng nhóm (tức là mỗi học kỳ của từng sinh viên)."
+  },
+  {
+    "id": "b2-d2-b1-3",
+    "category": "Truy vấn có phân nhóm",
+    "question": "3. Cho biết MaLop, TenLop, số lượng nam nữ theo từng lớp.",
+    "sql": "select\n  l.malop,\n  l.tenlop,\n  s.gioitinh,\n  count(s.masv) as soluong\nfrom\n  dmlop l,\n  sinhvien s\nwhere\n  l.malop = s.malop\ngroup by\n  l.malop,\n  l.tenlop,\n  s.gioitinh;",
+    "explanation": "Phép kết nối dmlop và sinhvien. GROUP BY được thực hiện trên malop, tenlop và gioitinh để chia nhỏ nhóm theo từng giới tính trong mỗi lớp. COUNT(s.masv) sẽ đếm tổng số sinh viên trong mỗi nhóm nhỏ đó, từ đó cho ra số lượng nam/nữ riêng biệt của mỗi lớp."
+  },
+  {
+    "id": "b2-d2-b2-1",
+    "category": "Truy vấn có phân nhóm",
+    "question": "1. Cho biết MaSV, HoTen, Số các học phần thiếu điểm (DiemHP<5) của mỗi sinh viên.",
+    "sql": "select\n  s.masv,\n  s.hoten,\n  count(d.mahp) as sohocphanthieu\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp < 5\ngroup by\n  s.masv,\n  s.hoten;",
+    "explanation": "Lọc ra các bản ghi điểm dưới 5 trước (bằng WHERE d.diemhp < 5) từ kết quả nối bảng sinhvien và diemhp. Sau đó, GROUP BY theo masv, hoten để gom nhóm và đếm số lượng học phần thiếu điểm của mỗi sinh viên bằng COUNT(d.mahp)."
+  },
+  {
+    "id": "b2-d2-b2-2",
+    "category": "Truy vấn có phân nhóm",
+    "question": "2. Đếm số sinh viên có điểm HP >5 của mỗi học phần.",
+    "sql": "select\n  mahp,\n  count(masv) as sosinhvien\nfrom\n  diemhp\nwhere\n  diemhp > 5\ngroup by\n  mahp;",
+    "explanation": "Lọc trực tiếp từ bảng diemhp những sinh viên có điểm > 5. Gom nhóm bằng GROUP BY mahp để phân chia theo từng học phần, rồi dùng hàm COUNT(masv) đếm số lượng sinh viên đạt yêu cầu của mỗi học phần."
+  },
+  {
+    "id": "b2-d2-b2-3",
+    "category": "Truy vấn có phân nhóm",
+    "question": "3. Tính tổng số đơn vị học trình có điểm HP >=5 của mỗi sinh viên.",
+    "sql": "select\n  s.masv,\n  s.hoten,\n  sum(h.sodvht) as tongsodvht\nfrom\n  sinhvien s,\n  diemhp d,\n  dmhocphan h\nwhere\n  s.masv = d.masv\n  and d.mahp = h.mahp\n  and d.diemhp >= 5\ngroup by\n  s.masv,\n  s.hoten;",
+    "explanation": "Lọc ra những môn có điểm >= 5 qua mệnh đề WHERE. Sau khi kết nối dữ liệu từ sinhvien, diemhp và dmhocphan, GROUP BY theo sinh viên. Hàm tập hợp SUM(h.sodvht) sẽ cộng dồn số đơn vị học trình của tất cả các môn đã qua (đạt điều kiện >= 5) của mỗi sinh viên."
+  },
+  {
+    "id": "b2-d2-b3-1",
+    "category": "Truy vấn có phân nhóm",
+    "question": "1. Cho biết MaLop, TenLop có tổng số sinh viên >=10.",
+    "sql": "select\n  l.malop,\n  l.tenlop\nfrom\n  dmlop l,\n  sinhvien s\nwhere\n  l.malop = s.malop\ngroup by\n  l.malop,\n  l.tenlop\nhaving\n  count(s.masv) >= 10;",
+    "explanation": "Gom nhóm sinh viên theo từng lớp bằng GROUP BY. Mệnh đề HAVING được dùng thay vì WHERE bởi vì ta cần lọc dựa trên kết quả của hàm tập hợp (COUNT). Điều kiện HAVING count(s.masv) >= 10 sẽ giữ lại những lớp có từ 10 sinh viên trở lên."
+  },
+  {
+    "id": "b2-d2-b3-2",
+    "category": "Truy vấn có phân nhóm",
+    "question": "2. Cho biết HoTen sinh viên có điểm Trung bình chung các học phần <3.",
+    "sql": "select\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\ngroup by\n  s.masv,\n  s.hoten\nhaving\n  avg(d.diemhp) < 3;",
+    "explanation": "Gom nhóm theo sinh viên, sau đó tính điểm trung bình chung bằng AVG(d.diemhp). Dùng mệnh đề HAVING avg(d.diemhp) < 3 để lọc ra các sinh viên có điểm trung bình sau khi gom nhóm nhỏ hơn 3 (HAVING áp dụng điều kiện cho các nhóm sau khi GROUP BY)."
+  },
+  {
+    "id": "b2-d2-b3-3",
+    "category": "Truy vấn có phân nhóm",
+    "question": "3. Cho biết HoTen sinh viên có ít nhất 2 học phần có điểm <=5.",
+    "sql": "select\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp <= 5\ngroup by\n  s.masv,\n  s.hoten\nhaving\n  count(d.mahp) >= 2;",
+    "explanation": "Đầu tiên dùng WHERE d.diemhp <= 5 để lọc ra các học phần có điểm <= 5. Sau đó thực hiện GROUP BY theo sinh viên và áp dụng mệnh đề HAVING count(d.mahp) >= 2 để chỉ lấy ra các sinh viên có ít nhất 2 học phần rớt."
+  },
+  {
+    "id": "b2-d2-b3-4",
+    "category": "Truy vấn có phân nhóm",
+    "question": "4. Cho biết HoTen sinh viên học TẤT CẢ các học phần ở ngành 140902.",
+    "sql": "select\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d,\n  dmhocphan h\nwhere\n  s.masv = d.masv\n  and d.mahp = h.mahp\n  and h.manganh = '140902'\ngroup by\n  s.masv,\n  s.hoten\nhaving\n  count(distinct d.mahp) = (\n    select\n      count(mahp)\n    from\n      dmhocphan\n    where\n      manganh = '140902'\n  );",
+    "explanation": "Lọc các học phần thuộc ngành '140902' trong WHERE, sau đó gom nhóm theo sinh viên. Mệnh đề HAVING đếm số học phần phân biệt (COUNT(DISTINCT d.mahp)) sinh viên đã học. Truy vấn con (SELECT COUNT... WHERE manganh='140902') trả về tổng số học phần của ngành. Phép bằng (=) đảm bảo sinh viên đã học 'TẤT CẢ' môn."
+  },
+  {
+    "id": "b2-d2-b3-5",
+    "category": "Truy vấn có phân nhóm",
+    "question": "5. Cho biết HoTen sinh viên học ít nhất 3 học phần mã ‘001’, ‘002’, ‘003’.",
+    "sql": "select\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.mahp in ('001', '002', '003')\ngroup by\n  s.masv,\n  s.hoten\nhaving\n  count(distinct d.mahp) >= 3;",
+    "explanation": "WHERE lọc các bản ghi chỉ thuộc 3 môn '001', '002', '003'. Sau đó gom nhóm theo sinh viên và dùng HAVING đếm số học phần phân biệt (DISTINCT mahp). Nếu đếm được >= 3 môn, nghĩa là sinh viên đã học ít nhất cả 3 học phần được chỉ định (vì đã bị giới hạn tối đa 3 môn ở phần WHERE)."
+  },
+  {
+    "id": "b2-d2-b4-1",
+    "category": "Truy vấn có phân nhóm",
+    "question": "1. Cho biết MaSV, HoTen sinh viên có điểm TBC cao nhất ở học kỳ 1.",
+    "sql": "select\n  top 1 s.masv,\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d,\n  dmhocphan h\nwhere\n  s.masv = d.masv\n  and d.mahp = h.mahp\n  and h.hocky = 1\ngroup by\n  s.masv,\n  s.hoten\norder by\n  avg(d.diemhp) desc;",
+    "explanation": "Mệnh đề SELECT TOP 1 lấy ra bản ghi đầu tiên trong kết quả truy vấn. Để tìm người có điểm trung bình cao nhất, sau khi GROUP BY tính AVG, ta phải sắp xếp giảm dần kết quả theo điểm trung bình bằng ORDER BY avg(d.diemhp) DESC. Bản ghi đầu tiên lúc này sẽ có điểm cao nhất."
+  },
+  {
+    "id": "b2-d2-b4-2",
+    "category": "Truy vấn có phân nhóm",
+    "question": "2. Cho biết MaSV, HoTen sinh viên có số học phần điểm HP <5 nhiều nhất.",
+    "sql": "select\n  top 1 s.masv,\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp < 5\ngroup by\n  s.masv,\n  s.hoten\norder by\n  count(d.mahp) desc;",
+    "explanation": "Lọc các điểm rớt (< 5), gom nhóm theo sinh viên và tính tổng số môn rớt bằng COUNT(). Lấy người có số học phần rớt nhiều nhất bằng cách kết hợp SELECT TOP 1 với ORDER BY count(d.mahp) DESC (sắp xếp giảm dần số môn rớt)."
+  },
+  {
+    "id": "b2-d2-b4-3",
+    "category": "Truy vấn có phân nhóm",
+    "question": "3. Cho biết MaHP, TenHP có số sinh viên điểm HP <5 nhiều nhất.",
+    "sql": "select\n  top 1 h.mahp,\n  h.tenhp\nfrom\n  dmhocphan h,\n  diemhp d\nwhere\n  h.mahp = d.mahp\n  and d.diemhp < 5\ngroup by\n  h.mahp,\n  h.tenhp\norder by\n  count(d.masv) desc;",
+    "explanation": "Tương tự như tìm sinh viên, nhưng áp dụng trên bảng học phần. Lọc ra các điểm < 5, gom nhóm theo học phần (mahp). Sử dụng hàm đếm COUNT(d.masv) (số lượng sinh viên rớt), sắp xếp giảm dần (DESC) và dùng TOP 1 để lấy ra học phần có nhiều sinh viên rớt nhất."
+  },
+  {
+    "id": "b2-d3-b1-1",
+    "category": "Truy vấn lồng nhau",
+    "question": "1. Cho biết Họ tên sinh viên KHÔNG học học phần nào.",
+    "sql": "select\n  hoten\nfrom\n  sinhvien\nwhere\n  masv not in (\n    select\n      masv\n    from\n      diemhp\n  );",
+    "explanation": "Sử dụng truy vấn lồng nhau (subquery). Câu lệnh con (SELECT masv FROM diemhp) lấy ra danh sách tất cả mã sinh viên đã có điểm học phần (nghĩa là đã học ít nhất 1 môn). Điều kiện NOT IN ở truy vấn ngoài sẽ loại trừ danh sách đó, để lấy những sinh viên không có điểm trong bảng diemhp."
+  },
+  {
+    "id": "b2-d3-b1-2",
+    "category": "Truy vấn lồng nhau",
+    "question": "2. Cho biết Họ tên sinh viên CHƯA học học phần có mã ‘002’.",
+    "sql": "select\n  hoten\nfrom\n  sinhvien\nwhere\n  masv not in (\n    select\n      masv\n    from\n      diemhp\n    where\n      mahp = '002'\n  );",
+    "explanation": "Truy vấn con lấy ra các mã sinh viên đã học học phần mã '002' (WHERE mahp = '002'). Sau đó, truy vấn chính lọc từ bảng sinhvien với mệnh đề NOT IN để loại bỏ các sinh viên trong danh sách vừa thu được, cho ra kết quả là những người chưa học môn này."
+  },
+  {
+    "id": "b2-d3-b1-3",
+    "category": "Truy vấn lồng nhau",
+    "question": "3. Cho biết Tên học phần KHÔNG có sinh viên điểm HP <=5.",
+    "sql": "select\n  tenhp\nfrom\n  dmhocphan\nwhere\n  mahp not in (\n    select\n      mahp\n    from\n      diemhp\n    where\n      diemhp <= 5\n  );",
+    "explanation": "Truy vấn con lọc ra danh sách mã học phần (mahp) có sinh viên nào đó đạt điểm <= 5. Truy vấn chính dùng NOT IN danh sách đó để lọc ra các học phần (từ bảng dmhocphan) không hề có bất kỳ sinh viên nào bị điểm thấp hơn hoặc bằng 5."
+  },
+  {
+    "id": "b2-d3-b1-4",
+    "category": "Truy vấn lồng nhau",
+    "question": "4. Cho biết Họ tên sinh viên KHÔNG có học phần điểm HP<5",
+    "sql": "select\n  hoten\nfrom\n  sinhvien\nwhere\n  masv not in (\n    select\n      masv\n    from\n      diemhp\n    where\n      diemhp < 5\n  );",
+    "explanation": "Truy vấn con lấy danh sách mã sinh viên (masv) đã từng có điểm nhỏ hơn 5 ở bất kỳ môn nào. Ở truy vấn ngoài, toán tử NOT IN được sử dụng để loại bỏ các sinh viên này, kết quả nhận được là những sinh viên hoàn toàn không có học phần nào bị điểm < 5."
+  },
+  {
+    "id": "b2-d3-b2-1",
+    "category": "Truy vấn lồng nhau",
+    "question": "1. Cho biết Tên lớp có sinh viên nữ tên Hoa.",
+    "sql": "select\n  tenlop\nfrom\n  dmlop\nwhere\n  malop in (\n    select\n      malop\n    from\n      sinhvien\n    where\n      gioitinh = 1\n      and hoten like n'%hoa'\n  );",
+    "explanation": "Truy vấn này sử dụng toán tử IN để tìm các lớp (dmlop) có mã lớp (malop) nằm trong danh sách các mã lớp chứa sinh viên thỏa mãn điều kiện: giới tính là nữ (gioitinh = 1) và tên kết thúc bằng 'hoa' (hoten like n'%hoa'). Truy vấn con (subquery) bên trong sẽ lọc ra danh sách các malop của các sinh viên này, sau đó truy vấn bên ngoài sẽ lấy ra tenlop tương ứng."
+  },
+  {
+    "id": "b2-d3-b2-2",
+    "category": "Truy vấn lồng nhau",
+    "question": "2. Cho biết HoTen sinh viên có điểm học phần ‘001’là >5.",
+    "sql": "select\n  hoten\nfrom\n  sinhvien\nwhere\n  masv in (\n    select\n      masv\n    from\n      diemhp\n    where\n      mahp = '001'\n      and diemhp > 5\n  );",
+    "explanation": "Sử dụng truy vấn lồng với IN để lấy tên sinh viên. Subquery sẽ lọc ra danh sách các mã sinh viên (masv) trong bảng diemhp có mã học phần (mahp) là '001' và điểm (diemhp) lớn hơn 5. Truy vấn chính sau đó sẽ tìm tên sinh viên (hoten) có mã nằm trong danh sách vừa được lọc."
+  },
+  {
+    "id": "b2-d3-b2-3",
+    "category": "Truy vấn lồng nhau",
+    "question": "3. Cho biết danh sách các học phần có số đơn vị học trình lớn hơn hoặc bằng số đơn vị học trình của học phần mã 001.",
+    "sql": "select\n  *\nfrom\n  dmhocphan\nwhere\n  sodvht >= (\n    select\n      sodvht\n    from\n      dmhocphan\n    where\n      mahp = '001'\n  );",
+    "explanation": "Truy vấn lồng này sử dụng phép so sánh >= kết hợp với một subquery trả về một giá trị duy nhất (scalar subquery). Subquery lấy ra số đơn vị học trình (sodvht) của học phần có mã '001'. Truy vấn ngoài cùng sẽ hiển thị tất cả thông tin các học phần có sodvht lớn hơn hoặc bằng giá trị vừa tìm được."
+  },
+  {
+    "id": "b2-d4-b1-1",
+    "category": "Lượng từ",
+    "question": "1. Cho biết HoTen sinh viên có DiemHP cao nhất.",
+    "sql": "select\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp >= all (\n    select\n      diemhp\n    from\n      diemhp\n  );",
+    "explanation": "Lượng từ ALL được sử dụng để so sánh một giá trị với mọi giá trị trong một tập hợp. Ở đây, điều kiện `d.diemhp >= all (...)` có nghĩa là điểm học phần của sinh viên này phải lớn hơn hoặc bằng tất cả các điểm học phần có trong bảng diemhp (tức là điểm cao nhất). Truy vấn thực hiện join 2 bảng sinhvien và diemhp để lấy ra họ tên sinh viên."
+  },
+  {
+    "id": "b2-d4-b1-2",
+    "category": "Lượng từ",
+    "question": "2. Cho biết HoTen sinh viên có tuổi cao nhất.",
+    "sql": "select\n  hoten\nfrom\n  sinhvien\nwhere\n  ngaysinh <= all (\n    select\n      ngaysinh\n    from\n      sinhvien\n  );",
+    "explanation": "Sử dụng lượng từ ALL để tìm sinh viên có tuổi cao nhất, tức là người có ngày sinh (ngaysinh) nhỏ nhất (xa nhất trong quá khứ). Điều kiện `ngaysinh <= all (...)` đảm bảo ngày sinh của sinh viên được chọn nhỏ hơn hoặc bằng mọi ngày sinh có trong bảng sinhvien."
+  },
+  {
+    "id": "b2-d4-b1-3",
+    "category": "Lượng từ",
+    "question": "3. Cho biết MaSV, HoTen sinh viên có điểm học phần mã ‘001’ cao nhất.",
+    "sql": "select\n  s.masv,\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.mahp = '001'\n  and d.diemhp >= all (\n    select\n      diemhp\n    from\n      diemhp\n    where\n      mahp = '001'\n  );",
+    "explanation": "Kết hợp JOIN và lượng từ ALL. Truy vấn tìm các sinh viên có điểm môn '001' lớn hơn hoặc bằng tất cả các điểm của chính môn '001' đó trong bảng diemhp. Điều kiện `mahp = '001'` ở cả truy vấn ngoài và truy vấn con giúp giới hạn phạm vi xét điểm cao nhất chỉ trong môn học này."
+  },
+  {
+    "id": "b2-d4-b2-1",
+    "category": "Lượng từ",
+    "question": "1. Cho biết MaSV, MaHP có điểm HP lớn hơn bất kỳ các điểm HP của sinh viên mã ‘001’.",
+    "sql": "select\n  masv,\n  mahp\nfrom\n  diemhp\nwhere\n  diemhp > any (\n    select\n      diemhp\n    from\n      diemhp\n    where\n      masv = '001'\n  );",
+    "explanation": "Lượng từ ANY (hoặc SOME) kiểm tra xem một giá trị có thỏa mãn điều kiện với ít nhất một phần tử trong tập hợp hay không. Ở đây, truy vấn chọn ra các bản ghi có diemhp lớn hơn một điểm bất kỳ của sinh viên '001' (chỉ cần lớn hơn điểm nhỏ nhất của sinh viên '001' là thỏa mãn)."
+  },
+  {
+    "id": "b2-d4-b2-2",
+    "category": "Lượng từ",
+    "question": "2. Cho biết sinh viên có điểm học phần nào đó lớn hơn gấp rưỡi điểm trung bình chung của sinh viên đó.",
+    "sql": "select\n  s.masv,\n  s.hoten\nfrom\n  sinhvien s,\n  diemhp d\nwhere\n  s.masv = d.masv\n  and d.diemhp > any (\n    select\n      1.5 * avg(d2.diemhp)\n    from\n      diemhp d2\n    where\n      d2.masv = s.masv\n    group by\n      d2.masv\n  );",
+    "explanation": "Subquery tính toán điểm trung bình (avg) của từng sinh viên (nhờ group by d2.masv và điều kiện d2.masv = s.masv - correlated subquery). Sau đó truy vấn chính sẽ dùng ANY để lấy ra sinh viên nếu họ có ít nhất một điểm học phần (d.diemhp) lớn hơn 1.5 lần điểm trung bình vừa tính."
+  },
+  {
+    "id": "b2-d4-b3-1",
+    "category": "Lượng từ",
+    "question": "1. Cho biết MaSV, HoTen sinh viên đã ít nhất một lần học học phần nào đó.",
+    "sql": "select\n  masv,\n  hoten\nfrom\n  sinhvien s\nwhere\n  exists (\n    select\n      1\n    from\n      diemhp d\n    where\n      s.masv = d.masv\n  );",
+    "explanation": "Lượng từ EXISTS kiểm tra xem một subquery có trả về bất kỳ dòng dữ liệu nào hay không. Correlated subquery bên trong kiểm tra xem có tồn tại dòng nào trong bảng diemhp ứng với mã sinh viên hiện tại hay không. Nếu có (sinh viên đã học ít nhất 1 môn), EXISTS trả về true và hiển thị sinh viên đó."
+  },
+  {
+    "id": "b2-d4-b3-2",
+    "category": "Lượng từ",
+    "question": "2. Cho biết MaSV, HoTen sinh viên đã không học học phần nào.",
+    "sql": "select\n  masv,\n  hoten\nfrom\n  sinhvien s\nwhere\n  not exists (\n    select\n      1\n    from\n      diemhp d\n    where\n      s.masv = d.masv\n  );",
+    "explanation": "Ngược lại với EXISTS, NOT EXISTS sẽ trả về true nếu subquery không trả về bất kỳ kết quả nào. Correlated subquery tìm xem sinh viên đang xét có bản ghi nào trong bảng diemhp không. Nếu không tìm thấy dòng nào, chứng tỏ sinh viên chưa học môn nào, NOT EXISTS thỏa mãn và in ra sinh viên đó."
+  },
+  {
+    "id": "b2-d4-b3-3",
+    "category": "Lượng từ",
+    "question": "3. Cho biết MaLop,TenLop đã không có sinh viên nào học.",
+    "sql": "select\n  malop,\n  tenlop\nfrom\n  dmlop l\nwhere\n  not exists (\n    select\n      1\n    from\n      sinhvien s\n    where\n      s.malop = l.malop\n  );",
+    "explanation": "Tương tự ví dụ trước, NOT EXISTS kiểm tra sự vắng mặt của dữ liệu. Truy vấn con tìm kiếm các sinh viên (sinhvien) thuộc lớp hiện tại đang xét (s.malop = l.malop). Nếu subquery không trả về bản ghi nào (lớp không có sinh viên nào), điều kiện NOT EXISTS thỏa mãn và in ra thông tin lớp đó."
+  },
+  {
+    "id": "buoi3-bai1",
+    "category": "Stored Procedure",
+    "question": "Thêm Sinh Viên Mới: Viết SP để thêm một sinh viên mới vào bảng SINHVIEN, thực hiện kiểm tra MaLop phải tồn tại trước khi thêm.",
+    "sql": "create procedure sp_themsinhvien\n    @masv varchar(20),\n    @hoten nvarchar(50),\n    @malop varchar(10),\n    @gioitinh int,\n    @ngaysinh date,\n    @diachi nvarchar(100)\nas\nbegin\n    if exists (select * from dmlop where malop = @malop)\n    begin\n        insert into sinhvien (masv, hoten, malop, gioitinh, ngaysinh, diachi)\n        values (@masv, @hoten, @malop, @gioitinh, @ngaysinh, @diachi)\n        print 'them sinh vien thanh cong!'\n    end\n    else\n    begin\n        print 'ma lop khong ton tai, khong the them.'\n    end\nend",
+    "explanation": "Stored Procedure này dùng để thêm mới một sinh viên. Đầu tiên, nó dùng hàm IF EXISTS để kiểm tra xem mã lớp (@malop) người dùng truyền vào có tồn tại trong bảng dmlop hay không nhằm đảm bảo toàn vẹn dữ liệu. Nếu có, nó thực hiện lệnh INSERT INTO để thêm sinh viên và thông báo thành công. Nếu không, nó in ra thông báo lỗi."
+  },
+  {
+    "id": "buoi3-bai2",
+    "category": "Stored Procedure",
+    "question": "Nhập/Cập Nhật Điểm: Viết SP cho phép nhập điểm mới cho một sinh viên. Nếu đã có điểm thì cập nhật, nếu chưa có thì thêm mới.",
+    "sql": "create procedure sp_nhapcapnhatdiem\n    @masv varchar(20),\n    @mahp varchar(10),\n    @diemhp float\nas\nbegin\n    if exists (select * from diemhp where masv = @masv and mahp = @mahp)\n    begin\n        update diemhp set diemhp = @diemhp where masv = @masv and mahp = @mahp\n        print 'da cap nhat diem.'\n    end\n    else\n    begin\n        insert into diemhp (masv, mahp, diemhp) values (@masv, @mahp, @diemhp)\n        print 'da them diem moi.'\n    end\nend",
+    "explanation": "SP này quản lý việc nhập hoặc cập nhật điểm. Nó sử dụng IF EXISTS kiểm tra tổ hợp masv và mahp đã có trong bảng diemhp chưa. Nếu đã tồn tại, nó chạy lệnh UPDATE để cập nhật điểm số mới. Nếu chưa tồn tại, nó dùng lệnh INSERT INTO để thêm điểm mới vào."
+  },
+  {
+    "id": "buoi3-bai3",
+    "category": "Stored Procedure",
+    "question": "Xuất Bảng Điểm: Viết SP lấy ra danh sách các môn học và điểm số tương ứng của một sinh viên khi biết mã sinh viên.",
+    "sql": "create procedure sp_xuatbangdiem\n    @masv varchar(20)\nas\nbegin\n    select h.tenhp, d.diemhp\n    from diemhp d, dmhocphan h\n    where d.mahp = h.mahp \n      and d.masv = @masv\nend",
+    "explanation": "SP có tác dụng xuất bảng điểm của một sinh viên cụ thể. Nó kết nối (join) hai bảng diemhp và dmhocphan thông qua mã học phần (mahp). Đồng thời, nó lọc điều kiện mã sinh viên (masv) bằng với tham số truyền vào (@masv) để chỉ hiện ra tên môn học (tenhp) và điểm số tương ứng của sinh viên đó."
+  },
+  {
+    "id": "buoi3-bai4",
+    "category": "Stored Procedure",
+    "question": "Tính Điểm Trung Bình GPA: Viết SP tính điểm trung bình học tập của một sinh viên dựa trên điểm các môn và số đơn vị học trình, trả về xếp loại học lực.",
+    "sql": "create procedure sp_tinhgpa_xeploai\n    @masv varchar(20)\nas\nbegin\n    declare @tongdiem float, @tongtc int, @gpa float\n    declare @xeploai varchar(20)\n\n    select @tongdiem = sum(d.diemhp * h.sodvht), @tongtc = sum(h.sodvht)\n    from diemhp d, dmhocphan h\n    where d.mahp = h.mahp \n      and d.masv = @masv\n\n    if @tongtc is null or @tongtc = 0\n        set @gpa = 0\n    else\n        set @gpa = @tongdiem / @tongtc\n\n    if @gpa >= 8.5 set @xeploai = 'gioi'\n    else if @gpa >= 7.0 set @xeploai = 'kha'\n    else if @gpa >= 5.5 set @xeploai = 'trung binh'\n    else if @gpa >= 4.0 set @xeploai = 'yeu'\n    else set @xeploai = 'kem'\n\n    select @masv as masv, @gpa as gpa, @xeploai as xeploai\nend",
+    "explanation": "SP tính toán điểm trung bình (GPA) dựa vào trọng số tín chỉ. Khai báo các biến cục bộ (DECLARE). Tính tổng điểm = sum(điểm * số tín chỉ) và tổng tín chỉ = sum(số tín chỉ) bằng cách JOIN 2 bảng điểm và môn học. Nếu tổng tín chỉ khác 0, tính GPA = tổng điểm / tổng tín chỉ. Cuối cùng, dùng cấu trúc IF ELSE nhiều nhánh để phân loại học lực và in ra kết quả qua lệnh SELECT cuối cùng."
+  },
+  {
+    "id": "buoi3-bai5",
+    "category": "Stored Procedure",
+    "question": "Thống Kê Sinh Viên Theo Lớp: Viết SP hiển thị danh sách tất cả sinh viên thuộc một lớp cụ thể và tổng số lượng sinh viên của lớp đó.",
+    "sql": "create procedure sp_thongkesv_lop\n    @malop varchar(10)\nas\nbegin\n    select * from sinhvien where malop = @malop\n    \n    select count(*) as tongsosinhvien from sinhvien where malop = @malop\nend",
+    "explanation": "SP này thực hiện hai công việc riêng biệt (2 câu SELECT liên tiếp). Đầu tiên, nó liệt kê tất cả danh sách sinh viên thuộc lớp được chỉ định bằng @malop. Sau đó, nó đếm tổng số lượng sinh viên bằng hàm COUNT(*) và đặt bí danh cho cột (tongsosinhvien)."
+  },
+  {
+    "id": "buoi3-bai6",
+    "category": "Stored Procedure",
+    "question": "Xóa Sinh Viên: Viết SP để xóa một sinh viên theo MaSV. Để tránh lỗi vi phạm khóa ngoại (Foreign Key), SP phải tự động xóa tất cả các điểm của sinh viên đó trong bảng DIEMHP trước, sau đó mới tiến hành xóa sinh viên trong bảng SINHVIEN.",
+    "sql": "create procedure sp_xoasinhvien\n    @masv varchar(20)\nas\nbegin\n    delete from diemhp where masv = @masv\n    \n    delete from sinhvien where masv = @masv\n    print 'da xoa sinh vien.'\nend",
+    "explanation": "SP xử lý thao tác xóa sinh viên an toàn. Vì có ràng buộc khóa ngoại (sinh viên có dữ liệu ở bảng điểm), ta không thể xóa thẳng ở bảng sinhvien. SP phải thực hiện lệnh DELETE trong bảng diemhp trước để dọn sạch điểm liên quan, sau đó mới DELETE trong bảng sinhvien để hoàn tất thao tác."
+  },
+  {
+    "id": "buoi3-bai7",
+    "category": "Stored Procedure",
+    "question": "Thống Kê Số Lượng Sinh Viên Theo Ngành: Viết SP nhận đầu vào là NamNhapHoc. SP sẽ trả về danh sách các Ngành học (MaNganh, TenNganh) và tổng số lượng sinh viên của từng ngành trong năm nhập học đó.",
+    "sql": "create procedure sp_thongkesv_nganh_nam\n    @namnhaphoc int\nas\nbegin\n    select n.manganh, n.tennganh, count(s.masv) as soluongsinhvien\n    from dmnganh n, dmlop l, sinhvien s\n    where n.manganh = l.manganh \n      and l.malop = s.malop \n      and l.namnhaphoc = @namnhaphoc\n    group by n.manganh, n.tennganh\nend",
+    "explanation": "SP này thống kê số sinh viên mỗi ngành trong 1 năm nhập học cụ thể. Thực hiện JOIN 3 bảng: dmnganh, dmlop và sinhvien. Lọc điều kiện namnhaphoc. Dùng mệnh đề GROUP BY gom nhóm theo manganh và tennganh, đồng thời đếm số sinh viên (COUNT) trong mỗi nhóm ngành để đưa ra tổng số lượng của ngành đó."
+  },
+  {
+    "id": "buoi3-bai8",
+    "category": "Stored Procedure",
+    "question": "Top N Sinh Viên Xuất Sắc Nhất Khoa: Viết SP nhận đầu vào là mã khoa (MaKhoa) và một số nguyên N. SP sẽ tính điểm trung bình của tất cả sinh viên trong Khoa đó và trả về danh sách N sinh viên có điểm trung bình cao nhất (Gồm MaSV, HoTen, TenLop, DiemTrungBinh).",
+    "sql": "create procedure sp_topnsv_khoa\n    @makhoa varchar(10),\n    @n int\nas\nbegin\n    select top (@n) \n           s.masv, \n           s.hoten, \n           sum(d.diemhp * h.sodvht) / sum(h.sodvht) as diemtrungbinh\n    from sinhvien s, dmlop l, dmnganh n, diemhp d, dmhocphan h\n    where s.malop = l.malop \n      and l.manganh = n.manganh \n      and s.masv = d.masv \n      and d.mahp = h.mahp\n      and n.makhoa = @makhoa\n    group by s.masv, s.hoten\n    order by diemtrungbinh desc\nend",
+    "explanation": "SP tìm N sinh viên xuất sắc nhất khoa. Tham số là mã khoa và số nguyên N. JOIN qua 5 bảng (sinhvien, dmlop, dmnganh, diemhp, dmhocphan) để liên kết từ sinh viên tới khoa và kết quả điểm. Tính điểm trung bình (GPA). Gom nhóm (GROUP BY) theo masv và hoten, rồi sắp xếp giảm dần bằng ORDER BY DESC. Từ khóa TOP (@n) giúp chỉ lấy ra N người đứng đầu danh sách sau khi đã sắp xếp."
+  },
+  {
+    "id": "buoi3-bai9",
+    "category": "Stored Procedure",
+    "question": "Chuyển Lớp Cho Sinh Viên: Viết SP thực hiện việc chuyển lớp cho sinh viên. Đầu vào gồm MaSV và MaLop_Moi. Điều kiện: Phải kiểm tra xem MaLop_Moi có tồn tại trong bảng DMLOP hay không, và sinh viên đó có đang thực sự học ở một lớp khác không. Nếu hợp lệ thì mới tiến hành cập nhật.",
+    "sql": "create procedure sp_chuyenlop\n    @masv varchar(20),\n    @malop_moi varchar(10)\nas\nbegin\n    if not exists (select * from dmlop where malop = @malop_moi)\n    begin\n        print 'ma lop moi khong co trong bang dmlop.'\n        return\n    end\n\n    update sinhvien\n    set malop = @malop_moi\n    where masv = @masv\n\n    print 'chuyen lop thanh cong.'\nend",
+    "explanation": "SP chuyển lớp. Dùng IF NOT EXISTS kiểm tra lớp mới truyền vào có trong hệ thống (dmlop) không. Nếu không, in ra lỗi và RETURN để kết thúc sớm (không chạy tiếp code bên dưới). Nếu hợp lệ, chạy lệnh UPDATE trên bảng sinhvien để sửa lại cột malop thành @malop_moi của sinh viên đó."
+  },
+  {
+    "id": "buoi3-bai10",
+    "category": "Stored Procedure",
+    "question": "Liệt Kê Học Phần Chưa Học: Viết SP nhận vào MaSV. SP sẽ truy xuất ra danh sách các môn học (thuộc cùng MANGANH với ngành mà sinh viên đó đang theo học) nhưng sinh viên này chưa có điểm trong bảng DIEMHP.",
+    "sql": "create procedure sp_hocphanchuahoc\n    @masv varchar(20)\nas\nbegin\n    declare @manganh varchar(20)\n    \n    select @manganh = l.manganh \n    from sinhvien s, dmlop l\n    where s.malop = l.malop and s.masv = @masv\n\n    select mahp, tenhp\n    from dmhocphan\n    where manganh = @manganh\n      and mahp not in (select mahp from diemhp where masv = @masv)\nend",
+    "explanation": "SP liệt kê môn chưa học. Bước 1: gán mã ngành sinh viên đang theo học vào biến @manganh. Bước 2: dùng câu truy vấn SELECT để lấy các môn học trong danh mục (dmhocphan) thuộc @manganh đó. Bước 3: loại trừ những môn sinh viên đã học thông qua cấu trúc NOT IN (những mã học phần đã nằm trong bảng diemhp của @masv)."
+  },
+  {
+    "id": "buoi3-bai11",
+    "category": "Trigger",
+    "question": "Tự Động Cập Nhật Sỉ Số: Viết Trigger kích hoạt sau khi thêm sinh viên, tự động tăng sỉ số của lớp tương ứng trong bảng DMLOP.",
+    "sql": "create trigger trg_themsinhvien_siso\non sinhvien\nafter insert\nas\nbegin\n    declare @malop varchar(10)\n    \n    select @malop = malop from inserted \n    \n    update dmlop\n    set siso = siso + 1\n    where malop = @malop\nend",
+    "explanation": "Đây là Trigger kích hoạt SAU KHI (AFTER INSERT) có dữ liệu thêm vào bảng sinhvien. Dữ liệu mới thêm sẽ nằm trong bảng ảo có tên là 'inserted'. Trigger lấy mã lớp của sinh viên vừa thêm ra từ bảng 'inserted', sau đó cập nhật (UPDATE) bảng dmlop bằng cách cộng 1 vào cột sĩ số (siso) của lớp đó."
+  },
+  {
+    "id": "buoi3-bai12",
+    "category": "Trigger",
+    "question": "Tự Động Cập Nhật Sỉ Số: Viết Trigger kích hoạt sau khi xóa sinh viên, tự động giảm sỉ số của lớp tương ứng trong bảng DMLOP.",
+    "sql": "create trigger trg_xoasinhvien_siso\non sinhvien\nafter delete\nas\nbegin\n    declare @malop varchar(10)\n    \n    select @malop = malop from deleted \n    \n    update dmlop\n    set siso = siso - 1\n    where malop = @malop\nend",
+    "explanation": "Trigger kích hoạt SAU KHI (AFTER DELETE) một sinh viên bị xóa. Dữ liệu bị xóa sẽ được hệ thống tạm lưu trữ trong bảng ảo 'deleted'. Trigger đọc mã lớp của dòng vừa xóa từ bảng 'deleted', sau đó thực hiện lệnh UPDATE giảm (trừ đi 1) cột siso ở bảng dmlop tương ứng."
+  },
+  {
+    "id": "buoi3-bai13",
+    "category": "Trigger",
+    "question": "Ràng Buộc Độ Tuổi Nhập Học: Viết Trigger kiểm tra ngày sinh khi thêm sinh viên mới, đảm bảo sinh viên phải đủ ít nhất 17 tuổi (tính đến năm hiện tại).",
+    "sql": "create trigger trg_kiemtratuoinhaphoc\non sinhvien\nafter insert, update\nas\nbegin\n    declare @ngaysinh date\n    declare @tuoi int\n    \n    select @ngaysinh = ngaysinh from inserted\n    \n    set @tuoi = year(getdate()) - year(@ngaysinh)\n    \n    if (@tuoi < 17)\n    begin\n        print 'loi: sinh vien phai du 17 tuoi tro len moi duoc nhap hoc.'\n        rollback transaction\n    end\nend",
+    "explanation": "Trigger kích hoạt sau thao tác INSERT và UPDATE. Lấy ngày sinh từ bảng 'inserted' và tính tuổi so với năm hiện tại (dùng hàm year() và getdate()). Nếu tuổi < 17, Trigger in ra lỗi và dùng ROLLBACK TRANSACTION để hủy bỏ toàn bộ quá trình, dữ liệu sẽ không được lưu vào bảng."
+  },
+  {
+    "id": "buoi3-bai14",
+    "category": "Trigger",
+    "question": "Ràng Buộc Thang Điểm Hợp Lệ: Viết Trigger ngăn chặn việc nhập hoặc cập nhật điểm học phần (bảng DIEMHP) nếu giá trị không nằm trong khoảng từ 0 đến 10.",
+    "sql": "create trigger trg_kiemtradiemhople\non diemhp\nafter insert, update\nas\nbegin\n    declare @diem float\n    \n    select @diem = diemhp from inserted\n    \n    if (@diem < 0 or @diem > 10)\n    begin\n        print 'loi: diem hoc phan bat buoc phai nam trong khoang tu 0 den 10.'\n        rollback transaction\n    end\nend",
+    "explanation": "Trigger bảo vệ tính toàn vẹn vùng giá trị của điểm số (AFTER INSERT, UPDATE). Nó lấy giá trị điểm (diemhp) đang được thêm/sửa từ bảng 'inserted'. Nếu điểm không nằm trong khoảng hợp lệ (nhỏ hơn 0 hoặc lớn hơn 10), ROLLBACK TRANSACTION được gọi để hủy việc nhập liệu đó."
+  },
+  {
+    "id": "buoi3-bai15",
+    "category": "Trigger",
+    "question": "Lưu Lịch Sử Thay Đổi Điểm: Viết Trigger lưu lại thông tin cũ và mới vào một bảng nhật ký (LOG_DIEM) mỗi khi điểm học phần của sinh viên được cập nhật.",
+    "sql": "create trigger trg_luulichsudiem\non diemhp\nafter update\nas\nbegin\n    if update(diemhp)\n    begin\n        declare @masv varchar(20), @mahp varchar(10)\n        declare @diemcu float, @diemmoi float\n        \n        select @masv = masv, @mahp = mahp, @diemcu = diemhp from deleted\n        \n        select @diemmoi = diemhp from inserted\n        \n        insert into log_diem (masv, mahp, diemcu, diemmoi)\n        values (@masv, @mahp, @diemcu, @diemmoi)\n    end\nend",
+    "explanation": "Trigger lưu vết quá trình thay đổi điểm (AFTER UPDATE). Hàm IF UPDATE(diemhp) giúp kiểm tra xem cột 'diemhp' có thực sự bị sửa đổi hay không. Nếu có, lấy điểm cũ từ bảng 'deleted' và điểm mới từ 'inserted', rồi INSERT một dòng bản ghi mới vào bảng 'log_diem' để lưu trữ biến động."
+  },
+  {
+    "id": "buoi3-bai16",
+    "category": "Trigger",
+    "question": "Tự Động Cập Nhật Sỉ Số Khi Chuyển Lớp: Viết Trigger kích hoạt khi có lệnh UPDATE trên bảng SINHVIEN làm thay đổi trường MaLop. Trigger phải tự động giảm sỉ số (nếu có trường SiSo) của lớp cũ đi 1 và tăng sỉ số của lớp mới lên 1 trong bảng DMLOP.",
+    "sql": "create trigger trg_chuyenlop_siso\non sinhvien\nafter update\nas\nbegin\n    if update(malop)\n    begin\n        declare @lopcu varchar(10), @lopmoi varchar(10)\n        \n        select @lopcu = malop from deleted\n        \n        select @lopmoi = malop from inserted\n        \n        update dmlop set siso = siso - 1 where malop = @lopcu\n        \n        update dmlop set siso = siso + 1 where malop = @lopmoi\n    end\nend",
+    "explanation": "Trigger chạy khi thông tin lớp (malop) bị thay đổi (AFTER UPDATE). Dùng IF UPDATE(malop) để đảm bảo chỉ chạy logic nếu sửa lớp. Bảng 'deleted' chứa dữ liệu cũ (lớp cũ), bảng 'inserted' chứa dữ liệu mới (lớp mới). Trigger tiến hành giảm sĩ số của lớp cũ đi 1 và tăng sĩ số lớp mới lên 1 trong bảng dmlop."
+  },
+  {
+    "id": "buoi3-bai17",
+    "category": "Trigger",
+    "question": "Ngăn Chặn Xóa Dữ Liệu Ràng Buộc: Viết Trigger trên bảng DMHOCPHAN. Không cho phép người dùng xóa một Học phần nếu học phần đó đã có sinh viên đăng ký hoặc đã được nhập điểm trong bảng DIEMHP. Nếu cố tình xóa, in ra thông báo lỗi và hủy thao tác.",
+    "sql": "create trigger trg_nganxoahocphan\non dmhocphan\nafter delete\nas\nbegin\n    declare @mahp varchar(10)\n    \n    select @mahp = mahp from deleted\n    \n    if exists (select * from diemhp where mahp = @mahp)\n    begin\n        print 'loi: da co sinh vien dang ky mon nay, ban khong the xoa mon hoc.'\n        rollback transaction\n    end\nend",
+    "explanation": "Trigger ngăn xóa học phần khi đã có dữ liệu ràng buộc. Khi có thao tác xóa, trigger lấy mã học phần đang cố xóa (từ bảng 'deleted'). Dùng IF EXISTS để kiểm tra xem đã có bất kỳ điểm nào liên quan tới môn đó trong bảng diemhp chưa. Nếu có, báo lỗi và gọi ROLLBACK TRANSACTION chặn đứng việc xóa."
+  },
+  {
+    "id": "buoi3-bai18",
+    "category": "Trigger",
+    "question": "Kiểm Tra Tính Hợp Lệ Của Môn Học Theo Ngành: Viết Trigger trên bảng DIEMHP. Khi nhập điểm cho một sinh viên, Trigger phải kiểm tra xem MaHP đó có thuộc đúng MaNganh mà sinh viên đó đang theo học hay không (liên kết từ SINHVIEN -> DMLOP -> MaNganh). Nếu sinh viên học khác ngành với môn học, không cho phép nhập điểm.",
+    "sql": "create trigger trg_kiemtramonhoc_nganh\non diemhp\nafter insert, update\nas\nbegin\n    declare @masv varchar(20), @mahp varchar(10)\n    declare @nganhcuasinhvien varchar(20)\n    declare @nganhcuamonhoc varchar(20)\n    \n    select @masv = masv, @mahp = mahp from inserted\n    \n    select @nganhcuasinhvien = dmlop.manganh \n    from dmlop, sinhvien \n    where dmlop.malop = sinhvien.malop and sinhvien.masv = @masv\n    \n    select @nganhcuamonhoc = manganh \n    from dmhocphan \n    where mahp = @mahp\n    \n    if (@nganhcuasinhvien <> @nganhcuamonhoc)\n    begin\n        print 'loi: sinh vien khong duoc phep hoc mon cua nganh khac.'\n        rollback transaction\n    end\nend",
+    "explanation": "Trigger kiểm tra logic phức tạp khi nhập điểm (AFTER INSERT, UPDATE). Nó lấy mã môn và mã sinh viên được nhập từ bảng 'inserted'. Từ đó, truy xuất ra 'ngành của sinh viên đang học' và 'ngành của môn học'. Nếu hai ngành này khác nhau (phát hiện bằng dấu <>), tức là nhập nhầm môn, tiến hành ROLLBACK TRANSACTION hủy bỏ."
+  },
+  {
+    "id": "buoi3-bai19",
+    "category": "Trigger",
+    "question": "Bảo Vệ Khóa Chính: Viết Trigger trên bảng SINHVIEN để ngăn chặn hành vi cố tình dùng lệnh UPDATE để thay đổi trường MaSV (Khóa chính). Nếu phát hiện cột MaSV bị thay đổi, Trigger sẽ báo lỗi 'Không được phép thay đổi mã sinh viên' và Rollback lại.",
+    "sql": "create trigger trg_baovekhoachinh_sinhvien\non sinhvien\nafter update\nas\nbegin\n    if update(masv)\n    begin\n        print 'loi: ban khong duoc phep thay doi ma sinh vien (vi day la khoa chinh).'\n        rollback transaction\n    end\nend",
+    "explanation": "Trigger bảo vệ khóa chính khỏi việc bị sửa đổi thủ công (AFTER UPDATE). Bằng cách dùng lệnh IF UPDATE(masv), hệ thống sẽ phát hiện ngay khi có ai đó dùng lệnh UPDATE can thiệp vào cột masv. Nếu có, trigger thông báo lỗi và ROLLBACK TRANSACTION để giữ nguyên mã cũ."
+  },
+  {
+    "id": "buoi3-bai20",
+    "category": "Trigger",
+    "question": "Lưu Trữ Lịch Sử Xóa Lớp: Giả sử tạo thêm một bảng DMLOP_Deleted có cấu trúc giống hệt bảng DMLOP. Viết Trigger sao cho mỗi khi một lớp bị xóa khỏi bảng DMLOP, toàn bộ thông tin của lớp đó sẽ được tự động sao chép (Insert) vào bảng DMLOP_Deleted để làm bằng chứng lưu trữ.",
+    "sql": "create trigger trg_luulichsuxoalop\non dmlop\nafter delete\nas\nbegin\n    insert into dmlop_deleted \n    select * from deleted\nend",
+    "explanation": "Trigger tạo ra một cơ chế Backup nhẹ. Khi một lớp học bị xóa (AFTER DELETE), tất cả thông tin của dòng dữ liệu vừa bị xóa được giữ tạm trong bảng ảo 'deleted'. Lệnh INSERT INTO ... SELECT * FROM deleted thực hiện bốc toàn bộ dòng dữ liệu đã xóa đưa vào bảng dmlop_deleted để phục vụ tra cứu sau này."
+  },
+  {
+    "id": "buoi5-view-1",
+    "category": "View",
+    "question": "Tạo View hiển thị danh sách tất cả các khoa (gồm MaKhoa, TenKhoa) từ bảng DMKHOA.",
+    "sql": "create view v_ds_khoa as\nselect\n  makhoa,\n  tenkhoa\nfrom\n  dmkhoa;",
+    "explanation": "Câu lệnh CREATE VIEW dùng để tạo một khung nhìn (view) có tên là v_ds_khoa. Từ khóa SELECT được sử dụng để lấy các cột makhoa và tenkhoa từ bảng dmkhoa. Khi view này được truy vấn, nó sẽ trả về danh sách các khoa gồm mã khoa và tên khoa."
+  },
+  {
+    "id": "buoi5-view-2",
+    "category": "View",
+    "question": "Tạo View hiển thị thông tin cơ bản của sinh viên (gồm MaSV, HoTen, NgaySinh) từ bảng SINHVIEN.",
+    "sql": "create view v_thongtin_sv as\nselect\n  masv,\n  hoten,\n  ngaysinh\nfrom\n  sinhvien;",
+    "explanation": "Câu lệnh này tạo ra một view với tên v_thongtin_sv. Phép chiếu SELECT sẽ trích xuất 3 cột masv, hoten, và ngaysinh từ bảng sinhvien để hiển thị những thông tin cơ bản nhất của mỗi sinh viên."
+  },
+  {
+    "id": "buoi5-view-3",
+    "category": "View",
+    "question": "Tạo View danh sách các sinh viên có GioiTinh là 'Nữ' từ bảng SINHVIEN.",
+    "sql": "create view v_sv_nu as\nselect\n  *\nfrom\n  sinhvien\nwhere\n  gioitinh = 0;",
+    "explanation": "Lệnh CREATE VIEW tạo view v_sv_nu. Dấu * trong câu lệnh SELECT có nghĩa là lấy tất cả các cột từ bảng sinhvien. Mệnh đề WHERE lọc ra các bản ghi có gioitinh = 0 (tương ứng với giới tính Nữ), giúp hiển thị toàn bộ thông tin của các nữ sinh viên."
+  },
+  {
+    "id": "buoi5-view-4",
+    "category": "View",
+    "question": "Tạo View danh sách các học phần có số đơn vị học trình (SoDVHT) lớn hơn hoặc bằng 3 từ bảng DMHOCPHAN.",
+    "sql": "create view v_hp_lonhon_3dvht as\nselect\n  *\nfrom\n  dmhocphan\nwhere\n  sodvht >= 3;",
+    "explanation": "Tạo view có tên v_hp_lonhon_3dvht để lấy tất cả các cột của bảng dmhocphan. Mệnh đề WHERE sodvht >= 3 được sử dụng để lọc ra những học phần có số đơn vị học trình từ 3 trở lên."
+  },
+  {
+    "id": "buoi5-view-5",
+    "category": "View",
+    "question": "Tạo View danh sách các lớp thuộc hệ đào tạo đại học (điều kiện cột HEDT bằng 'Đại học') từ bảng DMLOP.",
+    "sql": "create view v_lop_daihoc as\nselect\n  *\nfrom\n  dmlop\nwhere\n  hedt like n'%đại học%';",
+    "explanation": "Lệnh này tạo view v_lop_daihoc để lưu trữ kết quả của truy vấn. Mệnh đề WHERE kết hợp với toán tử LIKE và ký tự đại diện % dùng để tìm kiếm chuỗi 'đại học' ở bất kỳ vị trí nào trong cột hedt, qua đó lọc ra các lớp thuộc hệ đào tạo đại học."
+  },
+  {
+    "id": "buoi5-view-6",
+    "category": "View",
+    "question": "Tạo View hiển thị MaSV, HoTen và Tuoi của sinh viên từ bảng SINHVIEN (Gợi ý: Tuoi = Năm hiện tại trừ đi năm của NgaySinh).",
+    "sql": "create view v_tuoi_sv as\nselect\n  masv,\n  hoten,\n  year(getdate()) - year(ngaysinh) as tuoi\nfrom\n  sinhvien;",
+    "explanation": "Câu lệnh tạo view v_tuoi_sv. Bên cạnh việc lấy masv và hoten, câu lệnh SELECT còn tính toán tuổi của sinh viên bằng cách lấy năm hiện tại (hàm YEAR(GETDATE())) trừ đi năm sinh (hàm YEAR(ngaysinh)) và đặt bí danh cho cột kết quả là tuoi."
+  },
+  {
+    "id": "buoi5-view-7",
+    "category": "View",
+    "question": "Tạo View hiển thị MaNganh, TenNganh (từ bảng DMNGANH) và TenKhoa quản lý ngành đó (từ bảng DMKHOA).",
+    "sql": "create view v_nganh_khoa as\nselect\n  n.manganh,\n  n.tennganh,\n  k.tenkhoa\nfrom\n  dmnganh n\n  join dmkhoa k on n.makhoa = k.makhoa;",
+    "explanation": "Tạo view v_nganh_khoa. Truy vấn này sử dụng phép kết nối JOIN để nối hai bảng dmnganh (đặt bí danh n) và dmkhoa (đặt bí danh k) thông qua cột chung là makhoa. Từ đó, ta có thể lấy được mã ngành, tên ngành từ bảng dmnganh và tên khoa tương ứng từ bảng dmkhoa."
+  },
+  {
+    "id": "buoi5-view-8",
+    "category": "View",
+    "question": "Tạo View hiển thị danh sách sinh viên (MaSV, HoTen từ bảng SINHVIEN) kèm theo TenLop mà họ đang học (từ bảng DMLOP).",
+    "sql": "create view v_sv_lop as\nselect\n  s.masv,\n  s.hoten,\n  l.tenlop\nfrom\n  sinhvien s\n  join dmlop l on s.malop = l.malop;",
+    "explanation": "Lệnh tạo view v_sv_lop. Ta dùng lệnh JOIN để kết hợp bảng sinhvien (bí danh s) với bảng dmlop (bí danh l) dựa trên mã lớp (malop). Việc kết hợp này giúp lấy được thông tin mã sinh viên, họ tên cùng với tên lớp học tương ứng."
+  },
+  {
+    "id": "buoi5-view-9",
+    "category": "View",
+    "question": "Tạo View hiển thị MaLop, TenLop (từ bảng DMLOP) và TenNganh học của lớp đó (từ bảng DMNGANH).",
+    "sql": "create view v_lop_nganh as\nselect\n  l.malop,\n  l.tenlop,\n  n.tennganh\nfrom\n  dmlop l\n  join dmnganh n on l.manganh = n.manganh;",
+    "explanation": "Tạo view v_lop_nganh. Bằng cách sử dụng JOIN để nối hai bảng dmlop (l) và dmnganh (n) qua khóa ngoại manganh, câu lệnh lấy ra mã lớp, tên lớp và tên ngành học mà lớp đó trực thuộc."
+  },
+  {
+    "id": "buoi5-view-10",
+    "category": "View",
+    "question": "Tạo View hiển thị TenHP (từ bảng DMHOCPHAN) và TenNganh mà học phần đó trực thuộc (từ bảng DMNGANH).",
+    "sql": "create view v_hp_nganh as\nselect\n  h.tenhp,\n  n.tennganh\nfrom\n  dmhocphan h\n  join dmnganh n on h.manganh = n.manganh;",
+    "explanation": "Câu lệnh tạo view v_hp_nganh. Câu lệnh JOIN kết hợp bảng dmhocphan (h) và dmnganh (n) bằng điều kiện manganh, cho phép hiển thị tên học phần cùng tên ngành mà học phần đó thuộc về."
+  },
+  {
+    "id": "buoi5-view-11",
+    "category": "View",
+    "question": "Tạo View danh sách điểm của sinh viên gồm: MaSV (từ bảng DIEMHP), TenHP (từ bảng DMHOCPHAN) và Diem (từ bảng DIEMHP).",
+    "sql": "create view v_diem_sv as\nselect\n  d.masv,\n  h.tenhp,\n  d.diemhp as diem\nfrom\n  diemhp d\n  join dmhocphan h on d.mahp = h.mahp;",
+    "explanation": "Tạo view v_diem_sv. Truy vấn nối bảng diemhp (d) với bảng dmhocphan (h) dựa trên cột mahp. Lệnh SELECT lấy mã sinh viên, tên học phần từ bảng học phần và điểm số từ bảng điểm (với bí danh là diem)."
+  },
+  {
+    "id": "buoi5-view-12",
+    "category": "View",
+    "question": "Tạo View hiển thị Bảng điểm chi tiết gồm: HoTen sinh viên (bảng SINHVIEN), TenLop (bảng DMLOP), TenHP (bảng DMHOCPHAN) và Diem (bảng DIEMHP).",
+    "sql": "create view v_bangdiem_chitiet as\nselect\n  s.hoten,\n  l.tenlop,\n  h.tenhp,\n  d.diemhp as diem\nfrom\n  diemhp d\n  join sinhvien s on d.masv = s.masv\n  join dmlop l on s.malop = l.malop\n  join dmhocphan h on d.mahp = h.mahp;",
+    "explanation": "Câu lệnh tạo view v_bangdiem_chitiet thông qua việc JOIN 4 bảng: diemhp, sinhvien, dmlop và dmhocphan dựa trên các khóa liên kết tương ứng (masv, malop, mahp). Nhờ đó, ta lấy được thông tin chi tiết: họ tên, tên lớp, tên học phần và điểm."
+  },
+  {
+    "id": "buoi5-view-13",
+    "category": "View",
+    "question": "Tạo View hiển thị danh sách sinh viên bị rớt môn (điều kiện Diem < 5) gồm: HoTen (bảng SINHVIEN), TenHP (bảng DMHOCPHAN) và Diem (bảng DIEMHP).",
+    "sql": "create view v_sv_rotmon as\nselect\n  s.hoten,\n  h.tenhp,\n  d.diemhp as diem\nfrom\n  diemhp d\n  join sinhvien s on d.masv = s.masv\n  join dmhocphan h on d.mahp = h.mahp\nwhere\n  d.diemhp < 5;",
+    "explanation": "Tạo view v_sv_rotmon. Lệnh truy vấn này JOIN 3 bảng: diemhp, sinhvien và dmhocphan để lấy thông tin. Điểm nhấn là mệnh đề WHERE d.diemhp < 5 dùng để lọc ra những sinh viên có điểm số nhỏ hơn 5, tức là bị rớt môn."
+  },
+  {
+    "id": "buoi5-view-14",
+    "category": "View",
+    "question": "Tạo View hiển thị thông tin phân cấp học: TenLop (bảng DMLOP), TenNganh (bảng DMNGANH) và TenKhoa (bảng DMKHOA) tương ứng.",
+    "sql": "create view v_phancap_hoc as\nselect\n  l.tenlop,\n  n.tennganh,\n  k.tenkhoa\nfrom\n  dmlop l\n  join dmnganh n on l.manganh = n.manganh\n  join dmkhoa k on n.makhoa = k.makhoa;",
+    "explanation": "Câu lệnh tạo view v_phancap_hoc, JOIN 3 bảng: dmlop, dmnganh và dmkhoa thông qua các cột liên kết là manganh và makhoa. Việc này giúp kết xuất thông tin phân cấp bao gồm tên lớp, tên ngành và tên khoa theo thứ bậc."
+  },
+  {
+    "id": "buoi5-view-15",
+    "category": "View",
+    "question": "Tạo View hiển thị bảng điểm các môn học thuộc Học kỳ 1 (điều kiện HOCKY = 1) của tất cả sinh viên (liên kết các bảng DIEMHP, SINHVIEN, DMHOCPHAN).",
+    "sql": "create view v_diem_hocky1 as\nselect\n  s.masv,\n  s.hoten,\n  h.tenhp,\n  d.diemhp\nfrom\n  diemhp d\n  join sinhvien s on d.masv = s.masv\n  join dmhocphan h on d.mahp = h.mahp\nwhere\n  h.hocky = 1;",
+    "explanation": "Tạo view v_diem_hocky1. Lệnh JOIN kết nối 3 bảng: diemhp, sinhvien và dmhocphan để lấy mã, tên sinh viên cùng tên học phần và điểm. Mệnh đề WHERE h.hocky = 1 giới hạn kết quả chỉ lấy các học phần thuộc học kỳ 1."
+  },
+  {
+    "id": "buoi5-view-16",
+    "category": "View",
+    "question": "Tạo View thống kê số lượng sinh viên thực tế của mỗi lớp (đếm MaSV trong bảng SINHVIEN, nhóm theo MaLop).",
+    "sql": "create view v_tk_sv_lop as\nselect\n  malop,\n  count(masv) as soluong_sv\nfrom\n  sinhvien\ngroup by\n  malop;",
+    "explanation": "Lệnh tạo view v_tk_sv_lop để thống kê số sinh viên. Mệnh đề GROUP BY gom nhóm các bản ghi theo malop, và hàm tập hợp COUNT(masv) đếm số lượng sinh viên (mã sinh viên) trong từng nhóm lớp đó."
+  },
+  {
+    "id": "buoi5-view-17",
+    "category": "View",
+    "question": "Tạo View thống kê mỗi Khoa đang quản lý bao nhiêu Ngành học (đếm MaNganh trong bảng DMNGANH, nhóm theo TenKhoa trong bảng DMKHOA).",
+    "sql": "create view v_tk_nganh_khoa as\nselect\n  k.tenkhoa,\n  count(n.manganh) as soluong_nganh\nfrom\n  dmnganh n\n  join dmkhoa k on n.makhoa = k.makhoa\ngroup by\n  k.tenkhoa;",
+    "explanation": "Tạo view v_tk_nganh_khoa. Sử dụng JOIN để kết nối bảng dmnganh và dmkhoa. Mệnh đề GROUP BY nhóm kết quả theo tenkhoa, hàm COUNT(n.manganh) sẽ đếm số lượng ngành học thuộc về mỗi khoa đó."
+  },
+  {
+    "id": "buoi5-view-18",
+    "category": "View",
+    "question": "Tạo View tính Điểm trung bình (tính AVG(Diem) trong bảng DIEMHP) của từng sinh viên (nhóm theo MaSV).",
+    "sql": "create view v_dtb_sv as\nselect\n  masv,\n  avg(diemhp) as diemtrungbinh\nfrom\n  diemhp\ngroup by\n  masv;",
+    "explanation": "Tạo view v_dtb_sv. Cú pháp sử dụng mệnh đề GROUP BY masv để nhóm dữ liệu của từng sinh viên. Sau đó, hàm tập hợp AVG(diemhp) tính toán điểm trung bình của các học phần mà sinh viên đó đã học."
+  },
+  {
+    "id": "buoi5-view-19",
+    "category": "View",
+    "question": "Tạo View đếm tổng số lượng học phần (đếm MaHP trong bảng DMHOCPHAN) thuộc về mỗi ngành học (nhóm theo TenNganh trong bảng DMNGANH).",
+    "sql": "create view v_tk_hp_nganh as\nselect\n  n.tennganh,\n  count(h.mahp) as soluong_hp\nfrom\n  dmhocphan h\n  join dmnganh n on h.manganh = n.manganh\ngroup by\n  n.tennganh;",
+    "explanation": "Lệnh tạo view v_tk_hp_nganh, dùng JOIN nối dmhocphan và dmnganh. Mệnh đề GROUP BY n.tennganh gom nhóm dữ liệu theo tên ngành, và COUNT(h.mahp) đếm số lượng học phần (mã học phần) tương ứng với từng ngành học."
+  },
+  {
+    "id": "buoi5-view-20",
+    "category": "View",
+    "question": "Tạo View danh sách các lớp có số lượng sinh viên thực tế trên 40 sinh viên(nhóm theo TenLop trong bảng DMLOP, có điều kiện đếm MaSV > 40 trong bảng SINHVIEN).",
+    "sql": "create view v_lop_tren40sv as\nselect\n  l.tenlop,\n  count(s.masv) as soluong_sv\nfrom\n  sinhvien s\n  join dmlop l on s.malop = l.malop\ngroup by\n  l.tenlop\nhaving\n  count(s.masv) > 40;",
+    "explanation": "Tạo view v_lop_tren40sv. Câu lệnh JOIN bảng sinhvien và dmlop, sau đó GROUP BY l.tenlop. Mệnh đề HAVING được dùng kết hợp với GROUP BY để chỉ lọc ra các lớp thỏa mãn điều kiện COUNT(s.masv) > 40 (số sinh viên thực tế lớn hơn 40)."
+  },
+  {
+    "id": "buoi5-sp-1",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để thêm 1 loại.",
+    "sql": "create procedure sp_themloai (\n  @maloai int,\n  @tenloai nvarchar(50),\n  @mota nvarchar(max)\n) as begin\ninsert into\n  loai (maloai, tenloai, mota)\nvalues\n  (@maloai, @tenloai, @mota) end",
+    "explanation": "Tạo Stored Procedure tên sp_themloai, nhận vào 3 tham số là @maloai, @tenloai và @mota. Bên trong là lệnh INSERT INTO thực hiện việc thêm một bản ghi mới vào bảng loai với các giá trị được truyền vào từ tham số."
+  },
+  {
+    "id": "buoi5-sp-2",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để sửa 1 loại.",
+    "sql": "create procedure sp_sualoai (\n  @maloai int,\n  @tenloai nvarchar(50),\n  @mota nvarchar(max)\n) as begin\nupdate loai\nset\n  tenloai = @tenloai,\n  mota = @mota\nwhere\n  maloai = @maloai end",
+    "explanation": "Tạo Stored Procedure tên sp_sualoai với 3 tham số đầu vào. Khối lệnh chứa cú pháp UPDATE để cập nhật thông tin tenloai và mota trong bảng loai. Điều kiện WHERE maloai = @maloai đảm bảo chỉ dòng dữ liệu có mã loại tương ứng bị sửa đổi."
+  },
+  {
+    "id": "buoi5-sp-3",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để xóa 1 loại.",
+    "sql": "create procedure sp_xoaloai (@maloai int) as begin\ndelete from loai\nwhere\n  maloai = @maloai end",
+    "explanation": "Tạo Stored Procedure sp_xoaloai, nhận vào 1 tham số @maloai. Lệnh DELETE FROM được sử dụng để xóa dòng dữ liệu khỏi bảng loai. Mệnh đề WHERE chỉ định rõ sẽ xóa loại hàng hóa có mã bằng với tham số truyền vào."
+  },
+  {
+    "id": "buoi5-sp-4",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để lấy thông tin tất cả loại.",
+    "sql": "create procedure sp_laytatcaloai as begin\nselect\n  *\nfrom\n  loai end",
+    "explanation": "Tạo Stored Procedure có tên sp_laytatcaloai, không nhận tham số đầu vào nào. Khối lệnh thực thi là câu lệnh SELECT * FROM loai để truy xuất và trả về toàn bộ dữ liệu (tất cả các cột, các dòng) có trong bảng loai."
+  },
+  {
+    "id": "buoi5-sp-5",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để lấy thông tin một loại cụ thể theo mã.",
+    "sql": "create procedure sp_layloaibangma (@maloai int) as begin\nselect\n  *\nfrom\n  loai\nwhere\n  maloai = @maloai end",
+    "explanation": "Tạo Stored Procedure tên sp_layloaibangma với 1 tham số @maloai. Bên trong sử dụng câu lệnh SELECT để lấy thông tin, và mệnh đề WHERE lọc kết quả sao cho chỉ trả về bản ghi trong bảng loai có mã loại khớp với tham số đầu vào."
+  },
+  {
+    "id": "buoi5-sp-6",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để lấy danh sách hàng hóa thuộc loại cụ thể.",
+    "sql": "create procedure sp_layhanghoatheoloai (@maloai int) as begin\nselect\n  *\nfrom\n  hanghoa\nwhere\n  maloai = @maloai end",
+    "explanation": "Lệnh CREATE PROCEDURE dùng để tạo một thủ tục lưu trữ sp_layhanghoatheoloai, nhận tham số @maloai. Thủ tục này thực thi câu lệnh SELECT trên bảng hanghoa, và dùng WHERE để lọc ra tất cả hàng hóa thuộc về loại có mã truyền vào."
+  },
+  {
+    "id": "buoi5-sp-7",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để liệt kê DS khách hàng (HoTen, DienThoai) có đặt hàng với tổng số tiền trên X.",
+    "sql": "create procedure sp_ds_khachhang_tongtien_tren_x (@x float) as begin\nselect\n  kh.hoten,\n  kh.dienthoai\nfrom\n  khachhang kh\n  join dondathang ddh on kh.makh = ddh.makh\n  join chitietdathang ct on ddh.maddh = ct.maddh\ngroup by\n  kh.makh,\n  kh.hoten,\n  kh.dienthoai\nhaving\n  sum(ct.soluong * ct.dongia) > @x end",
+    "explanation": "Tạo Stored Procedure, nhận tham số @x. Lệnh JOIN kết nối bảng khachhang, dondathang và chitietdathang. Mệnh đề GROUP BY nhóm theo khách hàng và mệnh đề HAVING dùng hàm SUM để tính tổng tiền (số lượng * đơn giá). Cú pháp sẽ lấy ra những khách hàng có tổng tiền mua trên mức @x."
+  },
+  {
+    "id": "buoi5-sp-8",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để liệt kê DS hàng hóa (TenHH, Số đơn) có tổng số đơn đặt hàng trên X.",
+    "sql": "create procedure sp_ds_hanghoa_sodon_tren_x (@x int) as begin\nselect\n  hh.tenhh,\n  count(distinct ct.maddh) as sodon\nfrom\n  hanghoa hh\n  join chitietdathang ct on hh.mahh = ct.mahh\ngroup by\n  hh.mahh,\n  hh.tenhh\nhaving\n  count(distinct ct.maddh) > @x end",
+    "explanation": "Tạo Stored Procedure có tham số @x. Lệnh JOIN nối bảng hanghoa và chitietdathang. Dữ liệu được nhóm theo hàng hóa bằng GROUP BY. Hàm COUNT(DISTINCT ct.maddh) đếm số đơn hàng duy nhất chứa mặt hàng đó, và mệnh đề HAVING lọc ra các mặt hàng có số lượng đơn xuất hiện lớn hơn @x."
+  },
+  {
+    "id": "buoi5-sp-9",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để liệt kê DS hàng hóa (TenHH, Tổng SL) có tổng số lượng đặt hàng trên X.",
+    "sql": "create procedure sp_ds_hanghoa_tongsl_tren_x (@x int) as begin\nselect\n  hh.tenhh,\n  sum(ct.soluong) as tongsl\nfrom\n  hanghoa hh\n  join chitietdathang ct on hh.mahh = ct.mahh\ngroup by\n  hh.mahh,\n  hh.tenhh\nhaving\n  sum(ct.soluong) > @x end",
+    "explanation": "Tạo Stored Procedure nhận tham số @x. Thực hiện JOIN giữa hanghoa và chitietdathang, sau đó GROUP BY theo mặt hàng. Hàm tập hợp SUM(ct.soluong) tính tổng số lượng của hàng hóa được đặt, mệnh đề HAVING giữ lại những hàng hóa có tổng số lượng bán ra lớn hơn @x."
+  },
+  {
+    "id": "buoi5-sp-10",
+    "category": "Stored Procedure",
+    "question": "Viết store procedure để liệt kê DS hàng hóa (TenHH, Tổng số tiền) có tổng số tiền đặt hàng trên X.",
+    "sql": "create procedure sp_ds_hanghoa_tongtien_tren_x (@x float) as begin\nselect\n  hh.tenhh,\n  sum(ct.soluong * ct.dongia) as tongtien\nfrom\n  hanghoa hh\n  join chitietdathang ct on hh.mahh = ct.mahh\ngroup by\n  hh.mahh,\n  hh.tenhh\nhaving\n  sum(ct.soluong * ct.dongia) > @x end",
+    "explanation": "Tạo Stored Procedure với tham số @x. Lệnh sử dụng JOIN để kết hợp bảng hanghoa và chitietdathang, đồng thời dùng GROUP BY để gom nhóm theo hàng hóa. Mệnh đề HAVING so sánh tổng tiền thu được từ hàng hóa (tính bằng hàm SUM) với tham số @x, nhằm lọc ra các mặt hàng mang lại doanh thu lớn hơn giá trị này."
+  }
+]

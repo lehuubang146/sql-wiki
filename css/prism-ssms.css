@@ -1,0 +1,129 @@
+/* SSMS Dark Theme for Prism.js */
+code[class*="language-"],
+pre[class*="language-"] {
+    color: #d4d4d4;
+    text-shadow: none;
+    font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    tab-size: 4;
+    hyphens: none;
+}
+
+pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+    background: #1e1e1e; /* SSMS Editor Background */
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:not(pre) > code[class*="language-"] {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.2em 0.4em;
+    border-radius: 0.3em;
+    white-space: normal;
+}
+
+/* SSMS Dark Theme Token Colors */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #57a64a; /* Green */
+}
+
+.token.punctuation {
+    color: #d4d4d4;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #b5cea8; /* Numbers: Light Green */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #d69d85; /* Strings: Orange */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #d4d4d4; /* Operators: Default text color */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #569cd6; /* Keywords: Blue */
+}
+
+.token.function,
+.token.class-name {
+    color: #ff80ff; /* System Functions: Magenta */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #9cdcfe; /* Variables: Light Blue */
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+.token.entity {
+    cursor: help;
+}
+
+/* Plugin Line Numbers override */
+.line-numbers .line-numbers-rows {
+    border-right: 1px solid rgba(255,255,255,0.1) !important;
+}
+.line-numbers-rows > span:before {
+    color: #858585 !important;
+}
+
+/* Light Mode Overrides for SSMS Light Theme */
+body.light-mode pre[class*="language-"] {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #000000;
+}
+body.light-mode code[class*="language-"] {
+    color: #000000;
+}
+body.light-mode .token.comment { color: #008000; }
+body.light-mode .token.keyword { color: #0000ff; }
+body.light-mode .token.string { color: #a31515; }
+body.light-mode .token.number { color: #000000; }
+body.light-mode .token.function { color: #ff00ff; }
+body.light-mode .token.variable { color: #000000; }
+body.light-mode .token.operator, body.light-mode .token.punctuation { color: #808080; }

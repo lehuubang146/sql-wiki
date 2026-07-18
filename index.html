@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="home" class="desktop-sidebar-collapsed   clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Trang Chủ    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="landing-page">
+    <div class="hero-section">
+        <h1 class="hero-title">SQL Study Wiki</h1>
+        <p class="hero-subtitle">Nền tảng học tập cơ sở dữ liệu tương tác & thông minh dành cho sinh viên.</p>
+        
+        <div class="hero-cta">
+            <a href="queries.html" class="btn-primary" style="text-decoration:none; padding: 12px 24px; font-size: 1.1rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Khám Phá Lý Thuyết
+            </a>
+            <a href="basic.html" class="btn-secondary" style="text-decoration:none; padding: 12px 24px; font-size: 1.1rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Thực Hành Ngay
+            </a>
+            <a href="chat.html" class="btn-secondary" style="text-decoration:none; padding: 12px 24px; font-size: 1.1rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.5); color: var(--text-color);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                Hỏi Đáp Cùng AI
+            </a>
+        </div>
+
+        <!-- Progress Tracking Dashboard -->
+        <div class="progress-dashboard" style="margin-top: 40px; background: rgba(15, 23, 42, 0.6); padding: 20px 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); text-align: left; max-width: 800px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
+                <div>
+                    <h3 style="margin: 0; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        Tiến Độ Học Tập
+                    </h3>
+                    <p style="margin: 5px 0 0 0; color: #94a3b8; font-size: 0.9rem;">Danh hiệu hiện tại: <strong id="user-badge" style="color: #10b981;">Tân binh SQL</strong></p>
+                </div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #38bdf8;" class="progress-text">0%</div>
+            </div>
+            <div class="progress-bar-container" style="height: 12px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden;">
+                <div class="progress-bar-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px;"></div>
+            </div>
+            <p style="margin: 10px 0 0 0; font-size: 0.85rem; color: #64748b; text-align: center;">Hoàn thành bài học để mở khóa danh hiệu "Master SQL" 🏆</p>
+        </div>
+    </div>
+
+    <div class="features-grid">
+        <a href="overview.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            </div>
+            <h3>2 CSDL Thực Hành</h3>
+            <p>Khám phá dữ liệu mẫu và Sơ đồ ERD Kéo Thả của CSDL Quản Lý Sinh Viên và Quản Lý Bán Hàng.</p>
+        </a>
+        
+        <a href="queries.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <h3>Lý Thuyết Cốt Lõi</h3>
+            <p>Nắm vững Truy vấn, Hàm (Functions), Con trỏ (Cursors), Triggers, Khung nhìn và Giao tác (Transaction).</p>
+        </a>
+        
+        <a href="basic.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            </div>
+            <h3>100+ Bài Tập Thực Hành</h3>
+            <p>Trực tiếp gõ mã SQL trên trình duyệt để giải bài tập với kết quả chấm điểm tức thì.</p>
+        </a>
+
+        <a href="qa.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(236, 72, 153, 0.2); color: #f472b6;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <h3>100 Câu Hỏi Ôn Tập</h3>
+            <p>Tuyển tập câu hỏi lý thuyết & bài tập chuẩn bị cho kỳ thi cuối kỳ môn CSDL.</p>
+        </a>
+
+        <a href="sandbox.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <h3>Trình Biên Dịch SQL</h3>
+            <p>Thực thi lệnh SQL ngay trên trình duyệt mà không cần cài đặt SQL Server nhờ WebAssembly.</p>
+        </a>
+
+        <a href="visual_builder.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(249, 115, 22, 0.2); color: #fb923c;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </div>
+            <h3>Xếp Hình Truy Vấn</h3>
+            <p>Tự do lắp ráp câu lệnh SQL bằng phương pháp kéo-thả trực quan dành cho người mới bắt đầu.</p>
+        </a>
+
+        <a href="mock_exam.html" class="feature-card" style="text-decoration: none; color: inherit;">
+            <div class="feature-icon" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Chế Độ Thi Thử</h3>
+            <p>Kiểm tra kiến thức với 50+ câu hỏi trắc nghiệm ngẫu nhiên, có tính thời gian và chấm điểm.</p>
+        </a>
+
+        <a href="chat.html" class="feature-card" style="text-decoration: none; color: inherit; grid-column: 1 / -1; max-width: 600px; margin: 0 auto; width: 100%;">
+            <div class="feature-icon" style="background: rgba(139, 92, 246, 0.2); color: #a78bfa;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            </div>
+            <h3>Trợ Lý AI Đa Năng</h3>
+            <p>Tích hợp Llama 3 và Gemini để giải đáp thắc mắc SQL theo thời gian thực.</p>
+        </a>
+    </div>
+</div>
+
+<style>
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    min-height: calc(100vh - 100px);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    animation: fadeInSlideUp 0.6s ease-out forwards;
+}
+
+.hero-section {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+.hero-title {
+    font-size: 3.5rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 1rem !important;
+    color: #3b82f6 !important;
+    letter-spacing: -0.02em;
+}
+
+body.light-mode .hero-title {
+    color: #2563eb !important;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 2.5rem !important;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.light-mode .feature-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    margin: 0 0 1rem 0 !important;
+    font-size: 1.25rem !important;
+    color: var(--text-color) !important;
+}
+
+.feature-card p {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+}
+
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+    }
+    .hero-cta {
+        flex-direction: column;
+    }
+    .hero-cta a {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+            </main>
+            
+            <!-- TOC Container -->
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="tables" class="  has-toc clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="active">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Dữ Liệu Bảng (Dữ liệu mẫu)    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Khởi tạo Bảng &amp; Ràng Buộc</div><h1>Khởi tạo Bảng & Ràng Buộc (Constraints)</h1>
+<p class="description">Trong SQL Server, việc thiết kế bảng không chỉ dừng lại ở tên cột và kiểu dữ liệu, mà còn phải đảm bảo <strong>Toàn vẹn dữ liệu</strong> thông qua các Ràng buộc (Constraints). Việc khai báo đúng các ràng buộc giúp ngăn chặn những dữ liệu "rác" hoặc không hợp lệ được lưu vào hệ thống.</p>
+
+<h2>1. Các loại Ràng Buộc cơ bản</h2>
+<div class="info-box">
+    <ul>
+        <li><strong>PRIMARY KEY (Khóa chính):</strong> Đảm bảo dữ liệu trong cột là duy nhất và không được NULL. Dùng để định danh mỗi dòng dữ liệu.</li>
+        <li><strong>FOREIGN KEY (Khóa ngoại):</strong> Đảm bảo tính toàn vẹn tham chiếu. Dữ liệu cột này phải tồn tại ở khóa chính của bảng khác.</li>
+        <li><strong><span style="color: #ef4444;">CHECK</span> (Ràng buộc miền giá trị):</strong> Cực kỳ quan trọng! Dùng để giới hạn dữ liệu nhập vào phải thoả mãn một điều kiện cụ thể (VD: Tuổi >= 18, Điểm >= 0).</li>
+        <li><strong>UNIQUE (Duy nhất):</strong> Dữ liệu không được trùng lặp (nhưng được phép có 1 giá trị NULL).</li>
+        <li><strong>DEFAULT (Mặc định):</strong> Gán giá trị mặc định nếu người dùng không nhập.</li>
+    </ul>
+</div>
+
+<h2>2. Khai báo Ràng Buộc CHECK</h2>
+<p>Khi học phần tạo bảng, giảng viên thường rất hay yêu cầu sử dụng <code>CHECK</code> để kiểm tra tính hợp lệ của dữ liệu. Bạn có thể khai báo CHECK ngay lúc tạo bảng (CREATE TABLE) hoặc thêm vào sau (ALTER TABLE).</p>
+
+<h3>Ví dụ: Tạo bảng với các ràng buộc</h3>
+<pre><code class="language-sql">CREATE TABLE SINHVIEN (
+    MaSV VARCHAR(10) PRIMARY KEY, -- Khóa chính
+    HoTen NVARCHAR(100) NOT NULL,
+    GioiTinh BIT DEFAULT 1, -- Mặc định là Nam (1)
+    Tuoi INT CHECK (Tuoi >= 18 AND Tuoi <= 60), -- Ràng buộc CHECK tuổi
+    DiemThi FLOAT CHECK (DiemThi >= 0 AND DiemThi <= 10) -- Ràng buộc CHECK điểm
+)</code></pre>
+
+<h3>Cú pháp thêm Ràng buộc CHECK (ALTER TABLE)</h3>
+<p>Nếu bạn đã tạo bảng rồi và quên mất ràng buộc, bạn có thể bổ sung bằng lệnh sau:</p>
+<pre><code class="language-sql">ALTER TABLE DIEMHP 
+ADD CONSTRAINT CHK_DiemHP CHECK (DiemHP >= 0 AND DiemHP <= 10);
+
+ALTER TABLE SINHVIEN
+ADD CONSTRAINT CHK_GioiTinh CHECK (GioiTinh IN (0, 1));
+</code></pre>
+
+<hr>
+
+<h2 style="margin-top: 3rem;">Dữ Liệu Bảng (QLSV_NEW)</h2>
+<p>Dưới đây là toàn bộ dữ liệu mẫu đã được nạp vào cơ sở dữ liệu dựa theo file <code>SQL THBUOI2.sql</code>.</p>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DMKHOA</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MAKHOA<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TENKHOA<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(50)</small></th></tr></thead><tbody><tr><td>CNTT</td><td>CÔNG NGHỆ THÔNG TIN</td></tr><tr><td>KT</td><td>KẾ TOÁN</td></tr><tr><td>SP</td><td>SƯ PHẠM</td></tr></tbody></table></div><h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DMNGANH</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MANGANH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(20)</small></th><th>TENNGANH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(50)</small></th><th>MAKHOA<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th></tr></thead><tbody><tr><td>140902</td><td>SƯ PHẠM TOÁN TIN</td><td>SP</td></tr><tr><td>480202</td><td>TIN HỌC ỨNG DỤNG</td><td>CNTT</td></tr></tbody></table></div><h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DMLOP</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MALOP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TENLOP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(50)</small></th><th>MANGANH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(20)</small></th><th>KHOAHOC<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>HEDT<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(10)</small></th><th>NAMNHAPHOC<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th></tr></thead><tbody><tr><td>CT11</td><td>CAO ĐẲNG TIN HỌC</td><td>480202</td><td>11</td><td>TC</td><td>2013</td></tr><tr><td>CT12</td><td>CAO ĐẲNG TIN HỌC</td><td>480202</td><td>12</td><td>CĐ</td><td>2013</td></tr><tr><td>CT13</td><td>CAO ĐẲNG TIN HỌC</td><td>480202</td><td>13</td><td>CĐ</td><td>2014</td></tr></tbody></table></div><h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: SINHVIEN</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MASV<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(20)</small></th><th>HOTEN<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(50)</small></th><th>MALOP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>GIOITINH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th><th>NGAYSINH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>date</small></th><th>DIACHI<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th></tr></thead><tbody><tr><td>001</td><td>Phan Thanh</td><td>CT12</td><td>0</td><td>2000-12-09</td><td>Tuy Phước</td></tr><tr><td>002</td><td>Nguyễn Thị Cẩm</td><td>CT12</td><td>1</td><td>2003-12-01</td><td>Quy Nhơn</td></tr><tr><td>003</td><td>Võ Thị Hà</td><td>CT12</td><td>1</td><td>1992-02-07</td><td>An Nhơn</td></tr><tr><td>004</td><td>Trần Hoại Nam</td><td>CT12</td><td>0</td><td>1994-05-04</td><td>Tây Sơn</td></tr><tr><td>005</td><td>Trần Văn Hoàng</td><td>CT13</td><td>0</td><td>1995-04-08</td><td>Vĩnh Thạnh</td></tr><tr><td>006</td><td>Đặng Thị Thảo</td><td>CT13</td><td>1</td><td>1995-12-06</td><td>Quy Nhơn</td></tr><tr><td>007</td><td>Lê Thị Sen</td><td>CT13</td><td>1</td><td>1994-12-08</td><td>Phù Cạt</td></tr><tr><td>008</td><td>Nguyễn Văn Huy</td><td>CT11</td><td>0</td><td> 1995-04-06</td><td>Phù Mỹ</td></tr><tr><td>009</td><td>Trần Thị Hoa</td><td>CT11</td><td>1</td><td>1994-08-09</td><td>Hoài Nhơn</td></tr></tbody></table></div><h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DMHOCPHAN</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MAHP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TENHP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>SODVHT<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th><th>MANGANH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(20)</small></th><th>HOCKY<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th></tr></thead><tbody><tr><td>001</td><td>Toán cao cấp A1</td><td>4</td><td>480202</td><td>1</td></tr><tr><td>002</td><td>Tiếng Anh 1</td><td>3</td><td>480202</td><td>1</td></tr><tr><td>003</td><td>Vật lý đại cương</td><td>4</td><td>480202</td><td>1</td></tr><tr><td>004</td><td>Tiếng Anh 2</td><td>7</td><td>480202</td><td>1</td></tr><tr><td>005</td><td>Tiếng Anh 1</td><td>4</td><td>140902</td><td>2</td></tr><tr><td>006</td><td>Xác Suất Thống Kê</td><td>3</td><td>140902</td><td>2</td></tr></tbody></table></div><h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: DIEMHP</h3><div style='overflow-x: auto; margin-top: 1rem;'><table><thead><tr><th>MASV<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(20)</small></th><th>MAHP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>DIEMHP<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>float</small></th></tr></thead><tbody><tr><td>001</td><td>002</td><td>5.9</td></tr><tr><td>002</td><td>003</td><td>4.5</td></tr><tr><td>003</td><td>001</td><td>4.3</td></tr><tr><td>003</td><td>002</td><td>6.7</td></tr><tr><td>004</td><td>001</td><td>4.0</td></tr><tr><td>004</td><td>002</td><td>5.2</td></tr><tr><td>004</td><td>003</td><td>3.5</td></tr><tr><td>005</td><td>001</td><td>9.8</td></tr><tr><td>005</td><td>002</td><td>7.9</td></tr><tr><td>005</td><td>003</td><td>7.5</td></tr><tr><td>006</td><td>001</td><td>6.1</td></tr><tr><td>006</td><td>003</td><td>4.0</td></tr><tr><td>007</td><td>001</td><td>6.2</td></tr></tbody></table></div>
+<h2 style="margin-top: 4rem; color: #fbbf24;">Dữ Liệu Bảng (QUANLYBANHANG)</h2>
+<p>Dưới đây là một số dữ liệu mẫu đặc trưng của hệ thống Quản Lý Bán Hàng phục vụ cho các bài tập mở rộng.</p>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: KHACHHANG</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TenKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>DiaChi<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(200)</small></th><th>LoaiKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th></tr></thead>
+<tbody>
+<tr><td>KH01</td><td>Nguyễn Văn A</td><td>731 Trần Hưng Đạo, Q5, TpHCM</td><td>VIP</td></tr>
+<tr><td>KH02</td><td>Trần Ngọc Hân</td><td>23/5 Nguyễn Trãi, Q5, TpHCM</td><td>TV</td></tr>
+<tr><td>KH03</td><td>Phạm Quỳnh Anh</td><td>Quy Nhơn, Bình Định</td><td>VIP</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: HANGHOA</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>TenH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(100)</small></th><th>DonViTinh<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>nvarchar(20)</small></th><th>DonGia<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>float</small></th></tr></thead>
+<tbody>
+<tr><td>H001</td><td>Bánh Cosy</td><td>Hộp</td><td>35000</td></tr>
+<tr><td>H002</td><td>Nước yến</td><td>Lon</td><td>20000</td></tr>
+<tr><td>H003</td><td>Sữa tươi Vinamilk</td><td>Thùng</td><td>320000</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: HOADON</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaHD<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>NgayLapHD<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>date</small></th><th>MaKH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th></tr></thead>
+<tbody>
+<tr><td>HD001</td><td>2018-05-12</td><td>KH01</td></tr>
+<tr><td>HD002</td><td>2018-06-25</td><td>KH03</td></tr>
+<tr><td>HD003</td><td>2018-08-15</td><td>KH02</td></tr>
+</tbody></table></div>
+
+<h3 style='margin-top: 2rem; color: var(--primary-color);'>Bảng: CHITIETHD</h3>
+<div style='overflow-x: auto; margin-top: 1rem;'><table>
+<thead><tr><th>MaHD<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>MaH<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>varchar(10)</small></th><th>SoLuong<br><small style='color: var(--primary-color); font-weight: normal; font-size: 0.85em; font-family: monospace;'>int</small></th></tr></thead>
+<tbody>
+<tr><td>HD001</td><td>H001</td><td>12</td></tr>
+<tr><td>HD001</td><td>H003</td><td>5</td></tr>
+<tr><td>HD002</td><td>H002</td><td>20</td></tr>
+</tbody></table></div>
+
+                <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <button id="mark-complete-btn" onclick="markComplete('tables', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Đánh dấu Hoàn thành
+                    </button>
+                    <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Hoàn thành bài học để tăng tiến độ khóa học SQL của bạn!</p>
+                </div>
+                            </main>
+            
+            <!-- TOC Container -->
+                        <aside id="toc-container" class="toc-container"></aside>
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

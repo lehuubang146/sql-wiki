@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="quantifier" class="  has-toc clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="active">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Thực Hành: Lượng từ    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Lượng từ (Bài tập)</div>
+<div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <h1>Lượng từ</h1>
+    <p style="color: var(--text-muted); font-size: 1.05rem;">
+        Tổng hợp danh sách các bài tập rèn luyện kỹ năng <b>Lượng từ</b>.
+    </p>
+</div>
+
+    
+    <!-- Phần bài tập Quản Lý Sinh Viên -->
+            <h2 style="color: #3b82f6; border-bottom: 2px solid rgba(59, 130, 246, 0.3); padding-bottom: 0.5rem; margin-top: 2rem; margin-bottom: 1.5rem;">
+            📚 CSDL: Quản Lý Sinh Viên (QLSV_NEW)
+        </h2>
+                    <div class="exercise-item" id="ex-b2-d4-b1-1" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 1                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        1. Cho biết HoTen sinh viên có DiemHP cao nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  s.hoten
+from
+  sinhvien s,
+  diemhp d
+where
+  s.masv = d.masv
+  and d.diemhp &gt;= all (
+    select
+      diemhp
+    from
+      diemhp
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b1-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b1-1" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Lượng từ ALL được sử dụng để so sánh một giá trị với mọi giá trị trong một tập hợp. Ở đây, điều kiện `d.diemhp &gt;= all (...)` có nghĩa là điểm học phần của sinh viên này phải lớn hơn hoặc bằng tất cả các điểm học phần có trong bảng diemhp (tức là điểm cao nhất). Truy vấn thực hiện join 2 bảng sinhvien và diemhp để lấy ra họ tên sinh viên.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b1-2" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 2                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        2. Cho biết HoTen sinh viên có tuổi cao nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  hoten
+from
+  sinhvien
+where
+  ngaysinh &lt;= all (
+    select
+      ngaysinh
+    from
+      sinhvien
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b1-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b1-2" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng lượng từ ALL để tìm sinh viên có tuổi cao nhất, tức là người có ngày sinh (ngaysinh) nhỏ nhất (xa nhất trong quá khứ). Điều kiện `ngaysinh &lt;= all (...)` đảm bảo ngày sinh của sinh viên được chọn nhỏ hơn hoặc bằng mọi ngày sinh có trong bảng sinhvien.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b1-3" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 3                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        3. Cho biết MaSV, HoTen sinh viên có điểm học phần mã ‘001’ cao nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  s.masv,
+  s.hoten
+from
+  sinhvien s,
+  diemhp d
+where
+  s.masv = d.masv
+  and d.mahp = &#039;001&#039;
+  and d.diemhp &gt;= all (
+    select
+      diemhp
+    from
+      diemhp
+    where
+      mahp = &#039;001&#039;
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b1-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b1-3" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Kết hợp JOIN và lượng từ ALL. Truy vấn tìm các sinh viên có điểm môn &#039;001&#039; lớn hơn hoặc bằng tất cả các điểm của chính môn &#039;001&#039; đó trong bảng diemhp. Điều kiện `mahp = &#039;001&#039;` ở cả truy vấn ngoài và truy vấn con giúp giới hạn phạm vi xét điểm cao nhất chỉ trong môn học này.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b2-1" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 4                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        1. Cho biết MaSV, MaHP có điểm HP lớn hơn bất kỳ các điểm HP của sinh viên mã ‘001’.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  masv,
+  mahp
+from
+  diemhp
+where
+  diemhp &gt; any (
+    select
+      diemhp
+    from
+      diemhp
+    where
+      masv = &#039;001&#039;
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b2-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b2-1" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Lượng từ ANY (hoặc SOME) kiểm tra xem một giá trị có thỏa mãn điều kiện với ít nhất một phần tử trong tập hợp hay không. Ở đây, truy vấn chọn ra các bản ghi có diemhp lớn hơn một điểm bất kỳ của sinh viên &#039;001&#039; (chỉ cần lớn hơn điểm nhỏ nhất của sinh viên &#039;001&#039; là thỏa mãn).                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b2-2" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 5                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        2. Cho biết sinh viên có điểm học phần nào đó lớn hơn gấp rưỡi điểm trung bình chung của sinh viên đó.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  s.masv,
+  s.hoten
+from
+  sinhvien s,
+  diemhp d
+where
+  s.masv = d.masv
+  and d.diemhp &gt; any (
+    select
+      1.5 * avg(d2.diemhp)
+    from
+      diemhp d2
+    where
+      d2.masv = s.masv
+    group by
+      d2.masv
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b2-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b2-2" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Subquery tính toán điểm trung bình (avg) của từng sinh viên (nhờ group by d2.masv và điều kiện d2.masv = s.masv - correlated subquery). Sau đó truy vấn chính sẽ dùng ANY để lấy ra sinh viên nếu họ có ít nhất một điểm học phần (d.diemhp) lớn hơn 1.5 lần điểm trung bình vừa tính.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b3-1" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 6                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        1. Cho biết MaSV, HoTen sinh viên đã ít nhất một lần học học phần nào đó.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  masv,
+  hoten
+from
+  sinhvien s
+where
+  exists (
+    select
+      1
+    from
+      diemhp d
+    where
+      s.masv = d.masv
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b3-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b3-1" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Lượng từ EXISTS kiểm tra xem một subquery có trả về bất kỳ dòng dữ liệu nào hay không. Correlated subquery bên trong kiểm tra xem có tồn tại dòng nào trong bảng diemhp ứng với mã sinh viên hiện tại hay không. Nếu có (sinh viên đã học ít nhất 1 môn), EXISTS trả về true và hiển thị sinh viên đó.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b3-2" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 7                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        2. Cho biết MaSV, HoTen sinh viên đã không học học phần nào.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  masv,
+  hoten
+from
+  sinhvien s
+where
+  not exists (
+    select
+      1
+    from
+      diemhp d
+    where
+      s.masv = d.masv
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b3-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b3-2" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Ngược lại với EXISTS, NOT EXISTS sẽ trả về true nếu subquery không trả về bất kỳ kết quả nào. Correlated subquery tìm xem sinh viên đang xét có bản ghi nào trong bảng diemhp không. Nếu không tìm thấy dòng nào, chứng tỏ sinh viên chưa học môn nào, NOT EXISTS thỏa mãn và in ra sinh viên đó.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-b2-d4-b3-3" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 8                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        3. Cho biết MaLop,TenLop đã không có sinh viên nào học.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">select
+  malop,
+  tenlop
+from
+  dmlop l
+where
+  not exists (
+    select
+      1
+    from
+      sinhvien s
+    where
+      s.malop = l.malop
+  );</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d4-b3-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-b2-d4-b3-3" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Tương tự ví dụ trước, NOT EXISTS kiểm tra sự vắng mặt của dữ liệu. Truy vấn con tìm kiếm các sinh viên (sinhvien) thuộc lớp hiện tại đang xét (s.malop = l.malop). Nếu subquery không trả về bản ghi nào (lớp không có sinh viên nào), điều kiện NOT EXISTS thỏa mãn và in ra thông tin lớp đó.                    </div>
+                </div>
+                            </div>
+            
+    <!-- Phần bài tập Quản Lý Bán Hàng -->
+            <h2 style="color: #10b981; border-bottom: 2px solid rgba(16, 185, 129, 0.3); padding-bottom: 0.5rem; margin-top: 3rem; margin-bottom: 1.5rem;">
+            🛒 CSDL: Quản Lý Bán Hàng (QUANLYBANHANG)
+        </h2>
+                    <div class="exercise-item" id="ex-BH_22" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 1                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết hoá đơn có tổng trị giá lớn nhất gồm các thông tin: Số hoá đơn, ngày bán, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi,
+  SUM(C.SoLuong * H.DonGia) AS TongTriGia
+FROM
+  HOADON HD
+  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH
+  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD
+  INNER JOIN HANGHOA H ON C.MaH = H.MaH
+GROUP BY
+  HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi
+ORDER BY
+  SUM(C.SoLuong * H.DonGia) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_22')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_22" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng TOP 1 kết hợp với ORDER BY DESC để lấy lớn nhất.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_23" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 2                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết hoá đơn có tổng trị giá lớn nhất trong tháng 5/2000 gồm các thông tin: Số hoá đơn, ngày, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi,
+  SUM(C.SoLuong * H.DonGia) AS TongTriGia
+FROM
+  HOADON HD
+  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH
+  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD
+  INNER JOIN HANGHOA H ON C.MaH = H.MaH
+WHERE
+  MONTH(HD.NgayLapHD) = 5
+  AND YEAR(HD.NgayLapHD) = 2000
+GROUP BY
+  HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi
+ORDER BY
+  SUM(C.SoLuong * H.DonGia) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_23')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_23" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Lọc thêm theo tháng và năm trước khi tính TOP 1.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_24" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 3                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết hoá đơn có tổng trị giá nhỏ nhất gồm các thông tin: Số hoá đơn, ngày, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi,
+  SUM(C.SoLuong * H.DonGia) AS TongTriGia
+FROM
+  HOADON HD
+  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH
+  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD
+  INNER JOIN HANGHOA H ON C.MaH = H.MaH
+GROUP BY
+  HD.MaHD,
+  HD.NgayLapHD,
+  KH.TenKH,
+  KH.DiaChi
+ORDER BY
+  SUM(C.SoLuong * H.DonGia) ASC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_24')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_24" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng TOP 1 kết hợp với ORDER BY ASC để lấy nhỏ nhất.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_25" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 4                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết các thông tin của khách hàng có số lượng hoá đơn mua hàng nhiều nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 KH.*
+FROM
+  KHACHHANG KH
+  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH
+GROUP BY
+  KH.MaKH,
+  KH.TenKH,
+  KH.DiaChi,
+  KH.DienThoai,
+  KH.Email,
+  KH.LoaiKH
+ORDER BY
+  COUNT(HD.MaHD) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_25')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_25" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Đếm số hóa đơn bằng COUNT và sắp xếp giảm dần.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_26" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 5                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết các thông tin của khách hàng có số lượng hàng mua nhiều nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 KH.*
+FROM
+  KHACHHANG KH
+  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH
+  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD
+GROUP BY
+  KH.MaKH,
+  KH.TenKH,
+  KH.DiaChi,
+  KH.DienThoai,
+  KH.Email,
+  KH.LoaiKH
+ORDER BY
+  SUM(C.SoLuong) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_26')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_26" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tính tổng số lượng hàng hóa bằng SUM và sắp xếp giảm dần.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_27" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 6                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết các thông tin về các mặt hàng mà được bán trong nhiều hoá đơn nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 H.*
+FROM
+  HANGHOA H
+  INNER JOIN CHITIETHD C ON H.MaH = C.MaH
+GROUP BY
+  H.MaH,
+  H.TenH,
+  H.DonViTinh,
+  H.DonGia
+ORDER BY
+  COUNT(DISTINCT C.MaHD) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_27')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_27" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Đếm số hóa đơn khác nhau có mặt hàng đó.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_28" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 7                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Cho biết các thông tin về các mặt hàng mà được bán nhiều nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+  TOP 1 H.*
+FROM
+  HANGHOA H
+  INNER JOIN CHITIETHD C ON H.MaH = C.MaH
+GROUP BY
+  H.MaH,
+  H.TenH,
+  H.DonViTinh,
+  H.DonGia
+ORDER BY
+  SUM(C.SoLuong) DESC</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_28')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_28" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tính tổng số lượng bán ra của mặt hàng.                    </div>
+                </div>
+                            </div>
+                
+
+<script>
+function toggleExplanation(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'none') {
+        el.style.display = 'block';
+    } else {
+        el.style.display = 'none';
+    }
+}
+</script>
+                <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <button id="mark-complete-btn" onclick="markComplete('quantifier', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Đánh dấu Hoàn thành
+                    </button>
+                    <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Hoàn thành bài học để tăng tiến độ khóa học SQL của bạn!</p>
+                </div>
+                            </main>
+            
+            <!-- TOC Container -->
+                        <aside id="toc-container" class="toc-container"></aside>
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

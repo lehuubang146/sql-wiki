@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="visual_builder" class="  has-toc clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="active">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Xếp Hình Truy Vấn SQL    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Xếp Hình SQL</div><div class="wiki-content">
+    <div class="content-header">
+        <h1>Xếp Hình Truy Vấn (Visual Builder)</h1>
+        <p class="subtitle">Học SQL bằng cách kéo thả hoặc nhấp vào các "khối lệnh" vào vùng trống thay vì gõ phím. Chạy thử kết quả ngay lập tức!</p>
+    </div>
+
+    <div class="visual-builder-container" style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+        
+        <!-- Toolbox (Kho linh kiện) -->
+        <div class="toolbox" style="flex: 1; min-width: 320px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; max-height: 80vh; overflow-y: auto;">
+            <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Kho Lệnh SQL</h3>
+            
+            <div class="toolbox-section">
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Từ Khóa (Keywords)</h4>
+                <div class="blocks-container" id="toolbox-keywords">
+                    <div class="sql-block keyword" draggable="true" data-val="SELECT">SELECT</div>
+                    <div class="sql-block keyword" draggable="true" data-val="*">*</div>
+                    <div class="sql-block keyword" draggable="true" data-val="DISTINCT">DISTINCT</div>
+                    <div class="sql-block keyword" draggable="true" data-val="FROM">FROM</div>
+                    <div class="sql-block keyword" draggable="true" data-val="WHERE">WHERE</div>
+                    <div class="sql-block keyword" draggable="true" data-val="INNER JOIN">INNER JOIN</div>
+                    <div class="sql-block keyword" draggable="true" data-val="LEFT JOIN">LEFT JOIN</div>
+                    <div class="sql-block keyword" draggable="true" data-val="ON">ON</div>
+                    <div class="sql-block keyword" draggable="true" data-val="GROUP BY">GROUP BY</div>
+                    <div class="sql-block keyword" draggable="true" data-val="HAVING">HAVING</div>
+                    <div class="sql-block keyword" draggable="true" data-val="ORDER BY">ORDER BY</div>
+                    <div class="sql-block keyword" draggable="true" data-val="AND">AND</div>
+                    <div class="sql-block keyword" draggable="true" data-val="OR">OR</div>
+                    <div class="sql-block keyword" draggable="true" data-val="AS">AS</div>
+                </div>
+            </div>
+
+            <div class="toolbox-section" style="margin-top: 15px;">
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Hàm & Toán Tử (Operators)</h4>
+                <div class="blocks-container" id="toolbox-operators">
+                    <div class="sql-block operator" draggable="true" data-val="=">=</div>
+                    <div class="sql-block operator" draggable="true" data-val=">">></div>
+                    <div class="sql-block operator" draggable="true" data-val="<"><</div>
+                    <div class="sql-block operator" draggable="true" data-val=">=">>=</div>
+                    <div class="sql-block operator" draggable="true" data-val="<="><=</div>
+                    <div class="sql-block operator" draggable="true" data-val="LIKE">LIKE</div>
+                    <div class="sql-block operator" draggable="true" data-val="IN">IN</div>
+                    <div class="sql-block operator" draggable="true" data-val="BETWEEN">BETWEEN</div>
+                    <div class="sql-block operator" draggable="true" data-val="IS NULL">IS NULL</div>
+                    <div class="sql-block operator" draggable="true" data-val="COUNT(">COUNT(</div>
+                    <div class="sql-block operator" draggable="true" data-val="SUM(">SUM(</div>
+                    <div class="sql-block operator" draggable="true" data-val="AVG(">AVG(</div>
+                    <div class="sql-block operator" draggable="true" data-val="MAX(">MAX(</div>
+                    <div class="sql-block operator" draggable="true" data-val="MIN(">MIN(</div>
+                    <div class="sql-block operator" draggable="true" data-val=")">)</div>
+                </div>
+            </div>
+
+            <!-- Tab Headers cho CSDL -->
+            <div style="display: flex; gap: 10px; margin-top: 20px; border-bottom: 1px solid var(--border-color);">
+                <button class="db-tab-btn active" data-target="tab-qlsv" style="padding: 8px 12px; background: none; border: none; border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: bold; cursor: pointer;">QL Sinh Viên</button>
+                <button class="db-tab-btn" data-target="tab-banhang" style="padding: 8px 12px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); font-weight: bold; cursor: pointer;">QL Bán Hàng</button>
+            </div>
+
+            <!-- TAB QLSV -->
+            <div id="tab-qlsv" class="db-tab-content" style="display: block;">
+                <div class="toolbox-section" style="margin-top: 15px;">
+                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Bảng (Tables)</h4>
+                    <div class="blocks-container">
+                        <div class="sql-block table" draggable="true" data-val="SINHVIEN">SINHVIEN</div>
+                        <div class="sql-block table" draggable="true" data-val="DMLOP">DMLOP</div>
+                        <div class="sql-block table" draggable="true" data-val="DMHOCPHAN">DMHOCPHAN</div>
+                        <div class="sql-block table" draggable="true" data-val="DIEMHP">DIEMHP</div>
+                        <div class="sql-block table" draggable="true" data-val="DMNGANH">DMNGANH</div>
+                    </div>
+                </div>
+
+                <div class="toolbox-section" style="margin-top: 15px;">
+                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Cột (Columns)</h4>
+                    <div class="blocks-container">
+                        <div class="sql-block column" draggable="true" data-val="MASV">MASV</div>
+                        <div class="sql-block column" draggable="true" data-val="HOTEN">HOTEN</div>
+                        <div class="sql-block column" draggable="true" data-val="MALOP">MALOP</div>
+                        <div class="sql-block column" draggable="true" data-val="TENLOP">TENLOP</div>
+                        <div class="sql-block column" draggable="true" data-val="MAHP">MAHP</div>
+                        <div class="sql-block column" draggable="true" data-val="TENHP">TENHP</div>
+                        <div class="sql-block column" draggable="true" data-val="DIEMHP">DIEMHP</div>
+                        <div class="sql-block column" draggable="true" data-val="MANGANH">MANGANH</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB BÁN HÀNG -->
+            <div id="tab-banhang" class="db-tab-content" style="display: none;">
+                <div class="toolbox-section" style="margin-top: 15px;">
+                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Bảng (Tables)</h4>
+                    <div class="blocks-container">
+                        <div class="sql-block table" draggable="true" data-val="KHACHHANG">KHACHHANG</div>
+                        <div class="sql-block table" draggable="true" data-val="HANGHOA">HANGHOA</div>
+                        <div class="sql-block table" draggable="true" data-val="DONDATHANG">DONDATHANG</div>
+                        <div class="sql-block table" draggable="true" data-val="CHITIETDDH">CHITIETDDH</div>
+                    </div>
+                </div>
+
+                <div class="toolbox-section" style="margin-top: 15px;">
+                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Cột (Columns)</h4>
+                    <div class="blocks-container">
+                        <div class="sql-block column" draggable="true" data-val="MAKH">MAKH</div>
+                        <div class="sql-block column" draggable="true" data-val="TENKH">TENKH</div>
+                        <div class="sql-block column" draggable="true" data-val="MAHH">MAHH</div>
+                        <div class="sql-block column" draggable="true" data-val="TENHH">TENHH</div>
+                        <div class="sql-block column" draggable="true" data-val="DONGIA">DONGIA</div>
+                        <div class="sql-block column" draggable="true" data-val="SOHD">SOHD</div>
+                        <div class="sql-block column" draggable="true" data-val="NGAYLAP">NGAYLAP</div>
+                        <div class="sql-block column" draggable="true" data-val="SOLUONG">SOLUONG</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toolbox-section" style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Nhập Tay Giá Trị</h4>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" id="custom-val-input" placeholder="'Gia tri' hoac 123" style="flex:1; padding: 5px; border-radius: 4px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.1); color: var(--text-color);">
+                    <button id="add-custom-val-btn" class="btn btn-primary" style="padding: 5px 10px;">Thêm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drop Zone (Khu vực lắp ráp) -->
+        <div class="workspace" style="flex: 2; min-width: 300px; display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; min-height: 250px; display: flex; flex-direction: column;">
+                
+                <!-- Thử Thách -->
+                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 10px;">
+                        <h4 style="margin: 0; color: #3b82f6; font-size: 0.95rem; display: flex; align-items: center; gap: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Gợi Ý Thử Thách
+                        </h4>
+                        <select id="challenge-select" style="background-color: var(--code-bg, #1e293b); color: var(--text-color); border: 1px solid var(--border-color); padding: 8px 30px 8px 12px; border-radius: 6px; font-size: 0.9rem; outline: none; flex: 1; min-width: 250px; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%2394a3b8%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 8px center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; transition: border-color 0.2s;">
+                            <option value="">-- Chọn một bài tập mẫu --</option>
+                            <option value="1">1. Đếm tổng số lượng sinh viên</option>
+                            <option value="2">2. Tìm sinh viên học khoa CNTT</option>
+                            <option value="3">3. Hàng Hóa có giá lớn hơn 100,000</option>
+                            <option value="4">4. Nối Bảng Sinh Viên và Lớp</option>
+                            <option value="5">5. Liệt kê Khách Hàng (Tên & Địa Chỉ)</option>
+                            <option value="6">6. Tìm Hóa Đơn có tổng số lượng lớn</option>
+                            <option value="7">7. Sắp xếp Sinh Viên theo tên giảm dần</option>
+                        </select>
+                    </div>
+                    <p id="challenge-desc" style="margin: 0; font-size: 0.85rem; color: var(--text-color); font-style: italic;">Chọn một bài tập từ danh sách để bắt đầu!</p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">
+                    <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-color);">Khu Vực Lắp Ráp</h3>
+                    <button id="clear-workspace-btn" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">Xóa Hết</button>
+                </div>
+                <div id="drop-zone" style="flex: 1; border: 2px dashed var(--glass-border); border-radius: 8px; padding: 15px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; min-height: 150px;">
+                    <span id="drop-placeholder" style="color: var(--text-muted); font-style: italic; width: 100%; text-align: center; margin-top: 50px; user-select: none;">Kéo các khối vào đây...</span>
+                </div>
+            </div>
+            
+            <!-- Result Code -->
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-color);">Mã Lệnh Tự Sinh</h3>
+                    <button onclick="runQuery(this, 'visual-code-output', 'visual-run-result')" class="btn btn-primary" style="padding: 6px 15px; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #10b981; border-color: #059669;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Chạy Thử
+                    </button>
+                </div>
+                <textarea id="visual-code-output" readonly style="width: 100%; height: 100px; background: var(--code-bg, #1e1e1e); color: var(--text-color, #d4d4d4); font-family: 'Fira Code', monospace; font-size: 1rem; padding: 15px; border: none; resize: vertical; outline: none; border-radius: 8px;"></textarea>
+                <div id="visual-run-result" style="margin-top: 15px; min-height: 50px;"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<style>
+.blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.sql-block {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.1s;
+}
+.sql-block:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+.sql-block.keyword { background: #3b82f6; color: white; }
+.sql-block.operator { background: #8b5cf6; color: white; }
+.sql-block.table { background: #f59e0b; color: white; }
+.sql-block.column { background: #10b981; color: white; }
+.sql-block.custom { background: #64748b; color: white; }
+
+#drop-zone.drag-over {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #3b82f6;
+}
+.light-mode #drop-zone.drag-over {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.workspace-block {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    cursor: pointer; /* To remove */
+}
+.workspace-block:hover {
+    filter: brightness(1.2);
+}
+.workspace-block .remove-btn {
+    margin-left: 5px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+}
+.workspace-block .remove-btn:hover {
+    color: white;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const draggables = document.querySelectorAll('.sql-block');
+    const dropZone = document.getElementById('drop-zone');
+    const dropPlaceholder = document.getElementById('drop-placeholder');
+    const codeOutput = document.getElementById('visual-code-output');
+    const clearBtn = document.getElementById('clear-workspace-btn');
+    const addCustomBtn = document.getElementById('add-custom-val-btn');
+    const customInput = document.getElementById('custom-val-input');
+    
+    // Thử Thách
+    const challengeSelect = document.getElementById('challenge-select');
+    const challengeDesc = document.getElementById('challenge-desc');
+    const challenges = {
+        "1": "Bạn hãy dùng hàm <b>COUNT(</b> kết hợp với bảng <b>SINHVIEN</b> để đếm tổng số lượng sinh viên.",
+        "2": "Sử dụng <b>SELECT</b>, <b>FROM</b> và <b>WHERE</b> để tìm các sinh viên có MALOP là 'CNTT'. <i>Mẹo: Bạn có thể nhập tay 'CNTT' vào ô Nhập Tay Giá Trị.</i>",
+        "3": "Hãy chuyển sang kho lệnh Quản Lý Bán Hàng, dùng bảng <b>HANGHOA</b> và kết hợp <b>WHERE</b> DONGIA > 100000.",
+        "4": "Hãy thử dùng <b>INNER JOIN</b> để nối bảng <b>SINHVIEN</b> và <b>DMLOP</b> dựa trên cột chung là MALOP.",
+        "5": "Chuyển sang kho QL Bán Hàng, dùng <b>SELECT</b> để chọn hai cột <b>TENKH</b> và <b>DIACHI</b> từ bảng <b>KHACHHANG</b>. <i>(Mẹo: Dùng khối nhập tay cho DIACHI nếu không có sẵn)</i>",
+        "6": "Dùng <b>SELECT</b> và <b>FROM</b> bảng <b>CHITIETHD</b>, dùng <b>WHERE</b> để lọc các hóa đơn có <b>SOLUONG > 50</b>.",
+        "7": "Dùng <b>SELECT * FROM SINHVIEN</b> và thêm khối <b>ORDER BY</b> kèm theo <b>DESC</b> bằng khối <i>Nhập Tay Giá Trị</i> để sắp xếp giảm dần."
+    };
+    
+    if(challengeSelect && challengeDesc) {
+        challengeSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            if(val && challenges[val]) {
+                challengeDesc.innerHTML = challenges[val];
+            } else {
+                challengeDesc.innerHTML = "Chọn một bài tập từ danh sách để bắt đầu!";
+            }
+        });
+    }
+    
+    // Xử lý chuyển Tab Cơ sở dữ liệu
+    const dbTabs = document.querySelectorAll('.db-tab-btn');
+    const dbContents = document.querySelectorAll('.db-tab-content');
+    
+    dbTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            dbTabs.forEach(t => {
+                t.classList.remove('active');
+                t.style.borderBottomColor = 'transparent';
+                t.style.color = 'var(--text-muted)';
+            });
+            
+            tab.classList.add('active');
+            tab.style.borderBottomColor = '#3b82f6';
+            tab.style.color = '#3b82f6';
+            
+            const target = tab.dataset.target;
+            dbContents.forEach(c => {
+                c.style.display = (c.id === target) ? 'block' : 'none';
+            });
+        });
+    });
+    
+    // Add custom block to toolbox
+    addCustomBtn.addEventListener('click', () => {
+        const val = customInput.value.trim();
+        if(val) {
+            const block = document.createElement('div');
+            block.className = 'sql-block custom';
+            block.draggable = true;
+            block.dataset.val = val;
+            block.innerText = val;
+            attachDragEvents(block);
+            document.getElementById('toolbox-operators').appendChild(block);
+            customInput.value = '';
+        }
+    });
+
+    function appendBlock(val, sourceClass) {
+        if (!val) return;
+        
+        if (dropPlaceholder) {
+            dropPlaceholder.style.display = 'none';
+        }
+        
+        const newBlock = document.createElement('div');
+        // Extract type for styling
+        let typeClass = 'keyword';
+        if(sourceClass.includes('operator')) typeClass = 'operator';
+        if(sourceClass.includes('table')) typeClass = 'table';
+        if(sourceClass.includes('column')) typeClass = 'column';
+        if(sourceClass.includes('custom')) typeClass = 'custom';
+        
+        newBlock.className = `workspace-block sql-block ${typeClass}`;
+        newBlock.dataset.val = val;
+        newBlock.innerHTML = `${val} <span class="remove-btn" title="Xóa">✕</span>`;
+        
+        // Remove block on click
+        newBlock.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.remove();
+            updateCode();
+            if (dropZone.querySelectorAll('.workspace-block').length === 0) {
+                dropPlaceholder.style.display = 'block';
+            }
+        });
+        
+        dropZone.appendChild(newBlock);
+        updateCode();
+    }
+
+    function attachDragEvents(el) {
+        el.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', el.dataset.val);
+            e.dataTransfer.setData('source-class', el.className);
+        });
+        // Tương thích Mobile: Cho phép bấm để tự chui vào dropZone
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            appendBlock(el.dataset.val, el.className);
+        });
+    }
+
+    draggables.forEach(attachDragEvents);
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+        dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        
+        const val = e.dataTransfer.getData('text/plain');
+        const sourceClass = e.dataTransfer.getData('source-class');
+        appendBlock(val, sourceClass);
+    });
+    
+    clearBtn.addEventListener('click', () => {
+        const blocks = dropZone.querySelectorAll('.workspace-block');
+        blocks.forEach(b => b.remove());
+        dropPlaceholder.style.display = 'block';
+        updateCode();
+        document.getElementById('visual-run-result').innerHTML = '';
+    });
+    
+    function updateCode() {
+        const blocks = dropZone.querySelectorAll('.workspace-block');
+        let sql = [];
+        blocks.forEach(b => sql.push(b.dataset.val));
+        
+        // Basic formatting
+        let rawCode = sql.join(' ');
+        
+        // Add new lines before major keywords
+        rawCode = rawCode.replace(/ FROM /gi, '\nFROM ');
+        rawCode = rawCode.replace(/ WHERE /gi, '\nWHERE ');
+        rawCode = rawCode.replace(/ INNER JOIN /gi, '\nINNER JOIN ');
+        rawCode = rawCode.replace(/ GROUP BY /gi, '\nGROUP BY ');
+        rawCode = rawCode.replace(/ ORDER BY /gi, '\nORDER BY ');
+        
+        codeOutput.value = rawCode;
+    }
+});
+</script>
+                <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <button id="mark-complete-btn" onclick="markComplete('visual_builder', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Đánh dấu Hoàn thành
+                    </button>
+                    <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Hoàn thành bài học để tăng tiến độ khóa học SQL của bạn!</p>
+                </div>
+                            </main>
+            
+            <!-- TOC Container -->
+                        <aside id="toc-container" class="toc-container"></aside>
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

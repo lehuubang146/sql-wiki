@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="trigger_ex" class="  has-toc clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="active">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Thực Hành: Trigger    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content ">
+                <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Trigger (Bài tập)</div>
+<div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <h1>Trigger</h1>
+    <p style="color: var(--text-muted); font-size: 1.05rem;">
+        Tổng hợp danh sách các bài tập rèn luyện kỹ năng <b>Trigger</b>.
+    </p>
+</div>
+
+    
+    <!-- Phần bài tập Quản Lý Sinh Viên -->
+            <h2 style="color: #3b82f6; border-bottom: 2px solid rgba(59, 130, 246, 0.3); padding-bottom: 0.5rem; margin-top: 2rem; margin-bottom: 1.5rem;">
+            📚 CSDL: Quản Lý Sinh Viên (QLSV_NEW)
+        </h2>
+                    <div class="exercise-item" id="ex-buoi3-bai11" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 1                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Tự Động Cập Nhật Sỉ Số: Viết <strong class="highlight-kw">Trigger</strong> kích hoạt sau khi thêm sinh viên, tự động tăng sỉ số của lớp tương ứng trong <strong class="highlight-vi">bảng</strong> DMLOP.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_themsinhvien_siso
+on sinhvien
+after insert
+as
+begin
+    declare @malop varchar(10)
+    
+    select @malop = malop from inserted 
+    
+    update dmlop
+    set siso = siso + 1
+    where malop = @malop
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai11')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai11" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Đây là Trigger kích hoạt SAU KHI (AFTER INSERT) có dữ liệu thêm vào bảng sinhvien. Dữ liệu mới thêm sẽ nằm trong bảng ảo có tên là &#039;inserted&#039;. Trigger lấy mã lớp của sinh viên vừa thêm ra từ bảng &#039;inserted&#039;, sau đó cập nhật (UPDATE) bảng dmlop bằng cách cộng 1 vào cột sĩ số (siso) của lớp đó.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai12" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 2                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Tự Động Cập Nhật Sỉ Số: Viết <strong class="highlight-kw">Trigger</strong> kích hoạt sau khi xóa sinh viên, tự động giảm sỉ số của lớp tương ứng trong <strong class="highlight-vi">bảng</strong> DMLOP.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_xoasinhvien_siso
+on sinhvien
+after delete
+as
+begin
+    declare @malop varchar(10)
+    
+    select @malop = malop from deleted 
+    
+    update dmlop
+    set siso = siso - 1
+    where malop = @malop
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai12')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai12" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger kích hoạt SAU KHI (AFTER DELETE) một sinh viên bị xóa. Dữ liệu bị xóa sẽ được hệ thống tạm lưu trữ trong bảng ảo &#039;deleted&#039;. Trigger đọc mã lớp của dòng vừa xóa từ bảng &#039;deleted&#039;, sau đó thực hiện lệnh UPDATE giảm (trừ đi 1) cột siso ở bảng dmlop tương ứng.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai13" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 3                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        <strong class="highlight-vi">Ràng Buộc</strong> Độ Tuổi Nhập Học: Viết <strong class="highlight-kw">Trigger</strong> kiểm tra ngày sinh khi thêm sinh viên mới, đảm bảo sinh viên phải đủ ít nhất 17 tuổi (tính đến năm hiện tại).                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_kiemtratuoinhaphoc
+on sinhvien
+after insert, update
+as
+begin
+    declare @ngaysinh date
+    declare @tuoi int
+    
+    select @ngaysinh = ngaysinh from inserted
+    
+    set @tuoi = year(getdate()) - year(@ngaysinh)
+    
+    if (@tuoi &lt; 17)
+    begin
+        print &#039;loi: sinh vien phai du 17 tuoi tro len moi duoc nhap hoc.&#039;
+        rollback transaction
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai13')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai13" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger kích hoạt sau thao tác INSERT và UPDATE. Lấy ngày sinh từ bảng &#039;inserted&#039; và tính tuổi so với năm hiện tại (dùng hàm year() và getdate()). Nếu tuổi &lt; 17, Trigger in ra lỗi và dùng ROLLBACK TRANSACTION để hủy bỏ toàn bộ quá trình, dữ liệu sẽ không được lưu vào bảng.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai14" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 4                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        <strong class="highlight-vi">Ràng Buộc</strong> Thang Điểm Hợp Lệ: Viết <strong class="highlight-kw">Trigger</strong> ngăn chặn việc nhập hoặc cập nhật điểm học phần (<strong class="highlight-vi">bảng</strong> DIEMHP) nếu giá trị không nằm trong khoảng từ 0 đến 10.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_kiemtradiemhople
+on diemhp
+after insert, update
+as
+begin
+    declare @diem float
+    
+    select @diem = diemhp from inserted
+    
+    if (@diem &lt; 0 or @diem &gt; 10)
+    begin
+        print &#039;loi: diem hoc phan bat buoc phai nam trong khoang tu 0 den 10.&#039;
+        rollback transaction
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai14')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai14" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger bảo vệ tính toàn vẹn vùng giá trị của điểm số (AFTER INSERT, UPDATE). Nó lấy giá trị điểm (diemhp) đang được thêm/sửa từ bảng &#039;inserted&#039;. Nếu điểm không nằm trong khoảng hợp lệ (nhỏ hơn 0 hoặc lớn hơn 10), ROLLBACK TRANSACTION được gọi để hủy việc nhập liệu đó.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai15" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 5                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Lưu Lịch Sử Thay Đổi Điểm: Viết <strong class="highlight-kw">Trigger</strong> lưu lại thông tin cũ và mới vào một <strong class="highlight-vi">bảng</strong> nhật ký (LOG_DIEM) mỗi khi điểm học phần của sinh viên được cập nhật.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_luulichsudiem
+on diemhp
+after update
+as
+begin
+    if update(diemhp)
+    begin
+        declare @masv varchar(20), @mahp varchar(10)
+        declare @diemcu float, @diemmoi float
+        
+        select @masv = masv, @mahp = mahp, @diemcu = diemhp from deleted
+        
+        select @diemmoi = diemhp from inserted
+        
+        insert into log_diem (masv, mahp, diemcu, diemmoi)
+        values (@masv, @mahp, @diemcu, @diemmoi)
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai15')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai15" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger lưu vết quá trình thay đổi điểm (AFTER UPDATE). Hàm IF UPDATE(diemhp) giúp kiểm tra xem cột &#039;diemhp&#039; có thực sự bị sửa đổi hay không. Nếu có, lấy điểm cũ từ bảng &#039;deleted&#039; và điểm mới từ &#039;inserted&#039;, rồi INSERT một dòng bản ghi mới vào bảng &#039;log_diem&#039; để lưu trữ biến động.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai16" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 6                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Tự Động Cập Nhật Sỉ Số Khi Chuyển Lớp: Viết <strong class="highlight-kw">Trigger</strong> kích hoạt khi có lệnh <strong class="highlight-kw">UPDATE</strong> trên <strong class="highlight-vi">bảng</strong> SINHVIEN làm thay đổi trường MaLop. <strong class="highlight-kw">Trigger</strong> phải tự động giảm sỉ số (nếu có trường SiSo) của lớp cũ đi 1 và tăng sỉ số của lớp mới lên 1 trong <strong class="highlight-vi">bảng</strong> DMLOP.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_chuyenlop_siso
+on sinhvien
+after update
+as
+begin
+    if update(malop)
+    begin
+        declare @lopcu varchar(10), @lopmoi varchar(10)
+        
+        select @lopcu = malop from deleted
+        
+        select @lopmoi = malop from inserted
+        
+        update dmlop set siso = siso - 1 where malop = @lopcu
+        
+        update dmlop set siso = siso + 1 where malop = @lopmoi
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai16')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai16" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger chạy khi thông tin lớp (malop) bị thay đổi (AFTER UPDATE). Dùng IF UPDATE(malop) để đảm bảo chỉ chạy logic nếu sửa lớp. Bảng &#039;deleted&#039; chứa dữ liệu cũ (lớp cũ), bảng &#039;inserted&#039; chứa dữ liệu mới (lớp mới). Trigger tiến hành giảm sĩ số của lớp cũ đi 1 và tăng sĩ số lớp mới lên 1 trong bảng dmlop.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai17" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 7                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Ngăn Chặn Xóa <strong class="highlight-vi">Dữ Liệu</strong> <strong class="highlight-vi">Ràng Buộc</strong>: Viết <strong class="highlight-kw">Trigger</strong> trên <strong class="highlight-vi">bảng</strong> DMHOCPHAN. Không cho phép người dùng xóa một Học phần nếu học phần đó đã có sinh viên đăng ký hoặc đã được nhập điểm trong <strong class="highlight-vi">bảng</strong> DIEMHP. Nếu cố tình xóa, <strong class="highlight-kw">in</strong> ra thông báo lỗi và hủy thao tác.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_nganxoahocphan
+on dmhocphan
+after delete
+as
+begin
+    declare @mahp varchar(10)
+    
+    select @mahp = mahp from deleted
+    
+    if exists (select * from diemhp where mahp = @mahp)
+    begin
+        print &#039;loi: da co sinh vien dang ky mon nay, ban khong the xoa mon hoc.&#039;
+        rollback transaction
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai17')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai17" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger ngăn xóa học phần khi đã có dữ liệu ràng buộc. Khi có thao tác xóa, trigger lấy mã học phần đang cố xóa (từ bảng &#039;deleted&#039;). Dùng IF EXISTS để kiểm tra xem đã có bất kỳ điểm nào liên quan tới môn đó trong bảng diemhp chưa. Nếu có, báo lỗi và gọi ROLLBACK TRANSACTION chặn đứng việc xóa.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai18" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 8                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Kiểm Tra Tính Hợp Lệ Của Môn Học Theo Ngành: Viết <strong class="highlight-kw">Trigger</strong> trên <strong class="highlight-vi">bảng</strong> DIEMHP. Khi nhập điểm cho một sinh viên, <strong class="highlight-kw">Trigger</strong> phải kiểm tra xem MaHP đó có thuộc đúng MaNganh mà sinh viên đó đang theo học hay không (liên kết từ SINHVIEN -&gt; DMLOP -&gt; MaNganh). Nếu sinh viên học khác ngành với môn học, không cho phép nhập điểm.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_kiemtramonhoc_nganh
+on diemhp
+after insert, update
+as
+begin
+    declare @masv varchar(20), @mahp varchar(10)
+    declare @nganhcuasinhvien varchar(20)
+    declare @nganhcuamonhoc varchar(20)
+    
+    select @masv = masv, @mahp = mahp from inserted
+    
+    select @nganhcuasinhvien = dmlop.manganh 
+    from dmlop, sinhvien 
+    where dmlop.malop = sinhvien.malop and sinhvien.masv = @masv
+    
+    select @nganhcuamonhoc = manganh 
+    from dmhocphan 
+    where mahp = @mahp
+    
+    if (@nganhcuasinhvien &lt;&gt; @nganhcuamonhoc)
+    begin
+        print &#039;loi: sinh vien khong duoc phep hoc mon cua nganh khac.&#039;
+        rollback transaction
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai18')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai18" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger kiểm tra logic phức tạp khi nhập điểm (AFTER INSERT, UPDATE). Nó lấy mã môn và mã sinh viên được nhập từ bảng &#039;inserted&#039;. Từ đó, truy xuất ra &#039;ngành của sinh viên đang học&#039; và &#039;ngành của môn học&#039;. Nếu hai ngành này khác nhau (phát hiện bằng dấu &lt;&gt;), tức là nhập nhầm môn, tiến hành ROLLBACK TRANSACTION hủy bỏ.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai19" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 9                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Bảo Vệ <strong class="highlight-vi">Khóa Chính</strong>: Viết <strong class="highlight-kw">Trigger</strong> trên <strong class="highlight-vi">bảng</strong> SINHVIEN để ngăn chặn hành vi cố tình dùng lệnh <strong class="highlight-kw">UPDATE</strong> để thay đổi trường MaSV (<strong class="highlight-vi">Khóa chính</strong>). Nếu phát hiện <strong class="highlight-vi">cột</strong> MaSV bị thay đổi, <strong class="highlight-kw">Trigger</strong> sẽ báo lỗi &#039;Không được phép thay đổi mã sinh viên&#039; và <strong class="highlight-kw">Rollback</strong> lại.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_baovekhoachinh_sinhvien
+on sinhvien
+after update
+as
+begin
+    if update(masv)
+    begin
+        print &#039;loi: ban khong duoc phep thay doi ma sinh vien (vi day la khoa chinh).&#039;
+        rollback transaction
+    end
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai19')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai19" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger bảo vệ khóa chính khỏi việc bị sửa đổi thủ công (AFTER UPDATE). Bằng cách dùng lệnh IF UPDATE(masv), hệ thống sẽ phát hiện ngay khi có ai đó dùng lệnh UPDATE can thiệp vào cột masv. Nếu có, trigger thông báo lỗi và ROLLBACK TRANSACTION để giữ nguyên mã cũ.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-buoi3-bai20" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 10                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Lưu Trữ Lịch Sử Xóa Lớp: Giả sử tạo thêm một <strong class="highlight-vi">bảng</strong> DMLOP_Deleted có cấu trúc giống hệt <strong class="highlight-vi">bảng</strong> DMLOP. Viết <strong class="highlight-kw">Trigger</strong> sao cho mỗi khi một lớp bị xóa khỏi <strong class="highlight-vi">bảng</strong> DMLOP, toàn bộ thông tin của lớp đó sẽ được tự động sao chép (<strong class="highlight-kw">Insert</strong>) vào <strong class="highlight-vi">bảng</strong> DMLOP_Deleted để làm bằng chứng lưu trữ.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create trigger trg_luulichsuxoalop
+on dmlop
+after delete
+as
+begin
+    insert into dmlop_deleted 
+    select * from deleted
+end</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi3-bai20')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-buoi3-bai20" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger tạo ra một cơ chế Backup nhẹ. Khi một lớp học bị xóa (AFTER DELETE), tất cả thông tin của dòng dữ liệu vừa bị xóa được giữ tạm trong bảng ảo &#039;deleted&#039;. Lệnh INSERT INTO ... SELECT * FROM deleted thực hiện bốc toàn bộ dòng dữ liệu đã xóa đưa vào bảng dmlop_deleted để phục vụ tra cứu sau này.                    </div>
+                </div>
+                            </div>
+            
+    <!-- Phần bài tập Quản Lý Bán Hàng -->
+            <h2 style="color: #10b981; border-bottom: 2px solid rgba(16, 185, 129, 0.3); padding-bottom: 0.5rem; margin-top: 3rem; margin-bottom: 1.5rem;">
+            🛒 CSDL: Quản Lý Bán Hàng (QUANLYBANHANG)
+        </h2>
+                    <div class="exercise-item" id="ex-BH_39" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 1                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Thực hiện việc kiểm tra rằng buộc khoá ngoại ở <strong class="highlight-vi">bảng</strong> HOADON và CHITIETHD.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_CheckFK_HoaDon_ChiTiet ON CHITIETHD FOR
+INSERT
+,
+UPDATE AS BEGIN IF NOT EXISTS (
+  SELECT
+    *
+  FROM
+    HOADON HD
+    INNER JOIN INSERTED I ON HD.MaHD = I.MaHD
+) BEGIN PRINT N&#039;Mã hóa đơn không tồn tại!&#039; ROLLBACK TRANSACTION END END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_39')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_39" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Trigger kiểm tra nếu MaHD trong bản ghi INSERTED không có trong bảng HOADON thì ROLLBACK.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_40" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 2                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Không cho phép xoá các HOADON nào có SOHD còn trong <strong class="highlight-vi">bảng</strong> CHITIETHD.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_NoCascadeDelete_HoaDon ON HOADON FOR
+DELETE AS BEGIN IF EXISTS (
+  SELECT
+    *
+  FROM
+    CHITIETHD C
+    INNER JOIN DELETED D ON C.MaHD = D.MaHD
+) BEGIN PRINT N&#039;Không thể xóa hóa đơn vì đã có chi tiết hóa đơn!&#039; ROLLBACK TRANSACTION END END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_40')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_40" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Kiểm tra trong bảng DELETED xem hóa đơn định xóa có tồn tại trong CHITIETHD hay không.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_41" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 3                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Không cho phép user nhập vào hai mặt hàng có cùng tên.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_UniqueTenHang ON HANGHOA FOR
+INSERT
+,
+UPDATE AS BEGIN IF EXISTS (
+  SELECT
+    TenH
+  FROM
+    HANGHOA
+  GROUP BY
+    TenH
+  HAVING
+    COUNT(*) &gt; 1
+) BEGIN PRINT N&#039;Tên mặt hàng đã tồn tại!&#039; ROLLBACK TRANSACTION END END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_41')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_41" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Kiểm tra tính duy nhất của cột TenH bằng cách gom nhóm và đếm số lượng.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_42" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 4                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Khi user đặt hàng thì KHUYENMAI là 5% nếu SL &gt;100, 10% nếu SL &gt;500.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_UpdateKhuyenMai ON CHITIETHD FOR
+INSERT
+,
+UPDATE AS BEGIN
+UPDATE CHITIETHD
+SET
+  KhuyenMai = CASE
+    WHEN I.SoLuong &gt; 500 THEN (I.SoLuong * H.DonGia) * 0.10
+    WHEN I.SoLuong &gt; 100 THEN (I.SoLuong * H.DonGia) * 0.05
+    ELSE 0
+  END
+FROM
+  CHITIETHD C
+  INNER JOIN INSERTED I ON C.MaHD = I.MaHD
+  AND C.MaH = I.MaH
+  INNER JOIN HANGHOA H ON I.MaH = H.MaH END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_42')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_42" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Trigger tự động cập nhật giá trị cột KhuyenMai dựa trên SoLuong và bảng INSERTED.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_43" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 5                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Không cho phép user xoá một lúc nhiều hơn một mặt hàng.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_DeleteMatHang ON HANGHOA FOR
+DELETE AS BEGIN IF (
+  SELECT
+    COUNT(*)
+  FROM
+    DELETED
+) &gt; 1 BEGIN PRINT N&#039;Không được phép xóa nhiều hơn 1 mặt hàng cùng lúc!&#039; ROLLBACK TRANSACTION END END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_43')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_43" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Đếm số dòng trong bảng ảo DELETED, nếu &gt; 1 thì ROLLBACK.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-BH_44" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 6                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Chỉ bán mặt hàng BÁNH với số lượng là bội số của 10.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE
+TRIGGER trg_BanBanhBoiSo10 ON CHITIETHD FOR
+INSERT
+,
+UPDATE AS BEGIN IF EXISTS (
+  SELECT
+    *
+  FROM
+    INSERTED I
+    INNER JOIN HANGHOA H ON I.MaH = H.MaH
+  WHERE
+    H.TenH LIKE N&#039;%Bánh%&#039;
+    AND I.SoLuong % 10 &lt;&gt; 0
+) BEGIN PRINT N&#039;Mặt hàng bánh chỉ được bán với số lượng là bội số của 10!&#039; ROLLBACK TRANSACTION END END</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_44')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-BH_44" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng phép chia lấy dư (%) để kiểm tra số lượng của các mặt hàng có chữ &#039;Bánh&#039;.                    </div>
+                </div>
+                            </div>
+                
+
+<script>
+function toggleExplanation(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'none') {
+        el.style.display = 'block';
+    } else {
+        el.style.display = 'none';
+    }
+}
+</script>
+                <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <button id="mark-complete-btn" onclick="markComplete('trigger_ex', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Đánh dấu Hoàn thành
+                    </button>
+                    <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Hoàn thành bài học để tăng tiến độ khóa học SQL của bạn!</p>
+                </div>
+                            </main>
+            
+            <!-- TOC Container -->
+                        <aside id="toc-container" class="toc-container"></aside>
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

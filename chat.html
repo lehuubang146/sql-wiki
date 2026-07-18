@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SQL Wiki">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <title>SQL Study Wiki - QLSV_NEW</title>
+    <link rel="stylesheet" href="css/style.css?v=38">
+    <link rel="stylesheet" href="css/search.css?v=38">
+    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="chat" class=" is-chat-page  clean-reading-mode">
+    <script>
+        // Inline script để ngăn flash giao diện
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light' || !savedTheme) {
+                document.body.classList.add('light-mode');
+            }
+        })();
+    </script>
+        <div class="wiki-layout">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="index.html" style="text-decoration: none;"><h2>SQL Wiki</h2></a>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="sandbox.html" class="" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.8"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Trình Biên Dịch SQL
+            </a></li>
+            <li><a href="overview.html" class="">Tổng Quan 2 CSDL</a></li>
+            <li><a href="diagram.html" class="">Sơ Đồ ERD (Full)</a></li>
+            <li><a href="tables.html" class="">Dữ Liệu Các Bảng</a></li>
+            
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Lý Thuyết</li>
+            <li><a href="queries.html" class="">1. Truy Vấn Cơ Bản</a></li>
+            <li><a href="procedures.html" class="">2. Stored Procedures</a></li>
+            <li><a href="functions_cursors.html" class="">3. Hàm & Con Trỏ</a></li>
+            <li><a href="triggers.html" class="">4. Triggers (Bẫy Lỗi)</a></li>
+            <li><a href="transactions.html" class="">5. Giao Tác (Transaction)</a></li>
+            <li><a href="views.html" class="">6. Views (Khung Nhìn)</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Thực Hành</li>
+            <li><a href="basic.html" class="">Truy Vấn Có Điều Kiện</a></li>
+            <li><a href="groupby.html" class="">Truy Vấn Phân Nhóm</a></li>
+            <li><a href="subquery.html" class="">Truy Vấn Lồng Nhau</a></li>
+            <li><a href="quantifier.html" class="">Lượng Từ (ALL, ANY, EXISTS)</a></li>
+            <li><a href="view_ex.html" class="">Bài tập Views</a></li>
+            <li><a href="proc_ex.html" class="">Bài tập Procedures</a></li>
+            <li><a href="trigger_ex.html" class="">Bài tập Triggers</a></li>
+
+            <li style="margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; padding-left: 1rem; opacity: 0.8;">Công Cụ & Ôn Tập</li>
+            <li><a href="qa.html" class="">100 Câu Hỏi Ôn Tập</a></li>
+            <li><a href="mock_exam.html" class="">🔥 Thi Thử (Mock Exam)</a></li>
+            <li><a href="visual_builder.html" class="">🧩 Xếp Hình SQL</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+    // Inline script for instant sidebar scroll restoration to avoid any layout jitter
+    (function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+        
+        // Restore
+        const savedScroll = sessionStorage.getItem('sidebar_scroll');
+        if (savedScroll !== null) {
+            sidebar.scrollTop = parseInt(savedScroll, 10);
+        }
+        
+        // Save on click
+        sidebar.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) {
+                sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+            }
+        });
+        
+        // Save before unload
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('sidebar_scroll', sidebar.scrollTop);
+        });
+    })();
+</script>
+
+        <div class="main-content-wrapper">
+            <!-- Header -->
+            <header class="main-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" style="background: transparent; border: none; color: var(--text-color); cursor: pointer; padding: 0.5rem; display: block;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h1 style="margin: 0; font-size: 1.25rem;">
+        Messenger AI    </h1>
+    </div>
+
+    <div class="header-search" style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle-btn" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <button id="open-search-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Inter', sans-serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span style="font-size: 0.9rem;">Tìm kiếm...</span>
+            <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: monospace; margin-left: 0.5rem;">Ctrl K</kbd>
+        </button>
+    </div>
+</header>
+
+            <!-- Main Content Area -->
+            <main class="main-content chat-page-content">
+                <div class="messenger-layout">
+    <!-- Chat Sidebar (Sessions) -->
+    <aside class="chat-sidebar" id="chat-sidebar">
+        <div class="chat-sidebar-header">
+            <h3>Đoạn Chat</h3>
+            <div style="display: flex; gap: 5px;">
+                <button id="new-chat-btn" title="Chat mới">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <button id="mobile-sidebar-close" class="mobile-only" title="Đóng">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+        <ul id="chat-session-list" class="chat-session-list">
+            <!-- Rendered by JS -->
+        </ul>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <section class="chat-main">
+        <div class="chat-header">
+            <a href="#" id="chat-back-btn" class="mobile-only" title="Quay lại trang trước" style="background: none; border: none; color: white; cursor: pointer; text-decoration: none;" onclick="if(document.referrer) { history.back(); return false; } else { window.location.href='./'; return false; }">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </a>
+            <button id="mobile-sidebar-toggle" class="mobile-only" title="Danh sách Chat" style="background: none; border: none; color: white; cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            
+            <div class="chat-model-selector">
+                <select id="ai-model-select">
+                    <optgroup label="Groq Models (T&#7889;c &#273;&#7897; si&#234;u nhanh)">
+                        <option value="groq:llama-3.3-70b-versatile">Llama 3.3 70B (Th&#244;ng minh &amp; to&#224;n n&#259;ng)</option>
+                        <option value="groq:llama-3.1-8b-instant">Llama 3.1 8B Instant (Ph&#7843;n h&#7891;i si&#234;u nhanh)</option>
+                        <option value="groq:llama-3.2-11b-vision-instruct">Llama 3.2 Vision 11B (&#272;&#7885;c h&#236;nh &#7843;nh)</option>
+                    </optgroup>
+                    <optgroup label="Google Gemini">
+                        <option value="gemini:gemini-1.5-flash-latest">Gemini 1.5 Flash (Nhanh + h&#7895; tr&#7907; &#7843;nh)</option>
+                    </optgroup>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 5px;">
+                <button id="chat-profile-btn" title="Ghi chú AI Profile" style="background: none; border: none; color: var(--text-color); cursor: pointer; padding: 5px; border-radius: 5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button id="chat-help-btn" title="Hướng dẫn sử dụng" style="background: none; border: none; color: var(--text-color); cursor: pointer; padding: 5px; border-radius: 5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </button>
+                <button id="chat-settings-btn" title="Cài đặt API Keys">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="messenger-messages" class="messenger-messages">
+            <!-- Empty state -->
+        </div>
+
+        <div class="typing-indicator" id="messenger-typing" style="display: none;">
+            <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+        </div>
+        
+        <div id="attachment-preview-area" class="attachment-preview-area" style="display: none;">
+            <span id="attachment-filename"></span>
+            <button id="remove-attachment-btn">&times;</button>
+        </div>
+
+        <div class="messenger-input-area">
+            <input type="file" id="chat-file-upload" style="display: none;" accept="image/*,.txt,.csv,.json,.sql">
+            <button id="chat-attach-btn" class="icon-btn" title="Đính kèm file/ảnh">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            </button>
+            <input type="text" id="messenger-input" placeholder="Hỏi câu lệnh SQL ở đây (Hoặc đính kèm file)...">
+            <button id="messenger-send-btn" class="icon-btn send">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Settings Modal -->
+    <div id="messenger-settings-modal" class="messenger-settings-modal" style="display: none;">
+        <div class="ms-modal-content">
+            <h4 style="margin-top: 0;">Cấu Hình API Key</h4>
+            <div class="ms-form-group">
+                <label>Groq API Key (Miễn phí, Siêu nhanh)</label>
+                <div style="position: relative;">
+                    <input type="password" id="ms-groq-key" placeholder="gsk_..." style="padding-right: 40px;">
+                    <button type="button" id="toggle-key-btn" onclick="toggleKeyVisibility()" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; padding: 4px;">
+                        <svg id="eye-icon-show" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg id="eye-icon-hide" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                    </button>
+                </div>
+                <small>Lấy tại <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">Groq Console</a></small>
+            </div>
+            <div class="ms-form-group" style="margin-top: 15px;">
+                <label>Gemini API Key (Miễn phí từ Google)</label>
+                <div style="position: relative;">
+                    <input type="password" id="ms-gemini-key" placeholder="AIzaSy..." style="padding-right: 40px;">
+                    <button type="button" onclick="toggleGeminiKeyVisibility()" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; padding: 4px;">
+                        <svg id="gemini-eye-show" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg id="gemini-eye-hide" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                    </button>
+                </div>
+                <small>Lấy tại <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></small>
+            </div>
+            <script>
+            function toggleKeyVisibility() {
+                const input = document.getElementById('ms-groq-key');
+                const showIcon = document.getElementById('eye-icon-show');
+                const hideIcon = document.getElementById('eye-icon-hide');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    showIcon.style.display = 'none';
+                    hideIcon.style.display = 'block';
+                } else {
+                    input.type = 'password';
+                    showIcon.style.display = 'block';
+                    hideIcon.style.display = 'none';
+                }
+            }
+            function toggleGeminiKeyVisibility() {
+                const input = document.getElementById('ms-gemini-key');
+                const showIcon = document.getElementById('gemini-eye-show');
+                const hideIcon = document.getElementById('gemini-eye-hide');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    showIcon.style.display = 'none';
+                    hideIcon.style.display = 'block';
+                } else {
+                    input.type = 'password';
+                    showIcon.style.display = 'block';
+                    hideIcon.style.display = 'none';
+                }
+            }
+            </script>
+            <div class="ms-modal-actions">
+                <button id="ms-close-btn" class="btn btn-secondary">Đóng</button>
+                <button id="ms-save-btn" class="btn btn-primary">Lưu Lại</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Viewer Modal -->
+    <div id="image-viewer-modal" style="display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; cursor: zoom-out;">
+        <img id="image-viewer-img" style="max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+    </div>
+
+    <!-- AI Profile Modal -->
+    <div id="ai-profile-modal" class="messenger-settings-modal" style="display: none;">
+        <div class="ms-modal-content" style="max-width: 500px;">
+            <h4 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Ghi Chú AI Profile
+            </h4>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 0;">Viết ghi chú ở đây để AI tập trung vào một chủ đề hoặc phong cách cụ thể. Nội dung này sẽ được gửi kèm mỗi khi bạn chat.</p>
+            <div class="ms-form-group">
+                <label>Ghi chú tuỳ chỉnh cho AI</label>
+                <textarea id="ai-profile-notes" rows="6" style="width: 100%; box-sizing: border-box; padding: 10px; background: var(--code-bg, rgba(15, 23, 42, 0.5)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2)); border-radius: 6px; color: var(--text-color, white); outline: none; font-family: 'Inter', sans-serif; font-size: 0.9rem; resize: vertical; line-height: 1.6;" placeholder="Ví dụ:&#10;- Tôi đang ôn tập chương Stored Procedure.&#10;- Hãy giải thích bằng tiếng Việt đơn giản.&#10;- Luôn cho ví dụ minh hoạ kèm theo.&#10;- Tập trung vào bài tập phần JOIN."></textarea>
+            </div>
+            <div class="ms-modal-actions">
+                <button id="ai-profile-clear-btn" class="btn btn-secondary" style="margin-right: auto;">Xoá hết</button>
+                <button id="ai-profile-close-btn" class="btn btn-secondary">Đóng</button>
+                <button id="ai-profile-save-btn" class="btn btn-primary">Lưu Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="ai-help-modal" class="messenger-settings-modal" style="display: none;">
+        <div class="ms-modal-content" style="max-width: 550px; max-height: 80vh; overflow-y: auto;">
+            <h4 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Hướng Dẫn Sử Dụng AI Chat
+            </h4>
+            
+            <div style="font-size: 0.9rem; line-height: 1.7; color: var(--text-secondary);">
+                <h5 style="color: #8b5cf6; margin-bottom: 0.5rem;">&#128640; B&#7855;t &#273;&#7847;u nhanh</h5>
+                <ol style="padding-left: 1.2rem; margin-top: 0.25rem;">
+                    <li>B&#7845;m <b>&#9881;&#65039; C&#224;i &#273;&#7863;t</b> (b&#225;nh r&#259;ng) &#8594; nh&#7853;p <b>Groq API Key</b> &#273;&#7875; d&#249;ng c&#225;c model Llama, ho&#7863;c <b>Gemini API Key</b> &#273;&#7875; d&#249;ng Gemini.</li>
+                    <li>Ch&#7885;n <b>Model AI</b> ph&#249; h&#7907;p t&#7915; danh s&#225;ch th&#7843; xu&#7889;ng &#7903; thanh tr&#234;n.</li>
+                    <li>G&#245; c&#226;u h&#7887;i SQL, &#273;&#237;nh k&#232;m file/&#7843;nh n&#7871;u c&#7847;n, r&#7891;i b&#7845;m <b>G&#7917;i</b>.</li>
+                </ol>
+
+                <h5 style="color: #38bdf8; margin-bottom: 0.5rem;">🧠 AI đã biết gì?</h5>
+                <p style="margin-top: 0.25rem;">AI đã được nạp sẵn toàn bộ kiến thức về CSDL <code style="background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 3px;">QLSV_NEW</code>, bao gồm:</p>
+                <ul style="padding-left: 1.2rem; margin-top: 0.25rem;">
+                    <li>Cấu trúc 6 bảng (DMKHOA, DMNGANH, DMLOP, SINHVIEN, DMHOCPHAN, DIEMHP)</li>
+                    <li>Kiểu dữ liệu, Khóa chính, Khóa ngoại</li>
+                    <li>Mối quan hệ giữa các bảng</li>
+                </ul>
+
+                <h5 style="color: #10b981; margin-bottom: 0.5rem;">💡 Mẹo sử dụng hiệu quả</h5>
+                <ul style="padding-left: 1.2rem; margin-top: 0.25rem;">
+                    <li><b>Hỏi cấu trúc:</b> <i>"Bảng SINHVIEN có những cột nào?"</i></li>
+                    <li><b>Nhờ giải bài:</b> <i>"Giúp tôi giải bài tập 3 phần Truy Vấn Cơ Bản"</i></li>
+                    <li><b>Hỏi lý thuyết:</b> <i>"INNER JOIN khác LEFT JOIN chỗ nào?"</i></li>
+                    <li><b>Debug lỗi:</b> Dán đoạn SQL bị lỗi vào và hỏi <i>"Sửa giúp tôi đoạn này"</i></li>
+                    <li><b>Đính kèm file:</b> Bấm 📎 để gửi file .sql hoặc hình ảnh cho AI phân tích</li>
+                </ul>
+
+                <h5 style="color: #f59e0b; margin-bottom: 0.5rem;">👤 AI Profile</h5>
+                <p style="margin-top: 0.25rem;">Bấm nút <b>👤 Profile</b> để viết ghi chú tuỳ chỉnh. Ví dụ: <i>"Tôi đang ôn thi chương Trigger, hãy tập trung giải thích phần này"</i>. AI sẽ nhớ và ưu tiên chủ đề bạn yêu cầu!</p>
+
+                <h5 style="color: #f87171; margin-bottom: 0.5rem;">&#9889; C&#225;c Model AI &#273;ang d&#249;ng</h5>
+                <ul style="padding-left: 1.2rem; margin-top: 0.25rem;">
+                    <li><b>Llama 3.3 70B:</b> model Groq m&#7841;nh nh&#7845;t trong danh s&#225;ch, ph&#249; h&#7907;p gi&#7843;i th&#237;ch b&#224;i kh&#243;, vi&#7871;t truy v&#7845;n nhi&#7873;u b&#432;&#7899;c, ph&#226;n t&#237;ch JOIN/GROUP BY/Procedure/Trigger.</li>
+                    <li><b>Llama 3.1 8B Instant:</b> model Groq nh&#7865; v&#224; r&#7845;t nhanh, ph&#249; h&#7907;p h&#7887;i &#273;&#225;p ng&#7855;n, s&#7917;a l&#7895;i SQL &#273;&#417;n gi&#7843;n, nh&#7855;c c&#250; ph&#225;p nhanh.</li>
+                    <li><b>Llama 3.2 Vision 11B:</b> model Groq c&#243; h&#7895; tr&#7907; h&#236;nh &#7843;nh, d&#249;ng khi b&#7841;n ch&#7909;p &#273;&#7873; b&#224;i, s&#417; &#273;&#7891;, b&#7843;ng d&#7919; li&#7879;u ho&#7863;c l&#7895;i tr&#234;n m&#224;n h&#236;nh.</li>
+                    <li><b>Gemini 1.5 Flash:</b> model Google nhanh, h&#7895; tr&#7907; &#7843;nh, ph&#249; h&#7907;p gi&#7843;i th&#237;ch t&#7893;ng qu&#225;t v&#224; x&#7917; l&#253; c&#226;u h&#7887;i d&#224;i.</li>
+                </ul>
+            </div>
+
+            <div class="ms-modal-actions">
+                <button id="ai-help-close-btn" class="btn btn-primary">Đã hiểu!</button>
+            </div>
+        </div>
+    </div>
+</div>
+            </main>
+            
+            <!-- TOC Container -->
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+    <p>&copy; 2026 <strong>LiRiYing</strong>. All rights reserved.</p>
+</footer>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal hidden">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Tìm kiếm câu hỏi, từ khóa SQL..." autocomplete="off">
+            <button id="close-search-btn" class="close-btn">
+                <kbd>ESC</kbd>
+            </button>
+        </div>
+        <div id="search-results" class="search-results">
+            <div class="search-empty">Nhập từ khóa để bắt đầu tìm kiếm...</div>
+        </div>
+    </div>
+</div>
+    
+    <!-- SQL Result Modal -->
+    <div id="sql-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: var(--bg-color, #0f172a); border: 1px solid var(--glass-border); border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg, #1e293b);">
+                <h3 style="margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Live SQL Sandbox Result</h3>
+                <button id="sql-modal-close" style="background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            <div id="sql-result-content" style="padding: 1.5rem; overflow-y: auto; flex: 1;">
+                <!-- Result will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Custom Logic -->
+    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <!-- Link to Messenger Chat -->
+        
+    <!-- Messenger Logic (Only loads when needed) -->
+            <script src="js/ai_context.js" charset="UTF-8" defer></script>
+        <!-- Messenger Core Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="js/custom-select.js?v=18" charset="UTF-8" defer></script>
+        <script src="js/messenger-core.js?v=1784417225.64737" charset="UTF-8" defer></script>
+        
+    <!-- Syntax Highlighting -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(el) {
+            el.classList.add('line-numbers');
+        });
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
+    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Progress Tracking & Gamification -->
+    <script src="js/progress.js?v=1" defer></script>
+
+    <!-- SQL Sandbox (sql.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
+    <script src="js/sql-sandbox.js?v=1" defer></script>
+</body>
+</html>

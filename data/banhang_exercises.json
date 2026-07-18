@@ -1,0 +1,310 @@
+[
+  {
+    "id": "BH_1",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết danh sách gồm MaKH, TenKH, NgaySinh, GioiTinh của khách hàng thành viên.",
+    "sql": "SELECT\n  MaKH,\n  TenKH,\n  NgaySinh,\n  GioiTinh\nFROM\n  KHACHHANG\nWHERE\n  LoaiKH = 'TV'",
+    "explanation": "Lọc các khách hàng có loại khách hàng là 'Thành viên' (hoặc 'TV')."
+  },
+  {
+    "id": "BH_2",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết danh sách gồm MaKH, TenKH, NgaySinh, GioiTinh của khách hàng nữ ở Quy Nhơn.",
+    "sql": "SELECT\n  MaKH,\n  TenKH,\n  NgaySinh,\n  GioiTinh\nFROM\n  KHACHHANG\nWHERE\n  GioiTinh = N'Nữ'\n  AND DiaChi = N'Quy Nhơn'",
+    "explanation": "Sử dụng toán tử AND để lọc khách hàng nữ tại Quy Nhơn."
+  },
+  {
+    "id": "BH_3",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết danh sách gồm MaKH, TenKH, NgaySinh, GioiTinh của khách hàng VIP ở Quy Nhơn hoặc Tuy Phước.",
+    "sql": "SELECT\n  MaKH,\n  TenKH,\n  NgaySinh,\n  GioiTinh\nFROM\n  KHACHHANG\nWHERE\n  LoaiKH = 'VIP'\n  AND (\n    DiaChi = N'Quy Nhơn'\n    OR DiaChi = N'Tuy Phước'\n  )",
+    "explanation": "Sử dụng AND kết hợp với OR được bao trong ngoặc đơn."
+  },
+  {
+    "id": "BH_4",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết số lượng hoá đơn xuất vào tháng 8.",
+    "sql": "SELECT\n  COUNT(*) AS SoLuongHD\nFROM\n  HOADON\nWHERE\n  MONTH(NgayLapHD) = 8",
+    "explanation": "Dùng hàm COUNT và hàm MONTH để đếm số hóa đơn trong tháng 8."
+  },
+  {
+    "id": "BH_5",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết danh sách các mặt hàng có giá bán từ 20 nghìn đến 50 nghìn.",
+    "sql": "SELECT\n  *\nFROM\n  HANGHOA\nWHERE\n  DonGia BETWEEN 20000 AND 50000",
+    "explanation": "Sử dụng toán tử BETWEEN để lọc khoảng giá."
+  },
+  {
+    "id": "BH_6",
+    "category": "Truy vấn cơ bản",
+    "question": "Cho biết MaHD, MaH, SoLuong có số lượng bán > 10.",
+    "sql": "SELECT\n  MaHD,\n  MaH,\n  SoLuong\nFROM\n  CHITIETHD\nWHERE\n  SoLuong > 10",
+    "explanation": "Sử dụng toán tử so sánh > để lọc số lượng."
+  },
+  {
+    "id": "BH_7",
+    "category": "Kết nối bảng",
+    "question": "Cho biết MaHD, MaH, TenH, DonGia, SoLuong, ThanhTien của hoá đơn 001.",
+    "sql": "SELECT\n  C.MaHD,\n  C.MaH,\n  H.TenH,\n  H.DonGia,\n  C.SoLuong,\n  (C.SoLuong * H.DonGia) AS ThanhTien\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  C.MaHD = '001'",
+    "explanation": "Kết nối bảng CHITIETHD và HANGHOA, tính thành tiền bằng số lượng nhân đơn giá."
+  },
+  {
+    "id": "BH_8",
+    "category": "Kết nối bảng",
+    "question": "Cho biết MaHD, MaH, TenH, DonGia, SoLuong, ThanhTien có Thành tiền từ 1 triệu đến 2 triệu.",
+    "sql": "SELECT\n  C.MaHD,\n  C.MaH,\n  H.TenH,\n  H.DonGia,\n  C.SoLuong,\n  (C.SoLuong * H.DonGia) AS ThanhTien\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  (C.SoLuong * H.DonGia) BETWEEN 1000000 AND 2000000",
+    "explanation": "Lọc dựa trên giá trị của biểu thức tính toán."
+  },
+  {
+    "id": "BH_9",
+    "category": "Truy vấn lồng nhau",
+    "question": "Cho biết thông tin khách hàng không mua hàng vào tháng 6.",
+    "sql": "SELECT\n  *\nFROM\n  KHACHHANG\nWHERE\n  MaKH NOT IN (\n    SELECT\n      MaKH\n    FROM\n      HOADON\n    WHERE\n      MONTH(NgayLapHD) = 6\n  )",
+    "explanation": "Dùng NOT IN để loại trừ các khách hàng đã mua trong tháng 6."
+  },
+  {
+    "id": "BH_10",
+    "category": "Kết nối bảng",
+    "question": "Cho biết MaHD, NgayLapHD, MaHK, TenH, DonGia, SoLuong, ThanhTien bán vào tháng 6.",
+    "sql": "SELECT\n  HD.MaHD,\n  HD.NgayLapHD,\n  HD.MaKH,\n  H.TenH,\n  H.DonGia,\n  C.SoLuong,\n  (C.SoLuong * H.DonGia) AS ThanhTien\nFROM\n  HOADON HD\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  MONTH(HD.NgayLapHD) = 6",
+    "explanation": "Kết nối 3 bảng HOADON, CHITIETHD, HANGHOA và lọc theo tháng."
+  },
+  {
+    "id": "BH_11",
+    "category": "Kết nối bảng",
+    "question": "Cho biết danh sách các mặt hàng đã bán được.",
+    "sql": "SELECT DISTINCT\n  H.*\nFROM\n  HANGHOA H\n  INNER JOIN CHITIETHD C ON H.MaH = C.MaH",
+    "explanation": "Kết nối với CHITIETHD và dùng DISTINCT để loại bỏ trùng lặp."
+  },
+  {
+    "id": "BH_12",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaKH, TenKH, Tổng Thành tiền của từng khách hàng.",
+    "sql": "SELECT\n  KH.MaKH,\n  KH.TenKH,\n  SUM(C.SoLuong * H.DonGia) AS TongThanhTien\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  KH.MaKH,\n  KH.TenKH",
+    "explanation": "Dùng GROUP BY theo khách hàng và hàm SUM để tính tổng."
+  },
+  {
+    "id": "BH_13",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaKH, TenKH, Tổng Thành tiền của khách hàng VIP.",
+    "sql": "SELECT\n  KH.MaKH,\n  KH.TenKH,\n  SUM(C.SoLuong * H.DonGia) AS TongThanhTien\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  KH.LoaiKH = 'VIP'\nGROUP BY\n  KH.MaKH,\n  KH.TenKH",
+    "explanation": "Sử dụng WHERE để lọc loại khách hàng trước khi GROUP BY."
+  },
+  {
+    "id": "BH_14",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaKH, TenKH, Tổng Thành tiền của từng khách hàng có Tổng thành tiền mua được >=20 triệu.",
+    "sql": "SELECT\n  KH.MaKH,\n  KH.TenKH,\n  SUM(C.SoLuong * H.DonGia) AS TongThanhTien\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  KH.MaKH,\n  KH.TenKH\nHAVING\n  SUM(C.SoLuong * H.DonGia) >= 20000000",
+    "explanation": "Sử dụng HAVING để lọc dữ liệu sau khi đã nhóm (GROUP BY)."
+  },
+  {
+    "id": "BH_15",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaH, TenH, Tổng số lượng của từng mặt hàng.",
+    "sql": "SELECT\n  H.MaH,\n  H.TenH,\n  SUM(C.SoLuong) AS TongSoLuong\nFROM\n  HANGHOA H\n  INNER JOIN CHITIETHD C ON H.MaH = C.MaH\nGROUP BY\n  H.MaH,\n  H.TenH",
+    "explanation": "Nhóm theo mặt hàng và dùng SUM(SoLuong)."
+  },
+  {
+    "id": "BH_16",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaHD, Tổng thành tiền của những hoá đơn có tổng thành tiền lớn hơn 5 triệu.",
+    "sql": "SELECT\n  C.MaHD,\n  SUM(C.SoLuong * H.DonGia) AS TongThanhTien\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  C.MaHD\nHAVING\n  SUM(C.SoLuong * H.DonGia) > 5000000",
+    "explanation": "Nhóm theo mã hóa đơn và lọc bằng HAVING."
+  },
+  {
+    "id": "BH_17",
+    "category": "Phân nhóm",
+    "question": "Cho biết hoá đơn bán ít nhất hai mặt hàng H001 và H002.",
+    "sql": "SELECT\n  MaHD\nFROM\n  CHITIETHD\nWHERE\n  MaH IN ('H001', 'H002')\nGROUP BY\n  MaHD\nHAVING\n  COUNT(DISTINCT MaH) = 2",
+    "explanation": "Lọc các hóa đơn có chứa H001 hoặc H002, sau đó đếm số mặt hàng khác nhau trong nhóm."
+  },
+  {
+    "id": "BH_18",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaKH mua tất các các mặt hàng bánh.",
+    "sql": "SELECT\n  HD.MaKH\nFROM\n  HOADON HD\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\nWHERE\n  C.MaH IN (\n    SELECT\n      MaH\n    FROM\n      HANGHOA\n    WHERE\n      TenH LIKE N'%Bánh%'\n  )\nGROUP BY\n  HD.MaKH\nHAVING\n  COUNT(DISTINCT C.MaH) = (\n    SELECT\n      COUNT(MaH)\n    FROM\n      HANGHOA\n    WHERE\n      TenH LIKE N'%Bánh%'\n  )",
+    "explanation": "Sử dụng phép chia tập hợp bằng cách đếm số mặt hàng 'Bánh' mà khách hàng mua so với tổng số mặt hàng 'Bánh'."
+  },
+  {
+    "id": "BH_19",
+    "category": "Phân nhóm",
+    "question": "Đếm số hoá đơn của mỗi khách hàng.",
+    "sql": "SELECT\n  MaKH,\n  COUNT(MaHD) AS SoHoaDon\nFROM\n  HOADON\nGROUP BY\n  MaKH",
+    "explanation": "Nhóm theo mã khách hàng và dùng hàm COUNT."
+  },
+  {
+    "id": "BH_20",
+    "category": "Phân nhóm",
+    "question": "Cho biết MaHD, Tổng thành tiền, Khuyến mãi 5% cho những hoá đơn có tổng thành tiền lớn hơn 500 nghìn.",
+    "sql": "SELECT\n  C.MaHD,\n  SUM(C.SoLuong * H.DonGia) AS TongThanhTien,\n  SUM(C.SoLuong * H.DonGia) * 0.05 AS KhuyenMai\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  C.MaHD\nHAVING\n  SUM(C.SoLuong * H.DonGia) > 500000",
+    "explanation": "Sử dụng HAVING để lọc và nhân biểu thức với 0.05 để tính khuyến mãi."
+  },
+  {
+    "id": "BH_21",
+    "category": "Phân nhóm",
+    "question": "Cho biết thông tin khách hàng VIP có tổng thành tiến trong năm 2018 nhỏ hơn 20 triệu.",
+    "sql": "SELECT\n  KH.*\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  KH.LoaiKH = 'VIP'\n  AND YEAR(HD.NgayLapHD) = 2018\nGROUP BY\n  KH.MaKH,\n  KH.TenKH,\n  KH.DiaChi,\n  KH.DienThoai,\n  KH.Email,\n  KH.LoaiKH\nHAVING\n  SUM(C.SoLuong * H.DonGia) < 20000000",
+    "explanation": "Kết hợp WHERE cho điều kiện năm/VIP và HAVING cho tổng tiền."
+  },
+  {
+    "id": "BH_22",
+    "category": "TOP",
+    "question": "Cho biết hoá đơn có tổng trị giá lớn nhất gồm các thông tin: Số hoá đơn, ngày bán, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.",
+    "sql": "SELECT\n  TOP 1 HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi,\n  SUM(C.SoLuong * H.DonGia) AS TongTriGia\nFROM\n  HOADON HD\n  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi\nORDER BY\n  SUM(C.SoLuong * H.DonGia) DESC",
+    "explanation": "Sử dụng TOP 1 kết hợp với ORDER BY DESC để lấy lớn nhất."
+  },
+  {
+    "id": "BH_23",
+    "category": "TOP",
+    "question": "Cho biết hoá đơn có tổng trị giá lớn nhất trong tháng 5/2000 gồm các thông tin: Số hoá đơn, ngày, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.",
+    "sql": "SELECT\n  TOP 1 HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi,\n  SUM(C.SoLuong * H.DonGia) AS TongTriGia\nFROM\n  HOADON HD\n  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  MONTH(HD.NgayLapHD) = 5\n  AND YEAR(HD.NgayLapHD) = 2000\nGROUP BY\n  HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi\nORDER BY\n  SUM(C.SoLuong * H.DonGia) DESC",
+    "explanation": "Lọc thêm theo tháng và năm trước khi tính TOP 1."
+  },
+  {
+    "id": "BH_24",
+    "category": "TOP",
+    "question": "Cho biết hoá đơn có tổng trị giá nhỏ nhất gồm các thông tin: Số hoá đơn, ngày, tên khách hàng, địa chỉ khách hàng, tổng trị giá của hoá đơn.",
+    "sql": "SELECT\n  TOP 1 HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi,\n  SUM(C.SoLuong * H.DonGia) AS TongTriGia\nFROM\n  HOADON HD\n  INNER JOIN KHACHHANG KH ON HD.MaKH = KH.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  HD.MaHD,\n  HD.NgayLapHD,\n  KH.TenKH,\n  KH.DiaChi\nORDER BY\n  SUM(C.SoLuong * H.DonGia) ASC",
+    "explanation": "Sử dụng TOP 1 kết hợp với ORDER BY ASC để lấy nhỏ nhất."
+  },
+  {
+    "id": "BH_25",
+    "category": "TOP",
+    "question": "Cho biết các thông tin của khách hàng có số lượng hoá đơn mua hàng nhiều nhất.",
+    "sql": "SELECT\n  TOP 1 KH.*\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\nGROUP BY\n  KH.MaKH,\n  KH.TenKH,\n  KH.DiaChi,\n  KH.DienThoai,\n  KH.Email,\n  KH.LoaiKH\nORDER BY\n  COUNT(HD.MaHD) DESC",
+    "explanation": "Đếm số hóa đơn bằng COUNT và sắp xếp giảm dần."
+  },
+  {
+    "id": "BH_26",
+    "category": "TOP",
+    "question": "Cho biết các thông tin của khách hàng có số lượng hàng mua nhiều nhất.",
+    "sql": "SELECT\n  TOP 1 KH.*\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\nGROUP BY\n  KH.MaKH,\n  KH.TenKH,\n  KH.DiaChi,\n  KH.DienThoai,\n  KH.Email,\n  KH.LoaiKH\nORDER BY\n  SUM(C.SoLuong) DESC",
+    "explanation": "Tính tổng số lượng hàng hóa bằng SUM và sắp xếp giảm dần."
+  },
+  {
+    "id": "BH_27",
+    "category": "TOP",
+    "question": "Cho biết các thông tin về các mặt hàng mà được bán trong nhiều hoá đơn nhất.",
+    "sql": "SELECT\n  TOP 1 H.*\nFROM\n  HANGHOA H\n  INNER JOIN CHITIETHD C ON H.MaH = C.MaH\nGROUP BY\n  H.MaH,\n  H.TenH,\n  H.DonViTinh,\n  H.DonGia\nORDER BY\n  COUNT(DISTINCT C.MaHD) DESC",
+    "explanation": "Đếm số hóa đơn khác nhau có mặt hàng đó."
+  },
+  {
+    "id": "BH_28",
+    "category": "TOP",
+    "question": "Cho biết các thông tin về các mặt hàng mà được bán nhiều nhất.",
+    "sql": "SELECT\n  TOP 1 H.*\nFROM\n  HANGHOA H\n  INNER JOIN CHITIETHD C ON H.MaH = C.MaH\nGROUP BY\n  H.MaH,\n  H.TenH,\n  H.DonViTinh,\n  H.DonGia\nORDER BY\n  SUM(C.SoLuong) DESC",
+    "explanation": "Tính tổng số lượng bán ra của mặt hàng."
+  },
+  {
+    "id": "BH_29",
+    "category": "Truy vấn lồng nhau",
+    "question": "Cho biết MaH, TenH chưa được bán.",
+    "sql": "SELECT\n  MaH,\n  TenH\nFROM\n  HANGHOA\nWHERE\n  MaH NOT IN (\n    SELECT\n      MaH\n    FROM\n      CHITIETHD\n  )",
+    "explanation": "Dùng NOT IN để tìm những mã hàng không xuất hiện trong chi tiết hóa đơn."
+  },
+  {
+    "id": "BH_30",
+    "category": "Truy vấn lồng nhau",
+    "question": "Cho biết thông tin khách hàng chưa mua hàng vào tháng 5.",
+    "sql": "SELECT\n  *\nFROM\n  KHACHHANG\nWHERE\n  MaKH NOT IN (\n    SELECT\n      MaKH\n    FROM\n      HOADON\n    WHERE\n      MONTH(NgayLapHD) = 5\n  )",
+    "explanation": "Loại trừ khách hàng đã có hóa đơn trong tháng 5."
+  },
+  {
+    "id": "BH_31",
+    "category": "Truy vấn lồng nhau",
+    "question": "Cho biết thông tin mặt hàng chưa được bán vào tháng 2.",
+    "sql": "SELECT\n  *\nFROM\n  HANGHOA\nWHERE\n  MaH NOT IN (\n    SELECT\n      C.MaH\n    FROM\n      CHITIETHD C\n      INNER JOIN HOADON HD ON C.MaHD = HD.MaHD\n    WHERE\n      MONTH(HD.NgayLapHD) = 2\n  )",
+    "explanation": "Lọc các mặt hàng xuất hiện trong hóa đơn tháng 2 và dùng NOT IN để tìm phần bù."
+  },
+  {
+    "id": "BH_32",
+    "category": "Truy vấn lồng nhau",
+    "question": "Cho biết TenKH có mua mặt hàng BÁNH.",
+    "sql": "SELECT DISTINCT\n  KH.TenKH\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nWHERE\n  H.TenH LIKE N'%Bánh%'",
+    "explanation": "Dùng DISTINCT để loại bỏ tên trùng nếu mua nhiều lần."
+  },
+  {
+    "id": "BH_33",
+    "category": "Thủ tục (Procedure)",
+    "question": "Hiển thị danh các khách hàng đã mua hàng trong ngày chỉ định (ngày là tham số truyền vào).",
+    "sql": "CREATE PROCEDURE p_KhachHangTheoNgay @NgayLap date AS BEGIN\nSELECT\n  KH.*\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\nWHERE\n  HD.NgayLapHD = @NgayLap END",
+    "explanation": "Tạo thủ tục nhận tham số ngày và thực hiện câu lệnh SELECT với tham số đó."
+  },
+  {
+    "id": "BH_34",
+    "category": "Thủ tục (Procedure)",
+    "question": "Hiển thị danh sách 5 khách hàng có tổng trị giá các đơn hàng lớn nhất.",
+    "sql": "CREATE PROCEDURE p_Top5KhachHang AS BEGIN\nSELECT\n  TOP 5 KH.MaKH,\n  KH.TenKH,\n  SUM(C.SoLuong * H.DonGia) AS TongTriGia\nFROM\n  KHACHHANG KH\n  INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH\n  INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  KH.MaKH,\n  KH.TenKH\nORDER BY\n  SUM(C.SoLuong * H.DonGia) DESC END",
+    "explanation": "Sử dụng TOP 5 và ORDER BY DESC để lấy 5 người chi tiêu nhiều nhất."
+  },
+  {
+    "id": "BH_35",
+    "category": "Thủ tục (Procedure)",
+    "question": "Hiển thị danh sách 10 mặt hàng có số lượng bán lớn nhất.",
+    "sql": "CREATE PROCEDURE p_Top10MatHang AS BEGIN\nSELECT\n  TOP 10 H.MaH,\n  H.TenH,\n  SUM(C.SoLuong) AS TongSoLuong\nFROM\n  HANGHOA H\n  INNER JOIN CHITIETHD C ON H.MaH = C.MaH\nGROUP BY\n  H.MaH,\n  H.TenH\nORDER BY\n  SUM(C.SoLuong) DESC END",
+    "explanation": "Tính tổng số lượng của mỗi mặt hàng, sắp xếp giảm dần và lấy TOP 10."
+  },
+  {
+    "id": "BH_36",
+    "category": "Thủ tục (Procedure)",
+    "question": "Cập nhật cột Khuyến mãi như sau: Khuyến mãi 5% thành tiền nếu SoLuong >100, 10% thành tiền nếu SoLuong >500.",
+    "sql": "UPDATE CHITIETHD\nSET\n  KhuyenMai = CASE\n    WHEN SoLuong > 500 THEN (SoLuong * DonGia) * 0.10\n    WHEN SoLuong > 100 THEN (SoLuong * DonGia) * 0.05\n    ELSE 0\n  END\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH",
+    "explanation": "Sử dụng lệnh UPDATE kết hợp cấu trúc CASE WHEN."
+  },
+  {
+    "id": "BH_37",
+    "category": "Thủ tục (Procedure)",
+    "question": "Tính trị giá cho mỗi hoá đơn.",
+    "sql": "CREATE PROCEDURE p_TriGiaHoaDon AS BEGIN\nSELECT\n  C.MaHD,\n  SUM(C.SoLuong * H.DonGia) AS TriGia\nFROM\n  CHITIETHD C\n  INNER JOIN HANGHOA H ON C.MaH = H.MaH\nGROUP BY\n  C.MaHD END",
+    "explanation": "Thủ tục đơn giản sử dụng GROUP BY trên chi tiết hóa đơn."
+  },
+  {
+    "id": "BH_38",
+    "category": "Thủ tục (Procedure)",
+    "question": "Cập nhật cho cột Loại khách hàng: là VIP nếu tổng thành tiền trong năm lớn hơn hoặc bằng 20 triệu.",
+    "sql": "UPDATE KHACHHANG\nSET\n  LoaiKH = 'VIP'\nWHERE\n  MaKH IN (\n    SELECT\n      HD.MaKH\n    FROM\n      HOADON HD\n      INNER JOIN CHITIETHD C ON HD.MaHD = C.MaHD\n      INNER JOIN HANGHOA H ON C.MaH = H.MaH\n    WHERE\n      YEAR(HD.NgayLapHD) = YEAR(GETDATE())\n    GROUP BY\n      HD.MaKH\n    HAVING\n      SUM(C.SoLuong * H.DonGia) >= 20000000\n  )",
+    "explanation": "Sử dụng UPDATE với điều kiện lọc IN chứa câu truy vấn tính tổng thành tiền."
+  },
+  {
+    "id": "BH_39",
+    "category": "Trigger",
+    "question": "Thực hiện việc kiểm tra rằng buộc khoá ngoại ở bảng HOADON và CHITIETHD.",
+    "sql": "CREATE\nTRIGGER trg_CheckFK_HoaDon_ChiTiet ON CHITIETHD FOR\nINSERT\n,\nUPDATE AS BEGIN IF NOT EXISTS (\n  SELECT\n    *\n  FROM\n    HOADON HD\n    INNER JOIN INSERTED I ON HD.MaHD = I.MaHD\n) BEGIN PRINT N'Mã hóa đơn không tồn tại!' ROLLBACK TRANSACTION END END",
+    "explanation": "Tạo Trigger kiểm tra nếu MaHD trong bản ghi INSERTED không có trong bảng HOADON thì ROLLBACK."
+  },
+  {
+    "id": "BH_40",
+    "category": "Trigger",
+    "question": "Không cho phép xoá các HOADON nào có SOHD còn trong bảng CHITIETHD.",
+    "sql": "CREATE\nTRIGGER trg_NoCascadeDelete_HoaDon ON HOADON FOR\nDELETE AS BEGIN IF EXISTS (\n  SELECT\n    *\n  FROM\n    CHITIETHD C\n    INNER JOIN DELETED D ON C.MaHD = D.MaHD\n) BEGIN PRINT N'Không thể xóa hóa đơn vì đã có chi tiết hóa đơn!' ROLLBACK TRANSACTION END END",
+    "explanation": "Kiểm tra trong bảng DELETED xem hóa đơn định xóa có tồn tại trong CHITIETHD hay không."
+  },
+  {
+    "id": "BH_41",
+    "category": "Trigger",
+    "question": "Không cho phép user nhập vào hai mặt hàng có cùng tên.",
+    "sql": "CREATE\nTRIGGER trg_UniqueTenHang ON HANGHOA FOR\nINSERT\n,\nUPDATE AS BEGIN IF EXISTS (\n  SELECT\n    TenH\n  FROM\n    HANGHOA\n  GROUP BY\n    TenH\n  HAVING\n    COUNT(*) > 1\n) BEGIN PRINT N'Tên mặt hàng đã tồn tại!' ROLLBACK TRANSACTION END END",
+    "explanation": "Kiểm tra tính duy nhất của cột TenH bằng cách gom nhóm và đếm số lượng."
+  },
+  {
+    "id": "BH_42",
+    "category": "Trigger",
+    "question": "Khi user đặt hàng thì KHUYENMAI là 5% nếu SL >100, 10% nếu SL >500.",
+    "sql": "CREATE\nTRIGGER trg_UpdateKhuyenMai ON CHITIETHD FOR\nINSERT\n,\nUPDATE AS BEGIN\nUPDATE CHITIETHD\nSET\n  KhuyenMai = CASE\n    WHEN I.SoLuong > 500 THEN (I.SoLuong * H.DonGia) * 0.10\n    WHEN I.SoLuong > 100 THEN (I.SoLuong * H.DonGia) * 0.05\n    ELSE 0\n  END\nFROM\n  CHITIETHD C\n  INNER JOIN INSERTED I ON C.MaHD = I.MaHD\n  AND C.MaH = I.MaH\n  INNER JOIN HANGHOA H ON I.MaH = H.MaH END",
+    "explanation": "Trigger tự động cập nhật giá trị cột KhuyenMai dựa trên SoLuong và bảng INSERTED."
+  },
+  {
+    "id": "BH_43",
+    "category": "Trigger",
+    "question": "Không cho phép user xoá một lúc nhiều hơn một mặt hàng.",
+    "sql": "CREATE\nTRIGGER trg_DeleteMatHang ON HANGHOA FOR\nDELETE AS BEGIN IF (\n  SELECT\n    COUNT(*)\n  FROM\n    DELETED\n) > 1 BEGIN PRINT N'Không được phép xóa nhiều hơn 1 mặt hàng cùng lúc!' ROLLBACK TRANSACTION END END",
+    "explanation": "Đếm số dòng trong bảng ảo DELETED, nếu > 1 thì ROLLBACK."
+  },
+  {
+    "id": "BH_44",
+    "category": "Trigger",
+    "question": "Chỉ bán mặt hàng BÁNH với số lượng là bội số của 10.",
+    "sql": "CREATE\nTRIGGER trg_BanBanhBoiSo10 ON CHITIETHD FOR\nINSERT\n,\nUPDATE AS BEGIN IF EXISTS (\n  SELECT\n    *\n  FROM\n    INSERTED I\n    INNER JOIN HANGHOA H ON I.MaH = H.MaH\n  WHERE\n    H.TenH LIKE N'%Bánh%'\n    AND I.SoLuong % 10 <> 0\n) BEGIN PRINT N'Mặt hàng bánh chỉ được bán với số lượng là bội số của 10!' ROLLBACK TRANSACTION END END",
+    "explanation": "Sử dụng phép chia lấy dư (%) để kiểm tra số lượng của các mặt hàng có chữ 'Bánh'."
+  }
+]
