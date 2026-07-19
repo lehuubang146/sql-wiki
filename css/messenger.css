@@ -21,17 +21,19 @@ body.is-chat-page .wiki-layout, body.is-chat-page .main-content-wrapper {
     display: flex;
     flex: 1;
     min-height: 0;
-    background: var(--bg-color, #000000);
+    background: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 40%, #020617 100%);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Sidebar */
 .chat-sidebar {
     width: 280px;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
@@ -78,14 +80,19 @@ body.is-chat-page .wiki-layout, body.is-chat-page .main-content-wrapper {
 /* Main Chat Area */
 .chat-main {
     flex-grow: 1; display: flex; flex-direction: column; position: relative;
-    background: var(--bg-color, #000000);
+    background: transparent;
     min-width: 0; /* Important for flex child truncation */
     min-height: 0; /* Important to prevent vertical flex stretch hiding the input bar */
 }
 .chat-header {
     padding: 15px 20px;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: flex; justify-content: space-between; align-items: center;
+    position: relative;
+    z-index: 50;
 }
 #ai-model-select {
     background-color: rgba(15, 23, 42, 0.8);
@@ -163,6 +170,9 @@ body.is-chat-page .wiki-layout, body.is-chat-page .main-content-wrapper {
 /* Input Area */
 .messenger-input-area {
     padding: 15px 20px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex; gap: 10px; align-items: center;
 }
 .icon-btn {
