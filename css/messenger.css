@@ -224,6 +224,7 @@ body.is-chat-page .wiki-layout, body.is-chat-page .main-content-wrapper {
     body.is-chat-page .main-content-wrapper {
         position: fixed;
         top: 0; bottom: 0; left: 0; right: 0;
+        height: auto !important;
         z-index: 40;
         background: var(--bg-color, #000000); /* Prevent content underneath from showing */
         padding-bottom: env(safe-area-inset-bottom, 0px); /* iOS Safe Area */
@@ -493,16 +494,14 @@ body.light-mode #toggle-key-btn { color: #64748b; }
     .main-content.chat-page-content {
         width: 100%;
         max-width: none;
-        height: 100vh;
-        height: 100dvh;
+        height: 100%;
         padding: 0 !important;
         overflow: hidden;
     }
 
     .messenger-layout {
         width: 100%;
-        height: 100vh;
-        height: 100dvh;
+        height: 100%;
         min-height: 0;
         margin: 0;
         border-radius: 0;
