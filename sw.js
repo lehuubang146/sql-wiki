@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sql-wiki-v135';
+const CACHE_NAME = 'sql-wiki-v137';
 const urlsToCache = [
   './',  './css/style.css',
   './css/chat.css',
@@ -53,3 +53,5 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
+

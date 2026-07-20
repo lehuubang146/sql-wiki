@@ -10,9 +10,9 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
     <title>SQL Study Wiki - QLSV_NEW</title>
-    <link rel="stylesheet" href="css/style.css?v=38">
-    <link rel="stylesheet" href="css/search.css?v=38">
-    <link rel="stylesheet" href="css/messenger.css?v=38">
+    <link rel="stylesheet" href="css/style.css?v=137">
+    <link rel="stylesheet" href="css/search.css?v=137">
+    <link rel="stylesheet" href="css/messenger.css?v=137">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
@@ -176,12 +176,9 @@ group by
   h.hocky,
   avg(d.diemhp) as diemtbc
 from
-  diemhp d,
-  dmhocphan h,
   sinhvien s
-where
-  d.mahp = h.mahp
-  and d.masv = s.masv
+  join diemhp d on s.masv = d.masv
+  join dmhocphan h on d.mahp = h.mahp
 group by
   s.masv,
   h.hocky;</code></pre>
@@ -208,10 +205,8 @@ group by
   s.gioitinh,
   count(s.masv) as soluong
 from
-  dmlop l,
-  sinhvien s
-where
-  l.malop = s.malop
+  dmlop l
+  join sinhvien s on l.malop = s.malop
 group by
   l.malop,
   l.tenlop,
@@ -238,11 +233,10 @@ group by
   s.hoten,
   count(d.mahp) as sohocphanthieu
 from
-  sinhvien s,
-  diemhp d
+  sinhvien s
+  join diemhp d on s.masv = d.masv
 where
-  s.masv = d.masv
-  and d.diemhp &lt; 5
+  d.diemhp &lt; 5
 group by
   s.masv,
   s.hoten;</code></pre>
@@ -294,13 +288,11 @@ group by
   s.hoten,
   sum(h.sodvht) as tongsodvht
 from
-  sinhvien s,
-  diemhp d,
-  dmhocphan h
+  sinhvien s
+  join diemhp d on s.masv = d.masv
+  join dmhocphan h on d.mahp = h.mahp
 where
-  s.masv = d.masv
-  and d.mahp = h.mahp
-  and d.diemhp &gt;= 5
+  d.diemhp &gt;= 5
 group by
   s.masv,
   s.hoten;</code></pre>
@@ -325,10 +317,8 @@ group by
   l.malop,
   l.tenlop
 from
-  dmlop l,
-  sinhvien s
-where
-  l.malop = s.malop
+  dmlop l
+  join sinhvien s on l.malop = s.malop
 group by
   l.malop,
   l.tenlop
@@ -354,10 +344,8 @@ having
                 <pre style="margin-bottom: 0;"><code class="language-sql">select
   s.hoten
 from
-  sinhvien s,
-  diemhp d
-where
-  s.masv = d.masv
+  sinhvien s
+  join diemhp d on s.masv = d.masv
 group by
   s.masv,
   s.hoten
@@ -383,11 +371,10 @@ having
                 <pre style="margin-bottom: 0;"><code class="language-sql">select
   s.hoten
 from
-  sinhvien s,
-  diemhp d
+  sinhvien s
+  join diemhp d on s.masv = d.masv
 where
-  s.masv = d.masv
-  and d.diemhp &lt;= 5
+  d.diemhp &lt;= 5
 group by
   s.masv,
   s.hoten
@@ -413,13 +400,11 @@ having
                 <pre style="margin-bottom: 0;"><code class="language-sql">select
   s.hoten
 from
-  sinhvien s,
-  diemhp d,
-  dmhocphan h
+  sinhvien s
+  join diemhp d on s.masv = d.masv
+  join dmhocphan h on d.mahp = h.mahp
 where
-  s.masv = d.masv
-  and d.mahp = h.mahp
-  and h.manganh = &#039;140902&#039;
+  h.manganh = &#039;140902&#039;
 group by
   s.masv,
   s.hoten
@@ -452,11 +437,10 @@ having
                 <pre style="margin-bottom: 0;"><code class="language-sql">select
   s.hoten
 from
-  sinhvien s,
-  diemhp d
+  sinhvien s
+  join diemhp d on s.masv = d.masv
 where
-  s.masv = d.masv
-  and d.mahp in (&#039;001&#039;, &#039;002&#039;, &#039;003&#039;)
+  d.mahp in (&#039;001&#039;, &#039;002&#039;, &#039;003&#039;)
 group by
   s.masv,
   s.hoten
@@ -483,13 +467,11 @@ having
   top 1 s.masv,
   s.hoten
 from
-  sinhvien s,
-  diemhp d,
-  dmhocphan h
+  sinhvien s
+  join diemhp d on s.masv = d.masv
+  join dmhocphan h on d.mahp = h.mahp
 where
-  s.masv = d.masv
-  and d.mahp = h.mahp
-  and h.hocky = 1
+  h.hocky = 1
 group by
   s.masv,
   s.hoten
@@ -516,11 +498,10 @@ order by
   top 1 s.masv,
   s.hoten
 from
-  sinhvien s,
-  diemhp d
+  sinhvien s
+  join diemhp d on s.masv = d.masv
 where
-  s.masv = d.masv
-  and d.diemhp &lt; 5
+  d.diemhp &lt; 5
 group by
   s.masv,
   s.hoten
@@ -547,11 +528,10 @@ order by
   top 1 h.mahp,
   h.tenhp
 from
-  dmhocphan h,
-  diemhp d
+  dmhocphan h
+  join diemhp d on h.mahp = d.mahp
 where
-  h.mahp = d.mahp
-  and d.diemhp &lt; 5
+  d.diemhp &lt; 5
 group by
   h.mahp,
   h.tenhp
@@ -936,13 +916,13 @@ function toggleExplanation(id) {
     </div>
 
     <!-- Load Custom Logic -->
-    <script src="js/search.js?v=34" charset="UTF-8" defer></script>
-    <script src="js/theme.js?v=34" charset="UTF-8" defer></script>
-    <script src="js/mobile.js?v=34" charset="UTF-8" defer></script>
-    <script src="js/interactive.js?v=34" charset="UTF-8" defer></script>
-    <script src="js/toc.js?v=35" charset="UTF-8" defer></script>
-    <script src="js/sql-sandbox.js?v=35" charset="UTF-8" defer></script>
-    <script src="js/erd-drag.js?v=34" charset="UTF-8" defer></script>
+    <script src="js/search.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/theme.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/mobile.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/interactive.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/toc.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/sql-sandbox.js?v=137" charset="UTF-8" defer></script>
+    <script src="js/erd-drag.js?v=137" charset="UTF-8" defer></script>
     <!-- Link to Messenger Chat -->
         <a href="chat.html" id="ai-chat-toggle" class="ai-chat-btn" title="Mở Messenger AI">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -961,7 +941,7 @@ function toggleExplanation(id) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" defer></script>
-    <script src="js/prism-custom-buttons.js?v=3" defer></script>
+    <script src="js/prism-custom-buttons.js?v=137" defer></script>
 
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js" defer></script>
@@ -976,10 +956,13 @@ function toggleExplanation(id) {
     </script>
 
     <!-- Progress Tracking & Gamification -->
-    <script src="js/progress.js?v=1" defer></script>
+    <script src="js/progress.js?v=137" defer></script>
 
     <!-- SQL Sandbox (sql.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js" defer></script>
-    <script src="js/sql-sandbox.js?v=1" defer></script>
+    <script src="js/sql-sandbox.js?v=137" defer></script>
 </body>
 </html>
+
+
+

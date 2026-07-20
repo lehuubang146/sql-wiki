@@ -134,7 +134,316 @@
 
     
     <!-- Phần bài tập Quản Lý Sinh Viên -->
-    
+            <h2 style="color: #3b82f6; border-bottom: 2px solid rgba(59, 130, 246, 0.3); padding-bottom: 0.5rem; margin-top: 2rem; margin-bottom: 1.5rem;">
+            📚 CSDL: Quản Lý Sinh Viên (QLSV_NEW)
+        </h2>
+                    <div class="exercise-item" id="ex-qlsv-sp-1" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 1                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Thêm Sinh Viên Mới: Viết SP để thêm một sinh viên mới vào <strong class="highlight-vi">bảng</strong> SINHVIEN, thực hiện kiểm tra MaLop phải tồn tại trước khi thêm.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ThemSinhVien
+  @MaSV VARCHAR(10),
+  @HoTen NVARCHAR(50),
+  @MaLop VARCHAR(10),
+  @NgaySinh DATE,
+  @GioiTinh BIT
+AS BEGIN
+  IF EXISTS (SELECT 1 FROM DMLOP WHERE MaLop = @MaLop)
+  BEGIN
+    INSERT INTO SINHVIEN (MaSV, HoTen, MaLop, NgaySinh, GioiTinh)
+    VALUES (@MaSV, @HoTen, @MaLop, @NgaySinh, @GioiTinh);
+    PRINT N&#039;Thêm sinh viên thành công&#039;;
+  END
+  ELSE
+  BEGIN
+    PRINT N&#039;Lỗi: Mã lớp không tồn tại&#039;;
+  END
+END
+
+-- Thực thi procedure
+EXEC sp_ThemSinhVien &#039;SV001&#039;, N&#039;Nguyễn Văn A&#039;, &#039;L01&#039;, &#039;2000-01-01&#039;, 1;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-1" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Thủ tục sử dụng khối lệnh IF EXISTS để kiểm tra xem MaLop có tồn tại trong bảng DMLOP hay không. Nếu có thì mới thực hiện lệnh INSERT INTO để thêm sinh viên.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-2" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 2                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Nhập/Cập Nhật Điểm: Viết SP cho phép nhập điểm mới cho một sinh viên. Nếu đã có điểm thì cập nhật, nếu chưa có thì thêm mới.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_NhapCapNhatDiem
+  @MaSV VARCHAR(10),
+  @MaHP VARCHAR(10),
+  @Diem FLOAT
+AS BEGIN
+  IF EXISTS (SELECT 1 FROM DIEMHP WHERE MaSV = @MaSV AND MaHP = @MaHP)
+  BEGIN
+    UPDATE DIEMHP SET Diem = @Diem WHERE MaSV = @MaSV AND MaHP = @MaHP;
+  END
+  ELSE
+  BEGIN
+    INSERT INTO DIEMHP (MaSV, MaHP, Diem) VALUES (@MaSV, @MaHP, @Diem);
+  END
+END
+
+-- Thực thi procedure
+EXEC sp_NhapCapNhatDiem &#039;SV001&#039;, &#039;HP01&#039;, 8.5;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-2" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng IF EXISTS để kiểm tra sự tồn tại của bản ghi điểm tương ứng với MaSV và MaHP. Dùng lệnh UPDATE nếu đã tồn tại, và lệnh INSERT nếu chưa tồn tại (giống cơ chế UPSERT).                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-3" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 3                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Xuất <strong class="highlight-vi">Bảng</strong> Điểm: Viết SP lấy ra danh sách các môn học và điểm số tương ứng của một sinh viên khi biết mã sinh viên.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_BangDiemSinhVien
+  @MaSV VARCHAR(10)
+AS BEGIN
+  SELECT h.TenHP, d.Diem
+  FROM DMHOCPHAN h
+  INNER JOIN DIEMHP d ON h.MaHP = d.MaHP
+  WHERE d.MaSV = @MaSV;
+END
+
+-- Thực thi procedure
+EXEC sp_BangDiemSinhVien &#039;SV001&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-3" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Thủ tục thực hiện câu lệnh SELECT kết hợp INNER JOIN giữa bảng DMHOCPHAN và DIEMHP, sử dụng điều kiện lọc WHERE với tham số đầu vào @MaSV.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-4" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 4                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Tính Điểm Trung Bình GPA: Viết SP tính điểm trung bình học tập của một sinh viên dựa trên điểm các môn học phần.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_TinhGPA
+  @MaSV VARCHAR(10)
+AS BEGIN
+  SELECT MaSV, AVG(Diem) AS GPA
+  FROM DIEMHP
+  WHERE MaSV = @MaSV
+  GROUP BY MaSV;
+END
+
+-- Thực thi procedure
+EXEC sp_TinhGPA &#039;SV001&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-4')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-4" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng hàm tổng hợp AVG(Diem) và gom nhóm GROUP BY MaSV để tính toán điểm trung bình.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-5" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 5                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Thống Kê Sinh Viên Theo Lớp: Viết SP hiển thị danh sách tất cả sinh viên thuộc một lớp cụ thể và tổng số lượng sinh viên của lớp đó.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ThongKeSinhVienTheoLop
+  @MaLop VARCHAR(10)
+AS BEGIN
+  SELECT * FROM SINHVIEN WHERE MaLop = @MaLop;
+  SELECT COUNT(*) AS TongSoLuong FROM SINHVIEN WHERE MaLop = @MaLop;
+END
+
+-- Thực thi procedure
+EXEC sp_ThongKeSinhVienTheoLop &#039;L01&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-5')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-5" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Một Stored Procedure có thể trả về nhiều kết quả cùng lúc (Multiple Result Sets). Ở đây trả về 1 bảng danh sách và 1 bảng đếm số lượng tổng.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-6" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 6                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết SP để xóa một sinh viên theo MaSV. Để tránh lỗi vi phạm <strong class="highlight-vi">khóa ngoại</strong>, SP phải xóa điểm của sinh viên trong <strong class="highlight-vi">bảng</strong> DIEMHP trước.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_XoaSinhVien
+  @MaSV VARCHAR(10)
+AS BEGIN
+  DELETE FROM DIEMHP WHERE MaSV = @MaSV;
+  DELETE FROM SINHVIEN WHERE MaSV = @MaSV;
+END
+
+-- Thực thi procedure
+EXEC sp_XoaSinhVien &#039;SV001&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-6')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-6" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Trong CSDL có ràng buộc khóa ngoại, bảng con (DIEMHP) chứa dữ liệu phụ thuộc vào bảng cha (SINHVIEN). Do đó phải thực thi lệnh DELETE trên bảng DIEMHP trước khi DELETE bảng SINHVIEN.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-7" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 7                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Thống Kê Số Lượng Sinh Viên Theo Ngành: Viết SP nhận đầu vào là NamNhapHoc, trả về danh sách các Ngành học và tổng số lượng sinh viên của từng ngành.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_SoLuongSVTheoNganh
+  @NamNhapHoc INT
+AS BEGIN
+  SELECT n.MaNganh, n.TenNganh, COUNT(s.MaSV) AS TongSV
+  FROM DMNGANH n
+  INNER JOIN DMLOP l ON n.MaNganh = l.MaNganh
+  LEFT JOIN SINHVIEN s ON l.MaLop = s.MaLop
+  WHERE YEAR(s.NgaySinh) = @NamNhapHoc
+  GROUP BY n.MaNganh, n.TenNganh;
+END
+
+-- Thực thi procedure
+EXEC sp_SoLuongSVTheoNganh 2000;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-7')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-7" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng các lệnh JOIN để liên kết các bảng DMNGANH, DMLOP và SINHVIEN. Hàm COUNT để đếm lượng sinh viên sau khi lọc WHERE theo tham số đầu vào.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-8" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 8                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Top N Sinh Viên Xuất Sắc Nhất Khoa: Viết SP nhận đầu vào là MaKhoa và số nguyên N. SP trả về danh sách N sinh viên có điểm trung bình cao nhất.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_TopNSinhVien
+  @MaKhoa VARCHAR(10),
+  @N INT
+AS BEGIN
+  SELECT TOP (@N) s.MaSV, s.HoTen, l.TenLop, AVG(d.Diem) AS DiemTrungBinh
+  FROM SINHVIEN s
+  JOIN DMLOP l ON s.MaLop = l.MaLop
+  JOIN DMNGANH n ON l.MaNganh = n.MaNganh
+  JOIN DIEMHP d ON s.MaSV = d.MaSV
+  WHERE n.MaKhoa = @MaKhoa
+  GROUP BY s.MaSV, s.HoTen, l.TenLop
+  ORDER BY AVG(d.Diem) DESC;
+END
+
+-- Thực thi procedure
+EXEC sp_TopNSinhVien &#039;K01&#039;, 3;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-8')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-8" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Tham số N được sử dụng trực tiếp trong mệnh đề TOP (@N). Việc tính toán trung bình sử dụng AVG, sau đó ORDER BY DESC để lấy điểm từ cao xuống thấp.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-9" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 9                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Chuyển Lớp Cho Sinh Viên: Viết SP thực hiện chuyển lớp cho sinh viên. Đầu vào gồm MaSV và MaLop_Moi. Kiểm tra MaLop_Moi có tồn tại hay không.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ChuyenLop
+  @MaSV VARCHAR(10),
+  @MaLopMoi VARCHAR(10)
+AS BEGIN
+  IF EXISTS (SELECT 1 FROM DMLOP WHERE MaLop = @MaLopMoi)
+  BEGIN
+    UPDATE SINHVIEN SET MaLop = @MaLopMoi WHERE MaSV = @MaSV;
+    PRINT N&#039;Chuyển lớp thành công&#039;;
+  END
+  ELSE
+  BEGIN
+    PRINT N&#039;Mã lớp mới không hợp lệ&#039;;
+  END
+END
+
+-- Thực thi procedure
+EXEC sp_ChuyenLop &#039;SV001&#039;, &#039;L02&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-9')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-9" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Mệnh đề IF EXISTS tiếp tục được sử dụng để bắt lỗi dữ liệu đầu vào. Nếu dữ liệu đúng, thủ tục thực thi lệnh UPDATE để thay đổi thông tin khóa ngoại MaLop.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-qlsv-sp-10" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 10                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Liệt Kê Học Phần Chưa Học: Viết SP nhận vào MaSV. SP truy xuất ra danh sách các môn học thuộc cùng MANGANH với sinh viên nhưng chưa có điểm.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_HocPhanChuaHoc
+  @MaSV VARCHAR(10)
+AS BEGIN
+  SELECT hp.MaHP, hp.TenHP
+  FROM DMHOCPHAN hp
+  WHERE hp.MaHP NOT IN (
+    SELECT MaHP FROM DIEMHP WHERE MaSV = @MaSV
+  );
+END
+
+-- Thực thi procedure
+EXEC sp_HocPhanChuaHoc &#039;SV001&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-10')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-qlsv-sp-10" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; font-size: 0.95rem; line-height: 1.6;">
+                        Sử dụng truy vấn con kết hợp toán tử NOT IN để lấy ra những Mã Học Phần không nằm trong tập hợp các môn học đã thi của sinh viên.                    </div>
+                </div>
+                            </div>
+            
     <!-- Phần bài tập Quản Lý Bán Hàng -->
             <h2 style="color: #10b981; border-bottom: 2px solid rgba(16, 185, 129, 0.3); padding-bottom: 0.5rem; margin-top: 3rem; margin-bottom: 1.5rem;">
             🛒 CSDL: Quản Lý Bán Hàng (QUANLYBANHANG)
@@ -312,6 +621,299 @@ WHERE
                     </button>
                     <div id="expl-BH_38" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
                         Sử dụng UPDATE với điều kiện lọc IN chứa câu truy vấn tính tổng thành tiền.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-1" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 7                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để thêm 1 loại.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_themloai (
+  @maloai int,
+  @tenloai nvarchar(50),
+  @mota nvarchar(max)
+) as begin
+insert into
+  loai (maloai, tenloai, mota)
+values
+  (@maloai, @tenloai, @mota) end
+
+-- Thực thi procedure
+EXEC sp_themloai 100, N&#039;Loại mới&#039;, N&#039;Mô tả&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-1')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-1" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure tên sp_themloai, nhận vào 3 tham số là @maloai, @tenloai và @mota. Bên trong là lệnh INSERT INTO thực hiện việc thêm một bản ghi mới vào bảng loai với các giá trị được truyền vào từ tham số.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-2" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 8                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để sửa 1 loại.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_sualoai (
+  @maloai int,
+  @tenloai nvarchar(50),
+  @mota nvarchar(max)
+) as begin
+update loai
+set
+  tenloai = @tenloai,
+  mota = @mota
+where
+  maloai = @maloai end
+
+-- Thực thi procedure
+EXEC sp_sualoai 1, N&#039;Tên loại sửa&#039;, N&#039;Mô tả sửa&#039;;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-2')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-2" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure tên sp_sualoai với 3 tham số đầu vào. Khối lệnh chứa cú pháp UPDATE để cập nhật thông tin tenloai và mota trong bảng loai. Điều kiện WHERE maloai = @maloai đảm bảo chỉ dòng dữ liệu có mã loại tương ứng bị sửa đổi.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-3" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 9                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để xóa 1 loại.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_xoaloai (@maloai int) as begin
+delete from loai
+where
+  maloai = @maloai end
+
+-- Thực thi procedure
+EXEC sp_xoaloai 100;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-3')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-3" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure sp_xoaloai, nhận vào 1 tham số @maloai. Lệnh DELETE FROM được sử dụng để xóa dòng dữ liệu khỏi bảng loai. Mệnh đề WHERE chỉ định rõ sẽ xóa loại hàng hóa có mã bằng với tham số truyền vào.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-4" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 10                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để lấy thông tin tất cả loại.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_laytatcaloai as begin
+select
+  *
+from
+  loai end
+
+-- Thực thi procedure
+EXEC sp_laytatcaloai;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-4')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-4" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure có tên sp_laytatcaloai, không nhận tham số đầu vào nào. Khối lệnh thực thi là câu lệnh SELECT * FROM loai để truy xuất và trả về toàn bộ dữ liệu (tất cả các cột, các dòng) có trong bảng loai.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-5" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 11                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để lấy thông tin một loại cụ thể theo mã.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_layloaibangma (@maloai int) as begin
+select
+  *
+from
+  loai
+where
+  maloai = @maloai end
+
+-- Thực thi procedure
+EXEC sp_layloaibangma 1;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-5')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-5" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure tên sp_layloaibangma với 1 tham số @maloai. Bên trong sử dụng câu lệnh SELECT để lấy thông tin, và mệnh đề WHERE lọc kết quả sao cho chỉ trả về bản ghi trong bảng loai có mã loại khớp với tham số đầu vào.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-6" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 12                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để lấy danh sách hàng hóa thuộc loại cụ thể.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_layhanghoatheoloai (@maloai int) as begin
+select
+  *
+from
+  hanghoa
+where
+  maloai = @maloai end
+
+-- Thực thi procedure
+EXEC sp_layhanghoatheoloai 1;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-6')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-6" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Lệnh CREATE PROCEDURE dùng để tạo một thủ tục lưu trữ sp_layhanghoatheoloai, nhận tham số @maloai. Thủ tục này thực thi câu lệnh SELECT trên bảng hanghoa, và dùng WHERE để lọc ra tất cả hàng hóa thuộc về loại có mã truyền vào.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-7" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 13                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS khách hàng (HoTen, DienThoai) có đặt hàng với tổng số tiền trên X.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_khachhang_tongtien_tren_x (@x float) as begin
+select
+  kh.hoten,
+  kh.dienthoai
+from
+  khachhang kh
+  join dondathang ddh on kh.makh = ddh.makh
+  join chitietdathang ct on ddh.maddh = ct.maddh
+group by
+  kh.makh,
+  kh.hoten,
+  kh.dienthoai
+having
+  sum(ct.soluong * ct.dongia) &gt; @x end
+
+-- Thực thi procedure
+EXEC sp_ds_khachhang_tongtien_tren_x 1000000;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-7')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-7" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure, nhận tham số @x. Lệnh JOIN kết nối bảng khachhang, dondathang và chitietdathang. Mệnh đề GROUP BY nhóm theo khách hàng và mệnh đề HAVING dùng hàm SUM để tính tổng tiền (số lượng * đơn giá). Cú pháp sẽ lấy ra những khách hàng có tổng tiền mua trên mức @x.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-8" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 14                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Số đơn) có tổng số đơn đặt hàng trên X.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_sodon_tren_x (@x int) as begin
+select
+  hh.tenhh,
+  count(distinct ct.maddh) as sodon
+from
+  hanghoa hh
+  join chitietdathang ct on hh.mahh = ct.mahh
+group by
+  hh.mahh,
+  hh.tenhh
+having
+  count(distinct ct.maddh) &gt; @x end
+
+-- Thực thi procedure
+EXEC sp_ds_hanghoa_sodon_tren_x 5;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-8')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-8" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure có tham số @x. Lệnh JOIN nối bảng hanghoa và chitietdathang. Dữ liệu được nhóm theo hàng hóa bằng GROUP BY. Hàm COUNT(DISTINCT ct.maddh) đếm số đơn hàng duy nhất chứa mặt hàng đó, và mệnh đề HAVING lọc ra các mặt hàng có số lượng đơn xuất hiện lớn hơn @x.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-9" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 15                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Tổng SL) có tổng số lượng đặt hàng trên X.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_tongsl_tren_x (@x int) as begin
+select
+  hh.tenhh,
+  sum(ct.soluong) as tongsl
+from
+  hanghoa hh
+  join chitietdathang ct on hh.mahh = ct.mahh
+group by
+  hh.mahh,
+  hh.tenhh
+having
+  sum(ct.soluong) &gt; @x end
+
+-- Thực thi procedure
+EXEC sp_ds_hanghoa_tongsl_tren_x 50;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-9')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-9" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure nhận tham số @x. Thực hiện JOIN giữa hanghoa và chitietdathang, sau đó GROUP BY theo mặt hàng. Hàm tập hợp SUM(ct.soluong) tính tổng số lượng của hàng hóa được đặt, mệnh đề HAVING giữ lại những hàng hóa có tổng số lượng bán ra lớn hơn @x.                    </div>
+                </div>
+                            </div>
+                    <div class="exercise-item" id="ex-bh-sp-10" style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.3rem; margin-top: 0; border-bottom: none; padding-bottom: 0;">
+                    Bài tập 16                </h3>
+                <div class="callout" style="margin-bottom: 1rem; margin-top: 0.75rem;">
+                    <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
+                        Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Tổng số tiền) có tổng số tiền đặt hàng trên X.                    </p>
+                </div>
+                <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_tongtien_tren_x (@x float) as begin
+select
+  hh.tenhh,
+  sum(ct.soluong * ct.dongia) as tongtien
+from
+  hanghoa hh
+  join chitietdathang ct on hh.mahh = ct.mahh
+group by
+  hh.mahh,
+  hh.tenhh
+having
+  sum(ct.soluong * ct.dongia) &gt; @x end
+
+-- Thực thi procedure
+EXEC sp_ds_hanghoa_tongtien_tren_x 500000;</code></pre>
+                
+                                <div style="margin-top: 1rem;">
+                    <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-10')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                        Xem giải thích chi tiết
+                    </button>
+                    <div id="expl-bh-sp-10" style="display: none; margin-top: 1rem; background: rgba(0,0,0,0.1); padding: 1.25rem; border-radius: 0.5rem; border-left: 3px solid #10b981; font-size: 0.95rem; line-height: 1.6;">
+                        Tạo Stored Procedure với tham số @x. Lệnh sử dụng JOIN để kết hợp bảng hanghoa và chitietdathang, đồng thời dùng GROUP BY để gom nhóm theo hàng hóa. Mệnh đề HAVING so sánh tổng tiền thu được từ hàng hóa (tính bằng hàm SUM) với tham số @x, nhằm lọc ra các mặt hàng mang lại doanh thu lớn hơn giá trị này.                    </div>
                 </div>
                             </div>
                 
