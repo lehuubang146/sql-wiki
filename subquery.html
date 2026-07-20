@@ -125,47 +125,6 @@
             <!-- Main Content Area -->
             <main class="main-content ">
                 <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Truy vấn lồng nhau (Bài tập)</div>
-<style>
-.solution-wrapper {
-    position: relative;
-    margin-bottom: 0;
-}
-.solution-content {
-    filter: blur(5px);
-    transition: filter 0.3s ease;
-    user-select: none;
-    pointer-events: none;
-}
-.solution-content.revealed {
-    filter: blur(0);
-    user-select: auto;
-    pointer-events: auto;
-}
-.reveal-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
-    z-index: 10;
-    transition: opacity 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.reveal-btn:hover {
-    background: #2563eb;
-}
-</style>
-
 <div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
     <h1>Truy vấn lồng nhau</h1>
     <p style="color: var(--text-muted); font-size: 1.05rem;">
@@ -185,13 +144,7 @@
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết Họ tên sinh viên KHÔNG học học phần nào.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   hoten
 from
   sinhvien
@@ -202,8 +155,6 @@ where
     from
       diemhp
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b1-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -221,13 +172,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Cho biết Họ tên sinh viên CHƯA học học phần có mã ‘002’.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   hoten
 from
   sinhvien
@@ -240,8 +185,6 @@ where
     where
       mahp = &#039;002&#039;
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b1-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -259,13 +202,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Cho biết Tên học phần KHÔNG có sinh viên điểm HP &lt;=5.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   tenhp
 from
   dmhocphan
@@ -278,8 +215,6 @@ where
     where
       diemhp &lt;= 5
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b1-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -297,13 +232,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         4. Cho biết Họ tên sinh viên KHÔNG có học phần điểm HP&lt;5                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   hoten
 from
   sinhvien
@@ -316,8 +245,6 @@ where
     where
       diemhp &lt; 5
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b1-4')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -335,13 +262,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết Tên lớp có sinh viên nữ tên Hoa.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   tenlop
 from
   dmlop
@@ -355,8 +276,6 @@ where
       gioitinh = 1
       and hoten like n&#039;%hoa&#039;
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b2-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -374,13 +293,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Cho biết HoTen sinh viên có điểm học phần ‘001’là &gt;5.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   hoten
 from
   sinhvien
@@ -394,8 +307,6 @@ where
       mahp = &#039;001&#039;
       and diemhp &gt; 5
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b2-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -413,13 +324,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Cho biết danh sách các học phần có số đơn vị học trình lớn hơn hoặc bằng số đơn vị học trình của học phần mã 001.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   *
 from
   dmhocphan
@@ -432,8 +337,6 @@ where
     where
       mahp = &#039;001&#039;
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d3-b2-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -456,13 +359,7 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết thông tin khách hàng không mua hàng vào tháng 6.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   *
 FROM
   KHACHHANG
@@ -475,8 +372,6 @@ WHERE
     WHERE
       MONTH(NgayLapHD) = 6
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_9')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -494,13 +389,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaH, TenH chưa được bán.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   MaH,
   TenH
 FROM
@@ -512,8 +401,6 @@ WHERE
     FROM
       CHITIETHD
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_29')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -531,13 +418,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết thông tin khách hàng chưa mua hàng vào tháng 5.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   *
 FROM
   KHACHHANG
@@ -550,8 +431,6 @@ WHERE
     WHERE
       MONTH(NgayLapHD) = 5
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_30')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -569,13 +448,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết thông tin mặt hàng chưa được bán vào tháng 2.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   *
 FROM
   HANGHOA
@@ -589,8 +462,6 @@ WHERE
     WHERE
       MONTH(HD.NgayLapHD) = 2
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_31')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -608,13 +479,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết TenKH có mua mặt hàng BÁNH.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT DISTINCT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT DISTINCT
   KH.TenKH
 FROM
   KHACHHANG KH
@@ -623,8 +488,6 @@ FROM
   INNER JOIN HANGHOA H ON C.MaH = H.MaH
 WHERE
   H.TenH LIKE N&#039;%Bánh%&#039;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_32')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -645,13 +508,6 @@ function toggleExplanation(id) {
     } else {
         el.style.display = 'none';
     }
-}
-function revealSolution(btn) {
-    const wrapper = btn.closest('.solution-wrapper');
-    const content = wrapper.querySelector('.solution-content');
-    content.classList.add('revealed');
-    btn.style.opacity = '0';
-    setTimeout(() => btn.remove(), 300);
 }
 </script>
                 <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">

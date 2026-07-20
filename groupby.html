@@ -125,47 +125,6 @@
             <!-- Main Content Area -->
             <main class="main-content ">
                 <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Truy vấn có phân nhóm (Bài tập)</div>
-<style>
-.solution-wrapper {
-    position: relative;
-    margin-bottom: 0;
-}
-.solution-content {
-    filter: blur(5px);
-    transition: filter 0.3s ease;
-    user-select: none;
-    pointer-events: none;
-}
-.solution-content.revealed {
-    filter: blur(0);
-    user-select: auto;
-    pointer-events: auto;
-}
-.reveal-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
-    z-index: 10;
-    transition: opacity 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.reveal-btn:hover {
-    background: #2563eb;
-}
-</style>
-
 <div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
     <h1>Truy vấn có phân nhóm</h1>
     <p style="color: var(--text-muted); font-size: 1.05rem;">
@@ -185,13 +144,7 @@
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết MaLop, TenLop, tổng số sinh viên của mỗi lớp.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   l.malop,
   l.tenlop,
   count(s.masv) as tongsosv
@@ -201,8 +154,6 @@ from
 group by
   l.malop,
   l.tenlop;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b1-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -220,13 +171,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Cho biết điểm trung bình chung của mỗi sinh viên ở mỗi học kỳ.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.masv,
   h.hocky,
   avg(d.diemhp) as diemtbc
@@ -237,8 +182,6 @@ from
 group by
   s.masv,
   h.hocky;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b1-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -256,13 +199,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Cho biết MaLop, TenLop, số lượng nam nữ theo từng lớp.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   l.malop,
   l.tenlop,
   s.gioitinh,
@@ -274,8 +211,6 @@ group by
   l.malop,
   l.tenlop,
   s.gioitinh;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b1-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -293,13 +228,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết MaSV, HoTen, Số các học phần thiếu điểm (DiemHP&lt;5) của mỗi sinh viên.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.masv,
   s.hoten,
   count(d.mahp) as sohocphanthieu
@@ -311,8 +240,6 @@ where
 group by
   s.masv,
   s.hoten;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b2-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -330,13 +257,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Đếm số sinh viên có điểm HP &gt;5 của mỗi học phần.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   mahp,
   count(masv) as sosinhvien
 from
@@ -345,8 +266,6 @@ where
   diemhp &gt; 5
 group by
   mahp;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b2-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -364,13 +283,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Tính tổng số đơn vị học trình có điểm HP &gt;=5 của mỗi sinh viên.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.masv,
   s.hoten,
   sum(h.sodvht) as tongsodvht
@@ -383,8 +296,6 @@ where
 group by
   s.masv,
   s.hoten;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b2-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -402,13 +313,7 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết MaLop, TenLop có tổng số sinh viên &gt;=10.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   l.malop,
   l.tenlop
 from
@@ -419,8 +324,6 @@ group by
   l.tenlop
 having
   count(s.masv) &gt;= 10;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b3-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -438,13 +341,7 @@ having
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Cho biết HoTen sinh viên có điểm Trung bình chung các học phần &lt;3.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.hoten
 from
   sinhvien s
@@ -454,8 +351,6 @@ group by
   s.hoten
 having
   avg(d.diemhp) &lt; 3;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b3-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -473,13 +368,7 @@ having
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Cho biết HoTen sinh viên có ít nhất 2 học phần có điểm &lt;=5.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.hoten
 from
   sinhvien s
@@ -491,8 +380,6 @@ group by
   s.hoten
 having
   count(d.mahp) &gt;= 2;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b3-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -510,13 +397,7 @@ having
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         4. Cho biết HoTen sinh viên học TẤT CẢ các học phần ở ngành 140902.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.hoten
 from
   sinhvien s
@@ -536,8 +417,6 @@ having
     where
       manganh = &#039;140902&#039;
   );</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b3-4')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -555,13 +434,7 @@ having
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         5. Cho biết HoTen sinh viên học ít nhất 3 học phần mã ‘001’, ‘002’, ‘003’.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   s.hoten
 from
   sinhvien s
@@ -573,8 +446,6 @@ group by
   s.hoten
 having
   count(distinct d.mahp) &gt;= 3;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b3-5')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -592,13 +463,7 @@ having
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         1. Cho biết MaSV, HoTen sinh viên có điểm TBC cao nhất ở học kỳ 1.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   top 1 s.masv,
   s.hoten
 from
@@ -612,8 +477,6 @@ group by
   s.hoten
 order by
   avg(d.diemhp) desc;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b4-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -631,13 +494,7 @@ order by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         2. Cho biết MaSV, HoTen sinh viên có số học phần điểm HP &lt;5 nhiều nhất.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   top 1 s.masv,
   s.hoten
 from
@@ -650,8 +507,6 @@ group by
   s.hoten
 order by
   count(d.mahp) desc;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b4-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -669,13 +524,7 @@ order by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         3. Cho biết MaHP, TenHP có số sinh viên điểm HP &lt;5 nhiều nhất.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">select
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">select
   top 1 h.mahp,
   h.tenhp
 from
@@ -688,8 +537,6 @@ group by
   h.tenhp
 order by
   count(d.masv) desc;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-b2-d2-b4-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -712,13 +559,7 @@ order by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaKH, TenKH, Tổng Thành tiền của từng khách hàng.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   KH.MaKH,
   KH.TenKH,
   SUM(C.SoLuong * H.DonGia) AS TongThanhTien
@@ -730,8 +571,6 @@ FROM
 GROUP BY
   KH.MaKH,
   KH.TenKH</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_12')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -749,13 +588,7 @@ GROUP BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaKH, TenKH, Tổng Thành tiền của khách hàng VIP.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   KH.MaKH,
   KH.TenKH,
   SUM(C.SoLuong * H.DonGia) AS TongThanhTien
@@ -769,8 +602,6 @@ WHERE
 GROUP BY
   KH.MaKH,
   KH.TenKH</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_13')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -788,13 +619,7 @@ GROUP BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaKH, TenKH, Tổng Thành tiền của từng khách hàng có Tổng thành tiền mua được &gt;=20 triệu.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   KH.MaKH,
   KH.TenKH,
   SUM(C.SoLuong * H.DonGia) AS TongThanhTien
@@ -808,8 +633,6 @@ GROUP BY
   KH.TenKH
 HAVING
   SUM(C.SoLuong * H.DonGia) &gt;= 20000000</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_14')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -827,13 +650,7 @@ HAVING
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaH, TenH, Tổng số lượng của từng mặt hàng.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   H.MaH,
   H.TenH,
   SUM(C.SoLuong) AS TongSoLuong
@@ -843,8 +660,6 @@ FROM
 GROUP BY
   H.MaH,
   H.TenH</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_15')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -862,13 +677,7 @@ GROUP BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaHD, Tổng thành tiền của những hoá đơn có tổng thành tiền lớn hơn 5 triệu.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   C.MaHD,
   SUM(C.SoLuong * H.DonGia) AS TongThanhTien
 FROM
@@ -878,8 +687,6 @@ GROUP BY
   C.MaHD
 HAVING
   SUM(C.SoLuong * H.DonGia) &gt; 5000000</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_16')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -897,13 +704,7 @@ HAVING
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết hoá đơn bán ít nhất hai mặt hàng H001 và H002.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   MaHD
 FROM
   CHITIETHD
@@ -913,8 +714,6 @@ GROUP BY
   MaHD
 HAVING
   COUNT(DISTINCT MaH) = 2</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_17')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -932,13 +731,7 @@ HAVING
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaKH mua tất các các mặt hàng bánh.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   HD.MaKH
 FROM
   HOADON HD
@@ -963,8 +756,6 @@ HAVING
     WHERE
       TenH LIKE N&#039;%Bánh%&#039;
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_18')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -982,21 +773,13 @@ HAVING
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Đếm số hoá đơn của mỗi khách hàng.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   MaKH,
   COUNT(MaHD) AS SoHoaDon
 FROM
   HOADON
 GROUP BY
   MaKH</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_19')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1014,13 +797,7 @@ GROUP BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết MaHD, Tổng thành tiền, Khuyến mãi 5% cho những hoá đơn có tổng thành tiền lớn hơn 500 nghìn.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   C.MaHD,
   SUM(C.SoLuong * H.DonGia) AS TongThanhTien,
   SUM(C.SoLuong * H.DonGia) * 0.05 AS KhuyenMai
@@ -1031,8 +808,6 @@ GROUP BY
   C.MaHD
 HAVING
   SUM(C.SoLuong * H.DonGia) &gt; 500000</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_20')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1050,13 +825,7 @@ HAVING
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cho biết thông tin khách hàng VIP có tổng thành tiến trong năm 2018 nhỏ hơn 20 triệu.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">SELECT
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">SELECT
   KH.*
 FROM
   KHACHHANG KH
@@ -1075,8 +844,6 @@ GROUP BY
   KH.LoaiKH
 HAVING
   SUM(C.SoLuong * H.DonGia) &lt; 20000000</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_21')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1097,13 +864,6 @@ function toggleExplanation(id) {
     } else {
         el.style.display = 'none';
     }
-}
-function revealSolution(btn) {
-    const wrapper = btn.closest('.solution-wrapper');
-    const content = wrapper.querySelector('.solution-content');
-    content.classList.add('revealed');
-    btn.style.opacity = '0';
-    setTimeout(() => btn.remove(), 300);
 }
 </script>
                 <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">

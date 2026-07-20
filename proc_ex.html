@@ -125,47 +125,6 @@
             <!-- Main Content Area -->
             <main class="main-content ">
                 <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; Stored Procedure (Bài tập)</div>
-<style>
-.solution-wrapper {
-    position: relative;
-    margin-bottom: 0;
-}
-.solution-content {
-    filter: blur(5px);
-    transition: filter 0.3s ease;
-    user-select: none;
-    pointer-events: none;
-}
-.solution-content.revealed {
-    filter: blur(0);
-    user-select: auto;
-    pointer-events: auto;
-}
-.reveal-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
-    z-index: 10;
-    transition: opacity 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.reveal-btn:hover {
-    background: #2563eb;
-}
-</style>
-
 <div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
     <h1>Stored Procedure</h1>
     <p style="color: var(--text-muted); font-size: 1.05rem;">
@@ -185,13 +144,7 @@
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Thêm Sinh Viên Mới: Viết SP để thêm một sinh viên mới vào <strong class="highlight-vi">bảng</strong> SINHVIEN, thực hiện kiểm tra MaLop phải tồn tại trước khi thêm.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ThemSinhVien
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_ThemSinhVien
   @MaSV VARCHAR(10),
   @HoTen NVARCHAR(50),
   @MaLop VARCHAR(10),
@@ -212,8 +165,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_ThemSinhVien &#039;SV001&#039;, N&#039;Nguyễn Văn A&#039;, &#039;L01&#039;, &#039;2000-01-01&#039;, 1;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -231,13 +182,7 @@ EXEC sp_ThemSinhVien &#039;SV001&#039;, N&#039;Nguyễn Văn A&#039;, &#039;L01&
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Nhập/Cập Nhật Điểm: Viết SP cho phép nhập điểm mới cho một sinh viên. Nếu đã có điểm thì cập nhật, nếu chưa có thì thêm mới.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_NhapCapNhatDiem
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_NhapCapNhatDiem
   @MaSV VARCHAR(10),
   @MaHP VARCHAR(10),
   @Diem FLOAT
@@ -254,8 +199,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_NhapCapNhatDiem &#039;SV001&#039;, &#039;HP01&#039;, 8.5;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -273,13 +216,7 @@ EXEC sp_NhapCapNhatDiem &#039;SV001&#039;, &#039;HP01&#039;, 8.5;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Xuất <strong class="highlight-vi">Bảng</strong> Điểm: Viết SP lấy ra danh sách các môn học và điểm số tương ứng của một sinh viên khi biết mã sinh viên.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_BangDiemSinhVien
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_BangDiemSinhVien
   @MaSV VARCHAR(10)
 AS BEGIN
   SELECT h.TenHP, d.Diem
@@ -290,8 +227,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_BangDiemSinhVien &#039;SV001&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -309,13 +244,7 @@ EXEC sp_BangDiemSinhVien &#039;SV001&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tính Điểm Trung Bình GPA: Viết SP tính điểm trung bình học tập của một sinh viên dựa trên điểm các môn học phần.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_TinhGPA
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_TinhGPA
   @MaSV VARCHAR(10)
 AS BEGIN
   SELECT MaSV, AVG(Diem) AS GPA
@@ -326,8 +255,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_TinhGPA &#039;SV001&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-4')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -345,13 +272,7 @@ EXEC sp_TinhGPA &#039;SV001&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Thống Kê Sinh Viên Theo Lớp: Viết SP hiển thị danh sách tất cả sinh viên thuộc một lớp cụ thể và tổng số lượng sinh viên của lớp đó.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ThongKeSinhVienTheoLop
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_ThongKeSinhVienTheoLop
   @MaLop VARCHAR(10)
 AS BEGIN
   SELECT * FROM SINHVIEN WHERE MaLop = @MaLop;
@@ -360,8 +281,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_ThongKeSinhVienTheoLop &#039;L01&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-5')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -379,13 +298,7 @@ EXEC sp_ThongKeSinhVienTheoLop &#039;L01&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết SP để xóa một sinh viên theo MaSV. Để tránh lỗi vi phạm <strong class="highlight-vi">khóa ngoại</strong>, SP phải xóa điểm của sinh viên trong <strong class="highlight-vi">bảng</strong> DIEMHP trước.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_XoaSinhVien
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_XoaSinhVien
   @MaSV VARCHAR(10)
 AS BEGIN
   DELETE FROM DIEMHP WHERE MaSV = @MaSV;
@@ -394,8 +307,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_XoaSinhVien &#039;SV001&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-6')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -413,13 +324,7 @@ EXEC sp_XoaSinhVien &#039;SV001&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Thống Kê Số Lượng Sinh Viên Theo Ngành: Viết SP nhận đầu vào là NamNhapHoc, trả về danh sách các Ngành học và tổng số lượng sinh viên của từng ngành.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_SoLuongSVTheoNganh
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_SoLuongSVTheoNganh
   @NamNhapHoc INT
 AS BEGIN
   SELECT n.MaNganh, n.TenNganh, COUNT(s.MaSV) AS TongSV
@@ -432,8 +337,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_SoLuongSVTheoNganh 2000;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-7')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -451,13 +354,7 @@ EXEC sp_SoLuongSVTheoNganh 2000;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Top N Sinh Viên Xuất Sắc Nhất Khoa: Viết SP nhận đầu vào là MaKhoa và số nguyên N. SP trả về danh sách N sinh viên có điểm trung bình cao nhất.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_TopNSinhVien
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_TopNSinhVien
   @MaKhoa VARCHAR(10),
   @N INT
 AS BEGIN
@@ -473,8 +370,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_TopNSinhVien &#039;K01&#039;, 3;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-8')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -492,13 +387,7 @@ EXEC sp_TopNSinhVien &#039;K01&#039;, 3;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Chuyển Lớp Cho Sinh Viên: Viết SP thực hiện chuyển lớp cho sinh viên. Đầu vào gồm MaSV và MaLop_Moi. Kiểm tra MaLop_Moi có tồn tại hay không.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_ChuyenLop
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_ChuyenLop
   @MaSV VARCHAR(10),
   @MaLopMoi VARCHAR(10)
 AS BEGIN
@@ -515,8 +404,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_ChuyenLop &#039;SV001&#039;, &#039;L02&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-9')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -534,13 +421,7 @@ EXEC sp_ChuyenLop &#039;SV001&#039;, &#039;L02&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Liệt Kê Học Phần Chưa Học: Viết SP nhận vào MaSV. SP truy xuất ra danh sách các môn học thuộc cùng MANGANH với sinh viên nhưng chưa có điểm.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE sp_HocPhanChuaHoc
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE sp_HocPhanChuaHoc
   @MaSV VARCHAR(10)
 AS BEGIN
   SELECT hp.MaHP, hp.TenHP
@@ -552,8 +433,6 @@ END
 
 -- Thực thi procedure
 EXEC sp_HocPhanChuaHoc &#039;SV001&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-qlsv-sp-10')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -576,13 +455,7 @@ EXEC sp_HocPhanChuaHoc &#039;SV001&#039;;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Hiển thị danh các khách hàng đã mua hàng trong ngày chỉ định (ngày là tham số truyền vào).                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE p_KhachHangTheoNgay @NgayLap date AS BEGIN
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE p_KhachHangTheoNgay @NgayLap date AS BEGIN
 SELECT
   KH.*
 FROM
@@ -590,8 +463,6 @@ FROM
   INNER JOIN HOADON HD ON KH.MaKH = HD.MaKH
 WHERE
   HD.NgayLapHD = @NgayLap END</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_33')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -609,13 +480,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Hiển thị danh sách 5 khách hàng có tổng trị giá các đơn hàng lớn nhất.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE p_Top5KhachHang AS BEGIN
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE p_Top5KhachHang AS BEGIN
 SELECT
   TOP 5 KH.MaKH,
   KH.TenKH,
@@ -630,8 +495,6 @@ GROUP BY
   KH.TenKH
 ORDER BY
   SUM(C.SoLuong * H.DonGia) DESC END</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_34')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -649,13 +512,7 @@ ORDER BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Hiển thị danh sách 10 mặt hàng có số lượng bán lớn nhất.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE p_Top10MatHang AS BEGIN
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE p_Top10MatHang AS BEGIN
 SELECT
   TOP 10 H.MaH,
   H.TenH,
@@ -668,8 +525,6 @@ GROUP BY
   H.TenH
 ORDER BY
   SUM(C.SoLuong) DESC END</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_35')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -687,13 +542,7 @@ ORDER BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cập nhật <strong class="highlight-vi">cột</strong> Khuyến mãi như sau: Khuyến mãi 5% thành tiền nếu SoLuong &gt;100, 10% thành tiền nếu SoLuong &gt;500.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">UPDATE CHITIETHD
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">UPDATE CHITIETHD
 SET
   KhuyenMai = CASE
     WHEN SoLuong &gt; 500 THEN (SoLuong * DonGia) * 0.10
@@ -703,8 +552,6 @@ SET
 FROM
   CHITIETHD C
   INNER JOIN HANGHOA H ON C.MaH = H.MaH</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_36')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -722,13 +569,7 @@ FROM
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tính trị giá cho mỗi hoá đơn.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">CREATE PROCEDURE p_TriGiaHoaDon AS BEGIN
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">CREATE PROCEDURE p_TriGiaHoaDon AS BEGIN
 SELECT
   C.MaHD,
   SUM(C.SoLuong * H.DonGia) AS TriGia
@@ -737,8 +578,6 @@ FROM
   INNER JOIN HANGHOA H ON C.MaH = H.MaH
 GROUP BY
   C.MaHD END</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_37')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -756,13 +595,7 @@ GROUP BY
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Cập nhật cho <strong class="highlight-vi">cột</strong> Loại khách hàng: là VIP nếu tổng thành tiền trong năm lớn hơn hoặc bằng 20 triệu.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">UPDATE KHACHHANG
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">UPDATE KHACHHANG
 SET
   LoaiKH = &#039;VIP&#039;
 WHERE
@@ -780,8 +613,6 @@ WHERE
     HAVING
       SUM(C.SoLuong * H.DonGia) &gt;= 20000000
   )</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-BH_38')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -799,13 +630,7 @@ WHERE
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để thêm 1 loại.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_themloai (
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_themloai (
   @maloai int,
   @tenloai nvarchar(50),
   @mota nvarchar(max)
@@ -817,8 +642,6 @@ values
 
 -- Thực thi procedure
 EXEC sp_themloai 100, N&#039;Loại mới&#039;, N&#039;Mô tả&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-1')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -836,13 +659,7 @@ EXEC sp_themloai 100, N&#039;Loại mới&#039;, N&#039;Mô tả&#039;;</code></
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để sửa 1 loại.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_sualoai (
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_sualoai (
   @maloai int,
   @tenloai nvarchar(50),
   @mota nvarchar(max)
@@ -856,8 +673,6 @@ where
 
 -- Thực thi procedure
 EXEC sp_sualoai 1, N&#039;Tên loại sửa&#039;, N&#039;Mô tả sửa&#039;;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-2')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -875,21 +690,13 @@ EXEC sp_sualoai 1, N&#039;Tên loại sửa&#039;, N&#039;Mô tả sửa&#039;;<
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để xóa 1 loại.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_xoaloai (@maloai int) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_xoaloai (@maloai int) as begin
 delete from loai
 where
   maloai = @maloai end
 
 -- Thực thi procedure
 EXEC sp_xoaloai 100;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-3')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -907,13 +714,7 @@ EXEC sp_xoaloai 100;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để lấy thông tin tất cả loại.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_laytatcaloai as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_laytatcaloai as begin
 select
   *
 from
@@ -921,8 +722,6 @@ from
 
 -- Thực thi procedure
 EXEC sp_laytatcaloai;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-4')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -940,13 +739,7 @@ EXEC sp_laytatcaloai;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để lấy thông tin một loại cụ thể theo mã.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_layloaibangma (@maloai int) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_layloaibangma (@maloai int) as begin
 select
   *
 from
@@ -956,8 +749,6 @@ where
 
 -- Thực thi procedure
 EXEC sp_layloaibangma 1;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-5')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -975,13 +766,7 @@ EXEC sp_layloaibangma 1;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để lấy danh sách hàng hóa thuộc loại cụ thể.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_layhanghoatheoloai (@maloai int) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_layhanghoatheoloai (@maloai int) as begin
 select
   *
 from
@@ -991,8 +776,6 @@ where
 
 -- Thực thi procedure
 EXEC sp_layhanghoatheoloai 1;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-6')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1010,13 +793,7 @@ EXEC sp_layhanghoatheoloai 1;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS khách hàng (HoTen, DienThoai) có đặt hàng với tổng số tiền trên X.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_khachhang_tongtien_tren_x (@x float) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_ds_khachhang_tongtien_tren_x (@x float) as begin
 select
   kh.hoten,
   kh.dienthoai
@@ -1033,8 +810,6 @@ having
 
 -- Thực thi procedure
 EXEC sp_ds_khachhang_tongtien_tren_x 1000000;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-7')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1052,13 +827,7 @@ EXEC sp_ds_khachhang_tongtien_tren_x 1000000;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Số đơn) có tổng số đơn đặt hàng trên X.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_sodon_tren_x (@x int) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_ds_hanghoa_sodon_tren_x (@x int) as begin
 select
   hh.tenhh,
   count(distinct ct.maddh) as sodon
@@ -1073,8 +842,6 @@ having
 
 -- Thực thi procedure
 EXEC sp_ds_hanghoa_sodon_tren_x 5;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-8')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1092,13 +859,7 @@ EXEC sp_ds_hanghoa_sodon_tren_x 5;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Tổng SL) có tổng số lượng đặt hàng trên X.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_tongsl_tren_x (@x int) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_ds_hanghoa_tongsl_tren_x (@x int) as begin
 select
   hh.tenhh,
   sum(ct.soluong) as tongsl
@@ -1113,8 +874,6 @@ having
 
 -- Thực thi procedure
 EXEC sp_ds_hanghoa_tongsl_tren_x 50;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-9')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1132,13 +891,7 @@ EXEC sp_ds_hanghoa_tongsl_tren_x 50;</code></pre>
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Viết store <strong class="highlight-kw">procedure</strong> để liệt kê DS hàng hóa (TenHH, Tổng số tiền) có tổng số tiền đặt hàng trên X.                    </p>
                 </div>
-                <div class="solution-wrapper">
-                    <button class="reveal-btn" onclick="revealSolution(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        Xem Đáp Án
-                    </button>
-                    <div class="solution-content">
-                        <pre style="margin-bottom: 0;"><code class="language-sql">create procedure sp_ds_hanghoa_tongtien_tren_x (@x float) as begin
+                <pre style="margin-bottom: 1.5rem;"><code class="language-sql">create procedure sp_ds_hanghoa_tongtien_tren_x (@x float) as begin
 select
   hh.tenhh,
   sum(ct.soluong * ct.dongia) as tongtien
@@ -1153,8 +906,6 @@ having
 
 -- Thực thi procedure
 EXEC sp_ds_hanghoa_tongtien_tren_x 500000;</code></pre>
-                    </div>
-                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-bh-sp-10')" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -1175,13 +926,6 @@ function toggleExplanation(id) {
     } else {
         el.style.display = 'none';
     }
-}
-function revealSolution(btn) {
-    const wrapper = btn.closest('.solution-wrapper');
-    const content = wrapper.querySelector('.solution-content');
-    content.classList.add('revealed');
-    btn.style.opacity = '0';
-    setTimeout(() => btn.remove(), 300);
 }
 </script>
                 <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
