@@ -137,6 +137,7 @@
                 <h3 style="margin: 0; font-size: 1rem; color: var(--text-color); display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                     SQL Editor
+                    <span id="sandbox-save-status" style="font-size: 0.8rem; color: #10b981; font-weight: normal; opacity: 0; transition: opacity 0.3s; margin-left: 10px;">💾 Đã lưu nháp</span>
                 </h3>
                 <button onclick="runQuery(this, 'sandbox-input', 'sandbox-result')" class="btn btn-primary" style="padding: 6px 15px; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
@@ -160,6 +161,33 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sandboxInput = document.getElementById('sandbox-input');
+    const statusLabel = document.getElementById('sandbox-save-status');
+    let saveTimeout = null;
+
+    // Load saved draft if exists
+    const savedCode = localStorage.getItem('sandbox_draft');
+    if (savedCode && savedCode.trim() !== '') {
+        sandboxInput.value = savedCode;
+    }
+
+    // Auto-save on input with debounce
+    sandboxInput.addEventListener('input', () => {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            localStorage.setItem('sandbox_draft', sandboxInput.value);
+            // Show save status
+            statusLabel.style.opacity = '1';
+            setTimeout(() => {
+                statusLabel.style.opacity = '0';
+            }, 2000);
+        }, 800); // Wait 800ms after user stops typing
+    });
+});
+</script>
             </main>
             
             <!-- TOC Container -->

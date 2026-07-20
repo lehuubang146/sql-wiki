@@ -125,6 +125,47 @@
             <!-- Main Content Area -->
             <main class="main-content ">
                 <div class="breadcrumb"><a href="index.html">Trang chủ</a> &gt; View (Bài tập)</div>
+<style>
+.solution-wrapper {
+    position: relative;
+    margin-bottom: 0;
+}
+.solution-content {
+    filter: blur(5px);
+    transition: filter 0.3s ease;
+    user-select: none;
+    pointer-events: none;
+}
+.solution-content.revealed {
+    filter: blur(0);
+    user-select: auto;
+    pointer-events: auto;
+}
+.reveal-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    z-index: 10;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.reveal-btn:hover {
+    background: #2563eb;
+}
+</style>
+
 <div class="dynamic-category-header" style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
     <h1>View</h1>
     <p style="color: var(--text-muted); font-size: 1.05rem;">
@@ -144,12 +185,20 @@
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị danh sách tất cả các khoa (gồm MaKhoa, TenKhoa) từ <strong class="highlight-vi">bảng</strong> DMKHOA.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_ds_khoa as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_ds_khoa as
 select
   makhoa,
   tenkhoa
 from
   dmkhoa;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-1')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -167,13 +216,21 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị thông tin cơ bản của sinh viên (gồm MaSV, HoTen, NgaySinh) từ <strong class="highlight-vi">bảng</strong> SINHVIEN.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_thongtin_sv as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_thongtin_sv as
 select
   masv,
   hoten,
   ngaysinh
 from
   sinhvien;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-2')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -191,13 +248,21 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> danh sách các sinh viên có GioiTinh là &#039;Nữ&#039; từ <strong class="highlight-vi">bảng</strong> SINHVIEN.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_nu as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_nu as
 select
   *
 from
   sinhvien
 where
   gioitinh = 0;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-3')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -215,13 +280,21 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> danh sách các học phần có số đơn vị học trình (SoDVHT) lớn hơn hoặc bằng 3 từ <strong class="highlight-vi">bảng</strong> DMHOCPHAN.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_hp_lonhon_3dvht as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_hp_lonhon_3dvht as
 select
   *
 from
   dmhocphan
 where
   sodvht &gt;= 3;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-4')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -239,13 +312,21 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> danh sách các lớp thuộc hệ đào tạo đại học (<strong class="highlight-vi">điều kiện</strong> <strong class="highlight-vi">cột</strong> HEDT bằng &#039;Đại học&#039;) từ <strong class="highlight-vi">bảng</strong> DMLOP.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_daihoc as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_daihoc as
 select
   *
 from
   dmlop
 where
   hedt like n&#039;%đại học%&#039;;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-5')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -263,13 +344,21 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị MaSV, HoTen và Tuoi của sinh viên từ <strong class="highlight-vi">bảng</strong> SINHVIEN (Gợi ý: Tuoi = Năm hiện tại trừ đi năm của NgaySinh).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tuoi_sv as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tuoi_sv as
 select
   masv,
   hoten,
   year(getdate()) - year(ngaysinh) as tuoi
 from
   sinhvien;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-6')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -287,7 +376,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị MaNganh, TenNganh (từ <strong class="highlight-vi">bảng</strong> DMNGANH) và TenKhoa quản lý ngành đó (từ <strong class="highlight-vi">bảng</strong> DMKHOA).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_nganh_khoa as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_nganh_khoa as
 select
   n.manganh,
   n.tennganh,
@@ -295,6 +390,8 @@ select
 from
   dmnganh n
   join dmkhoa k on n.makhoa = k.makhoa;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-7')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -312,7 +409,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị danh sách sinh viên (MaSV, HoTen từ <strong class="highlight-vi">bảng</strong> SINHVIEN) kèm theo TenLop mà họ đang học (từ <strong class="highlight-vi">bảng</strong> DMLOP).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_lop as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_lop as
 select
   s.masv,
   s.hoten,
@@ -320,6 +423,8 @@ select
 from
   sinhvien s
   join dmlop l on s.malop = l.malop;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-8')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -337,7 +442,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị MaLop, TenLop (từ <strong class="highlight-vi">bảng</strong> DMLOP) và TenNganh học của lớp đó (từ <strong class="highlight-vi">bảng</strong> DMNGANH).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_nganh as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_nganh as
 select
   l.malop,
   l.tenlop,
@@ -345,6 +456,8 @@ select
 from
   dmlop l
   join dmnganh n on l.manganh = n.manganh;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-9')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -362,13 +475,21 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị TenHP (từ <strong class="highlight-vi">bảng</strong> DMHOCPHAN) và TenNganh mà học phần đó trực thuộc (từ <strong class="highlight-vi">bảng</strong> DMNGANH).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_hp_nganh as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_hp_nganh as
 select
   h.tenhp,
   n.tennganh
 from
   dmhocphan h
   join dmnganh n on h.manganh = n.manganh;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-10')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -386,7 +507,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> danh sách điểm của sinh viên gồm: MaSV (từ <strong class="highlight-vi">bảng</strong> DIEMHP), TenHP (từ <strong class="highlight-vi">bảng</strong> DMHOCPHAN) và Diem (từ <strong class="highlight-vi">bảng</strong> DIEMHP).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_diem_sv as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_diem_sv as
 select
   d.masv,
   h.tenhp,
@@ -394,6 +521,8 @@ select
 from
   diemhp d
   join dmhocphan h on d.mahp = h.mahp;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-11')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -411,7 +540,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị <strong class="highlight-vi">Bảng</strong> điểm chi tiết gồm: HoTen sinh viên (<strong class="highlight-vi">bảng</strong> SINHVIEN), TenLop (<strong class="highlight-vi">bảng</strong> DMLOP), TenHP (<strong class="highlight-vi">bảng</strong> DMHOCPHAN) và Diem (<strong class="highlight-vi">bảng</strong> DIEMHP).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_bangdiem_chitiet as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_bangdiem_chitiet as
 select
   s.hoten,
   l.tenlop,
@@ -422,6 +557,8 @@ from
   join sinhvien s on d.masv = s.masv
   join dmlop l on s.malop = l.malop
   join dmhocphan h on d.mahp = h.mahp;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-12')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -439,7 +576,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị danh sách sinh viên bị rớt môn (<strong class="highlight-vi">điều kiện</strong> Diem &lt; 5) gồm: HoTen (<strong class="highlight-vi">bảng</strong> SINHVIEN), TenHP (<strong class="highlight-vi">bảng</strong> DMHOCPHAN) và Diem (<strong class="highlight-vi">bảng</strong> DIEMHP).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_rotmon as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_sv_rotmon as
 select
   s.hoten,
   h.tenhp,
@@ -450,6 +593,8 @@ from
   join dmhocphan h on d.mahp = h.mahp
 where
   d.diemhp &lt; 5;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-13')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -467,7 +612,13 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị thông tin phân cấp học: TenLop (<strong class="highlight-vi">bảng</strong> DMLOP), TenNganh (<strong class="highlight-vi">bảng</strong> DMNGANH) và TenKhoa (<strong class="highlight-vi">bảng</strong> DMKHOA) tương ứng.                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_phancap_hoc as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_phancap_hoc as
 select
   l.tenlop,
   n.tennganh,
@@ -476,6 +627,8 @@ from
   dmlop l
   join dmnganh n on l.manganh = n.manganh
   join dmkhoa k on n.makhoa = k.makhoa;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-14')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -493,7 +646,13 @@ from
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> hiển thị <strong class="highlight-vi">bảng</strong> điểm các môn học thuộc Học kỳ 1 (<strong class="highlight-vi">điều kiện</strong> HOCKY = 1) của tất cả sinh viên (liên kết các <strong class="highlight-vi">bảng</strong> DIEMHP, SINHVIEN, DMHOCPHAN).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_diem_hocky1 as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_diem_hocky1 as
 select
   s.masv,
   s.hoten,
@@ -505,6 +664,8 @@ from
   join dmhocphan h on d.mahp = h.mahp
 where
   h.hocky = 1;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-15')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -522,7 +683,13 @@ where
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> thống kê số lượng sinh viên thực tế của mỗi lớp (đếm MaSV trong <strong class="highlight-vi">bảng</strong> SINHVIEN, nhóm theo MaLop).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_sv_lop as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_sv_lop as
 select
   malop,
   count(masv) as soluong_sv
@@ -530,6 +697,8 @@ from
   sinhvien
 group by
   malop;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-16')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -547,7 +716,13 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> thống kê mỗi Khoa đang quản lý bao nhiêu Ngành học (đếm MaNganh trong <strong class="highlight-vi">bảng</strong> DMNGANH, nhóm theo TenKhoa trong <strong class="highlight-vi">bảng</strong> DMKHOA).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_nganh_khoa as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_nganh_khoa as
 select
   k.tenkhoa,
   count(n.manganh) as soluong_nganh
@@ -556,6 +731,8 @@ from
   join dmkhoa k on n.makhoa = k.makhoa
 group by
   k.tenkhoa;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-17')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -573,7 +750,13 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> tính Điểm trung bình (tính AVG(Diem) trong <strong class="highlight-vi">bảng</strong> DIEMHP) của từng sinh viên (nhóm theo MaSV).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_dtb_sv as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_dtb_sv as
 select
   masv,
   avg(diemhp) as diemtrungbinh
@@ -581,6 +764,8 @@ from
   diemhp
 group by
   masv;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-18')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -598,7 +783,13 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> đếm tổng số lượng học phần (đếm MaHP trong <strong class="highlight-vi">bảng</strong> DMHOCPHAN) thuộc về mỗi ngành học (nhóm theo TenNganh trong <strong class="highlight-vi">bảng</strong> DMNGANH).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_hp_nganh as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_tk_hp_nganh as
 select
   n.tennganh,
   count(h.mahp) as soluong_hp
@@ -607,6 +798,8 @@ from
   join dmnganh n on h.manganh = n.manganh
 group by
   n.tennganh;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-19')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -624,7 +817,13 @@ group by
                     <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 500;">
                         Tạo <strong class="highlight-kw">View</strong> danh sách các lớp có số lượng sinh viên thực tế trên 40 sinh viên(nhóm theo TenLop trong <strong class="highlight-vi">bảng</strong> DMLOP, có <strong class="highlight-vi">điều kiện</strong> đếm MaSV &gt; 40 trong <strong class="highlight-vi">bảng</strong> SINHVIEN).                    </p>
                 </div>
-                <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_tren40sv as
+                <div class="solution-wrapper">
+                    <button class="reveal-btn" onclick="revealSolution(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        Xem Đáp Án
+                    </button>
+                    <div class="solution-content">
+                        <pre style="margin-bottom: 0;"><code class="language-sql">create view v_lop_tren40sv as
 select
   l.tenlop,
   count(s.masv) as soluong_sv
@@ -635,6 +834,8 @@ group by
   l.tenlop
 having
   count(s.masv) &gt; 40;</code></pre>
+                    </div>
+                </div>
                 
                                 <div style="margin-top: 1rem;">
                     <button class="toggle-explanation-btn" onclick="toggleExplanation('expl-buoi5-view-20')" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
@@ -657,6 +858,13 @@ function toggleExplanation(id) {
     } else {
         el.style.display = 'none';
     }
+}
+function revealSolution(btn) {
+    const wrapper = btn.closest('.solution-wrapper');
+    const content = wrapper.querySelector('.solution-content');
+    content.classList.add('revealed');
+    btn.style.opacity = '0';
+    setTimeout(() => btn.remove(), 300);
 }
 </script>
                 <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">

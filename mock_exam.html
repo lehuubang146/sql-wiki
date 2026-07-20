@@ -151,7 +151,13 @@
             </div>
         </div>
 
-        <button id="start-exam-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 24px;">Bắt đầu thi ngay</button>
+        <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+            <button id="start-exam-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 24px;">Bắt đầu thi ngay</button>
+            <button onclick="showHistoryModal()" class="btn btn-secondary" style="font-size: 1.1rem; padding: 12px 24px; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #10b981; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Xem Lịch Sử Thi
+            </button>
+        </div>
     </div>
 
     <div id="exam-active-container" style="display: none;">
@@ -176,6 +182,76 @@
         <div id="score-display" style="font-size: 3rem; font-weight: bold; color: #3b82f6; margin: 1rem 0;">0/10</div>
         <p id="score-message" style="font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
         <button onclick="location.reload()" class="btn btn-secondary">Thi lại (Đề mới)</button>
+    </div>
+</div>
+
+<!-- Modal Lịch Sử -->
+<style>
+.solid-modal-box {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+body.light-mode .solid-modal-box {
+    background-color: #ffffff;
+    color: #0f172a;
+}
+.solid-modal-box .close-btn {
+    color: #cbd5e1;
+}
+body.light-mode .solid-modal-box .close-btn {
+    color: #64748b;
+}
+.history-item-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e2e8f0;
+}
+body.light-mode .history-item-card {
+    background: rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #0f172a;
+}
+.history-item-card:hover {
+    background: rgba(255,255,255,0.1);
+}
+body.light-mode .history-item-card:hover {
+    background: rgba(0,0,0,0.06);
+}
+.history-question-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e2e8f0;
+}
+body.light-mode .history-question-card {
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.08);
+    color: #0f172a;
+}
+</style>
+<div id="history-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; overflow-y: auto; backdrop-filter: blur(5px);">
+    <div class="solid-modal-box" style="width: 90%; max-width: 800px; margin: 40px auto; border-radius: 12px; border: 1px solid var(--border-color); padding: 2rem; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <button class="close-btn" onclick="document.getElementById('history-modal').style.display='none'" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 2rem; cursor: pointer; line-height: 1; padding: 5px;">&times;</button>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; padding-right: 40px;">
+            <h2 id="history-modal-title" style="margin-top: 0; margin-bottom: 0; color: #10b981;">🕒 Lịch Sử Bài Làm</h2>
+            <button id="clear-history-btn" onclick="clearHistory()" class="btn btn-secondary" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; padding: 8px 16px; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                Xóa toàn bộ
+            </button>
+        </div>
+        
+        <div id="history-list" style="display: flex; flex-direction: column; gap: 15px;">
+            <!-- History items injected here -->
+        </div>
+        
+        <div id="history-detail" style="display: none;">
+            <button onclick="backToHistoryList()" class="btn btn-secondary" style="margin-bottom: 15px; background: rgba(255,255,255,0.1); border: none; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Quay lại danh sách
+            </button>
+            <div id="history-detail-content" style="display: flex; flex-direction: column; gap: 15px;">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -363,8 +439,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             
+            
+            // For history tracking
+            q.userSelected = selectedVal;
+            
             if (selectedVal === q.newAnswer) score++;
         });
+        
+        // Save history to LocalStorage
+        const attempt = {
+            date: new Date().toLocaleString('vi-VN'),
+            score: score,
+            total: selectedQuestions.length,
+            questions: selectedQuestions
+        };
+        let history = JSON.parse(localStorage.getItem('mock_exam_history') || '[]');
+        history.unshift(attempt); // Add to beginning
+        if (history.length > 10) history = history.slice(0, 10); // Keep last 10 attempts
+        localStorage.setItem('mock_exam_history', JSON.stringify(history));
         
         document.getElementById('score-display').innerText = `${score}/${selectedQuestions.length}`;
         const msgEl = document.getElementById('score-message');
@@ -390,6 +482,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function showHistoryModal() {
+    const history = JSON.parse(localStorage.getItem('mock_exam_history') || '[]');
+    const list = document.getElementById('history-list');
+    
+    if (history.length === 0) {
+        list.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Chưa có dữ liệu lịch sử thi.</div>';
+        document.getElementById('clear-history-btn').style.display = 'none';
+    } else {
+        document.getElementById('clear-history-btn').style.display = 'flex';
+        list.innerHTML = history.map((attempt, index) => {
+            let percentage = (attempt.score / attempt.total) * 100;
+            let color = percentage >= 80 ? '#10b981' : (percentage >= 50 ? '#f59e0b' : '#ef4444');
+            
+            let questionsHtml = attempt.questions.map((q, qi) => {
+                let optionsHtml = q.shuffledOptions.map((opt, oi) => {
+                    let style = '';
+                    let icon = '';
+                    if (oi === q.newAnswer) {
+                        style = 'color: #10b981; font-weight: bold; background: rgba(16, 185, 129, 0.1);';
+                        icon = '✓';
+                    } else if (oi === q.userSelected && q.userSelected !== q.newAnswer) {
+                        style = 'color: #ef4444; background: rgba(239, 68, 68, 0.1); text-decoration: line-through;';
+                        icon = '✗';
+                    }
+                    return `<div style="padding: 4px 8px; border-radius: 4px; margin-bottom: 4px; ${style}">${icon} ${opt.text}</div>`;
+                }).join('');
+                
+                return `
+                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px dashed rgba(255,255,255,0.1);">
+                        <div style="font-weight: 500; margin-bottom: 0.5rem;">Câu ${qi + 1}: ${q.question}</div>
+                        ${optionsHtml}
+                    </div>
+                `;
+            }).join('');
+            
+            return `
+                <div class="history-item-card" style="border-radius: 8px; padding: 15px; cursor: pointer; transition: background 0.2s;" onclick='showHistoryDetail(${index})'>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="font-weight: bold; font-size: 1.1rem; color: inherit;">Lần ${history.length - index}</span>
+                            <span style="color: var(--text-muted); margin-left: 10px; font-size: 0.9rem;">${attempt.date}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-weight: bold; font-size: 1.2rem; color: ${color};">
+                                ${attempt.score}/${attempt.total}
+                            </div>
+                            <button onclick="deleteHistoryItem(${index}, event)" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 4px; padding: 6px; cursor: pointer; color: #ef4444; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'" title="Xóa bài làm này">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    document.getElementById('history-list').style.display = 'flex';
+    document.getElementById('history-detail').style.display = 'none';
+    document.getElementById('history-modal-title').innerText = '🕒 Lịch Sử Bài Làm';
+    if (history.length > 0) {
+        document.getElementById('clear-history-btn').style.display = 'flex';
+    } else {
+        document.getElementById('clear-history-btn').style.display = 'none';
+    }
+    document.getElementById('history-modal').style.display = 'block';
+}
+
+function deleteHistoryItem(index, event) {
+    event.stopPropagation(); // Ngăn không cho click truyền lên thẻ cha để không mở Modal chi tiết
+    if (confirm("Bạn có chắc chắn muốn xóa bài làm này?")) {
+        let history = JSON.parse(localStorage.getItem('mock_exam_history') || '[]');
+        history.splice(index, 1);
+        localStorage.setItem('mock_exam_history', JSON.stringify(history));
+        showHistoryModal(); // Render lại danh sách
+    }
+}
+
+function showHistoryDetail(index) {
+    const history = JSON.parse(localStorage.getItem('mock_exam_history') || '[]');
+    const attempt = history[index];
+    if (!attempt) return;
+    
+    let percentage = (attempt.score / attempt.total) * 100;
+    let color = percentage >= 80 ? '#10b981' : (percentage >= 50 ? '#f59e0b' : '#ef4444');
+    
+    document.getElementById('history-modal-title').innerText = `Chi tiết Lần ${history.length - index} - Điểm: ${attempt.score}/${attempt.total}`;
+    document.getElementById('clear-history-btn').style.display = 'none';
+    
+    let questionsHtml = attempt.questions.map((q, qi) => {
+        let optionsHtml = q.shuffledOptions.map((opt, oi) => {
+            let style = 'color: var(--text-muted);';
+            let icon = '○';
+            if (oi === q.newAnswer) {
+                style = 'color: #10b981; font-weight: bold; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);';
+                icon = '✓';
+            } else if (oi === q.userSelected && q.userSelected !== q.newAnswer) {
+                style = 'color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); text-decoration: line-through;';
+                icon = '✗';
+            }
+            return `<div style="padding: 8px 12px; border-radius: 6px; border: 1px solid transparent; margin-bottom: 6px; ${style}">${icon} ${opt.text}</div>`;
+        }).join('');
+        
+        return `
+            <div class="history-question-card" style="padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-weight: 500; margin-bottom: 1rem; color: inherit; font-size: 1.05rem;">Câu ${qi + 1}: ${q.question}</div>
+                ${optionsHtml}
+            </div>
+        `;
+    }).join('');
+    
+    document.getElementById('history-detail-content').innerHTML = questionsHtml;
+    document.getElementById('history-list').style.display = 'none';
+    document.getElementById('history-detail').style.display = 'block';
+}
+
+function backToHistoryList() {
+    document.getElementById('history-modal-title').innerText = '🕒 Lịch Sử Bài Làm';
+    document.getElementById('history-detail').style.display = 'none';
+    document.getElementById('history-list').style.display = 'flex';
+    document.getElementById('clear-history-btn').style.display = 'flex';
+}
+
+function clearHistory() {
+    if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử thi thử không? Hành động này không thể hoàn tác.")) {
+        localStorage.removeItem('mock_exam_history');
+        showHistoryModal(); // Re-render the empty list
+    }
+}
 </script>
                 <div class="mark-complete-wrapper" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
                     <button id="mark-complete-btn" onclick="markComplete('mock_exam', this)" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">

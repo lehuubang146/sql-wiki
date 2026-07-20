@@ -191,6 +191,11 @@ body.light-mode .erd-header {
     padding: 0.4rem 0.75rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     color: #cbd5e1;
+    cursor: help;
+    transition: background 0.2s;
+}
+.erd-row:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 .erd-row:last-child {
     border-bottom: none;
@@ -269,6 +274,33 @@ body.light-mode .erd-path {
     </div>
 </div>
 
+<!-- Info Modal cho ERD -->
+<style>
+.solid-erd-modal {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+body.light-mode .solid-erd-modal {
+    background-color: #ffffff;
+    color: #0f172a;
+}
+.solid-erd-modal .close-btn {
+    color: #cbd5e1;
+}
+body.light-mode .solid-erd-modal .close-btn {
+    color: #64748b;
+}
+</style>
+<div id="erd-info-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; backdrop-filter: blur(5px); align-items: center; justify-content: center;">
+    <div class="solid-erd-modal" style="width: 90%; max-width: 450px; border-radius: 12px; border: 1px solid var(--border-color); padding: 1.5rem; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+        <button class="close-btn" onclick="document.getElementById('erd-info-modal').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+        <h3 id="erd-info-title" style="margin-top: 0; color: #3b82f6; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Bảng: SINHVIEN</h3>
+        <div id="erd-info-content" style="margin-top: 1rem; line-height: 1.6; font-size: 0.95rem; color: inherit;">
+            <!-- Nội dung được fill bằng JS -->
+        </div>
+    </div>
+</div>
+
 <script>
 window.erdScale = 1;
 
@@ -319,6 +351,44 @@ function switchErd(target, btn) {
         window.erdDrawLines();
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Thêm sự kiện click cho các cột để hiện giải thích
+    document.querySelectorAll('.erd-row').forEach(row => {
+        row.addEventListener('click', (e) => {
+            // Không chặn sự kiện kéo (drag), chỉ bắt click
+            const tableName = row.closest('.erd-table').querySelector('.erd-header').innerText;
+            const colName = row.querySelector('.col-name').innerText;
+            const colType = row.querySelector('.col-type').innerText;
+            const isPK = row.classList.contains('pk');
+            const isFK = row.classList.contains('fk');
+            
+            document.getElementById('erd-info-title').innerText = `Bảng: ${tableName}`;
+            
+            let html = `<div><b>Cột:</b> <span style="color: #10b981;">${colName}</span></div>`;
+            html += `<div><b>Kiểu dữ liệu:</b> <span style="font-family: 'Fira Code', monospace; color: #eab308;">${colType}</span></div>`;
+            
+            if (isPK) {
+                html += `<div style="margin-top: 10px; padding: 10px; background: rgba(251, 191, 36, 0.1); border-left: 3px solid #fbbf24; border-radius: 4px;">
+                    <b>🔑 Khóa chính (Primary Key):</b><br>Đảm bảo giá trị của cột <code>${colName}</code> là duy nhất, dùng để phân biệt các bản ghi trong bảng <code>${tableName}</code>.
+                </div>`;
+            }
+            if (isFK) {
+                html += `<div style="margin-top: 10px; padding: 10px; background: rgba(96, 165, 250, 0.1); border-left: 3px solid #60a5fa; border-radius: 4px;">
+                    <b>🗝️ Khóa ngoại (Foreign Key):</b><br>Liên kết dữ liệu với một bảng khác. Dữ liệu nhập vào <code>${colName}</code> bắt buộc phải tồn tại ở bảng gốc.
+                </div>`;
+            }
+            if (!isPK && !isFK) {
+                html += `<div style="margin-top: 10px; padding: 10px; background: rgba(148, 163, 184, 0.1); border-left: 3px solid #94a3b8; border-radius: 4px;">
+                    <b>📝 Thuộc tính thường:</b><br>Cột lưu trữ thông tin cơ bản, không mang tính ràng buộc quan hệ.
+                </div>`;
+            }
+            
+            document.getElementById('erd-info-content').innerHTML = html;
+            document.getElementById('erd-info-modal').style.display = 'flex';
+        });
+    });
+});
 </script>
 
 <div class="erd-full-container" id="erd-canvas">
